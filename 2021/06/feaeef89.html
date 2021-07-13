@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.3.0">
+<meta name="generator" content="Hexo 5.4.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -34,8 +34,9 @@
 <meta property="og:description" content="安装 ¶Java 安装  elasticsearch 需要 Java 的环境，我们一般需要安装 JDK1.8 或以上版本，Java 的安装步骤不再展示（参考菜鸟教程）……">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://i.loli.net/2021/06/14/oyxaB4VSnRrIhcO.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1168165/201903/1168165-20190321171753955-918996558.png">
 <meta property="article:published_time" content="2021-06-14T12:27:45.000Z">
-<meta property="article:modified_time" content="2021-06-20T16:05:48.947Z">
+<meta property="article:modified_time" content="2021-06-28T12:25:21.788Z">
 <meta property="article:author" content="ann-zhgy">
 <meta property="article:tag" content="ES安装及入门">
 <meta name="twitter:card" content="summary">
@@ -223,7 +224,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">Java 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">Elasticsearch 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text"> 官网下载安装包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose-%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">docker-compose 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ik-%E5%88%86%E8%AF%8D%E5%99%A8%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.3.</span> <span class="nav-text">ik 分词器下载安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Elasticsearch 配置文件解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#elasticsearch-yml"><span class="nav-number">2.1.</span> <span class="nav-text">elasticsearch.yml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jvm-options"><span class="nav-number">2.2.</span> <span class="nav-text">jvm.options</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">Java 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elasticsearch%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">Elasticsearch 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text"> 官网下载安装包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose-%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">docker-compose 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ik-%E5%88%86%E8%AF%8D%E5%99%A8%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.3.</span> <span class="nav-text">ik 分词器下载安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">Elasticsearch 配置文件解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#elasticsearch-yml"><span class="nav-number">2.1.</span> <span class="nav-text">elasticsearch.yml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jvm-options"><span class="nav-number">2.2.</span> <span class="nav-text">jvm.options</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">ES 的数据结构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text"> 逻辑设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%A1%A3%EF%BC%88document%EF%BC%89"><span class="nav-number">3.1.1.</span> <span class="nav-text"> 文档（document）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%EF%BC%88type%EF%BC%89"><span class="nav-number">3.1.2.</span> <span class="nav-text"> 类型（type）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-number">3.1.3.</span> <span class="nav-text"> 索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.2.</span> <span class="nav-text"> 物理设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95"><span class="nav-number">3.2.1.</span> <span class="nav-text"> 倒排索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BE%E4%B8%AA%E6%A0%97%E5%AD%90"><span class="nav-number">3.2.1.1.</span> <span class="nav-text"> 举个栗子</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">ES 的简单操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#PUT"><span class="nav-number">4.1.</span> <span class="nav-text">PUT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PUT-%E6%93%8D%E4%BD%9C%E5%A2%9E%E5%8A%A0%E7%B4%A2%E5%BC%95"><span class="nav-number">4.1.1.</span> <span class="nav-text">PUT 操作增加索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PUT-%E5%A2%9E%E5%8A%A0%E6%96%87%E6%A1%A3"><span class="nav-number">4.1.2.</span> <span class="nav-text">PUT 增加文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#POST"><span class="nav-number">4.2.</span> <span class="nav-text">POST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#POST-%E5%A2%9E%E5%8A%A0%E6%96%87%E6%A1%A3"><span class="nav-number">4.2.1.</span> <span class="nav-text">POST 增加文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET"><span class="nav-number">4.3.</span> <span class="nav-text">GET</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GET-%E6%93%8D%E4%BD%9C%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E4%BF%A1%E6%81%AF"><span class="nav-number">4.3.1.</span> <span class="nav-text">GET 操作查看索引信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E6%96%87%E6%A1%A3"><span class="nav-number">4.3.2.</span> <span class="nav-text">GET 查询所有文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DELETE"><span class="nav-number">4.4.</span> <span class="nav-text">DELETE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DELETE-%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95"><span class="nav-number">4.4.1.</span> <span class="nav-text">DELETE 删除索引</span></a></li></ol></li></ol></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -239,20 +240,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">19</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -282,7 +283,7 @@
     <h3 class="widget-title">标签云</h3>
     <div id="myCanvasContainer" class="widget tagcloud">
         <canvas width="250" height="250" id="resCanvas" style="width=100%">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E4%BB%8B%E7%BB%8D/" rel="tag">ES介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" rel="tag">ES安装及入门</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java8新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quick-Start/" rel="tag">Quick Start</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-compose/" rel="tag">docker-compose</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker%E4%B8%80%E9%94%AE%E6%9E%84%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8/" rel="tag">docker一键构建并启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-%E8%84%9A%E6%9C%AC/" rel="tag">linux 脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E7%A1%80/" rel="tag">markdown基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E8%AF%AD%E6%B3%95%E8%BF%9B%E9%98%B6/" rel="tag">markdown语法进阶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-a/" rel="tag">passwd-a</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/" rel="tag">容器引擎</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E4%BB%8B%E7%BB%8D/" rel="tag">ES介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" rel="tag">ES安装及入门</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E7%9A%84CURD/" rel="tag">ES的CURD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java8新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quick-Start/" rel="tag">Quick Start</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-compose/" rel="tag">docker-compose</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker%E4%B8%80%E9%94%AE%E6%9E%84%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8/" rel="tag">docker一键构建并启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F/" rel="tag">elasticsearch查询方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-%E8%84%9A%E6%9C%AC/" rel="tag">linux 脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E7%A1%80/" rel="tag">markdown基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E8%AF%AD%E6%B3%95%E8%BF%9B%E9%98%B6/" rel="tag">markdown语法进阶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-a/" rel="tag">passwd-a</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pl-sql/" rel="tag">pl/sql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="tag">存储过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/" rel="tag">容器引擎</a><span class="tag-list-count">1</span></li></ul>
         </canvas>
     </div>
 </div>
@@ -351,7 +352,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-21 00:05:48" itemprop="dateModified" datetime="2021-06-21T00:05:48+08:00">2021-06-21</time>
+        <time title="修改时间：2021-06-28 20:25:21" itemprop="dateModified" datetime="2021-06-28T20:25:21+08:00">2021-06-28</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -392,14 +393,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.7k</span>
+      <span>9.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>9 分钟</span>
     </span>
 </div>
 
@@ -415,7 +416,7 @@
 <ul>
 <li>elasticsearch 需要 Java 的环境，我们一般需要安装 JDK1.8 或以上版本，Java 的安装步骤不再展示（参考<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-environment-setup.html">菜鸟教程</a>）……</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="Elasticsearch安装"><a class="header-anchor" href="#Elasticsearch安装">¶</a>Elasticsearch 安装</h2>
 <h3 id="官网下载安装包安装"><a class="header-anchor" href="#官网下载安装包安装">¶</a> 官网下载安装包安装</h3>
 <ol>
@@ -501,15 +502,243 @@
 <p>ES 的配置文件在 config 文件夹下，值得关注的有 <code>elasticsearch.yml</code>、<code>jvm.options</code>、<code>log4j2.properties</code>，但是我们需要关注的仅仅是 <code>elasticsearch.yml</code>，<code>jvm.options</code> 在 JVM 的笔记中会详细解释，<code>log4j2.properties</code> 里面存储了日志打印的信息，一般不用管，而且在 <code>elasticsearch.yml</code> 中同样可以进行日志的配置</p>
 </blockquote>
 <h2 id="elasticsearch-yml"><a class="header-anchor" href="#elasticsearch-yml">¶</a><code>elasticsearch.yml</code></h2>
-<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"># ES的官方文档地址：https://www.elastic.co/guide/en/elasticsearch/reference/index.html</span><br><span class="line">#----------------------------------- 集群相关 ------------------------------------</span><br><span class="line"># 集群名称，默认就是 elasticsearch</span><br><span class="line">cluster.name: my-application</span><br><span class="line"></span><br><span class="line">#----------------------------------- 节点相关 ------------------------------------</span><br><span class="line"># 当前节点名字，如果不配置，系统会随机指定名字</span><br><span class="line">node.name: node-1</span><br><span class="line"># 设置节点是否可以成为主节点，默认为true</span><br><span class="line">node.master: true</span><br><span class="line"># 设置节点是否存储数据，默认为true</span><br><span class="line">node.data: true</span><br><span class="line">#===========================================</span><br><span class="line"># master 和 data 配置可以产生一些奇异的效果</span><br><span class="line"># 1). 当master为false，而data为true时，该节点将会作为负载器，负荷会比较大</span><br><span class="line"># 2). 当master为true，而data为false时，该节点作为一个协调者</span><br><span class="line"># 3). 当master为false，data也为false时，该节点将会作为搜索器，从节点中获取数据并生成搜索结果</span><br><span class="line">#===========================================</span><br><span class="line"># 为节点添加自定义的属性，可以作为集群分片 分布/过滤 规则的属性</span><br><span class="line">node.attr.rack: r1</span><br><span class="line"></span><br><span class="line"># ----------------------------- 日志和持久化相关 ---------------------------------</span><br><span class="line"># 数据文件存储目录，可以设置多个路径，用【逗号】隔开 </span><br><span class="line">path.data: /path/to/data1,/path/to/data2</span><br><span class="line"># 日志文件存储目录</span><br><span class="line">path.logs: /path/to/logs</span><br><span class="line"># 临时文件目录</span><br><span class="line">path.work: /path/to/work</span><br><span class="line"># 配置文件目录</span><br><span class="line">path.conf: /path/to/conf</span><br><span class="line"># 插件安装路径</span><br><span class="line">path.plugins: /path/to/plugins</span><br><span class="line"></span><br><span class="line"># ----------------------------------- 内存配置 -----------------------------------</span><br><span class="line"># 锁定物理内存地址，防止es内存被交换出去，也就是避免es使用swap交换分区。频繁的交换，会导致IOPS变高。</span><br><span class="line">bootstrap.memory_lock: true</span><br><span class="line"># 要确保堆大小设置为系统可用内存的一半</span><br><span class="line"></span><br><span class="line"># ---------------------------------- 网络配置 -----------------------------------</span><br><span class="line"># 本机绑定ip地址，默认0.0.0.0</span><br><span class="line">network.host: 192.168.0.1</span><br><span class="line"># 本机绑定端口，默认9200</span><br><span class="line">http.port: 9200</span><br><span class="line"></span><br><span class="line"># ----------------------------- 集群节点服务发现配置 ------------------------------</span><br><span class="line"># 设置一个集群中主节点的数量，当多于三个节点时，该值可在2-4之间：</span><br><span class="line">discovery.zen.minimum_master_nodes: 1</span><br><span class="line">#</span><br><span class="line"># 设置ping其他节点时的超时时间，网络比较慢时可将该值设大：</span><br><span class="line">discovery.zen.ping.timeout: 3s</span><br><span class="line"># 设置新节点被启动时能够发现的主节点列表（主要用于不同网段机器连接）：</span><br><span class="line">discovery.zen.ping.unicast.hosts: ["host1", "host2:port", "host3[portX-portY]"]</span><br><span class="line"></span><br><span class="line"># 设置是否可以通过正则或者_all删除或者关闭索引</span><br><span class="line">action.destructive_requires_name 默认false 允许 可设置true不允许 </span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"># ES的官方文档地址：https://www.elastic.co/guide/en/elasticsearch/reference/index.html</span><br><span class="line">#----------------------------------- 集群相关 ------------------------------------</span><br><span class="line"># 集群名称，默认就是 elasticsearch</span><br><span class="line">cluster.name: my-application</span><br><span class="line"></span><br><span class="line">#----------------------------------- 节点相关 ------------------------------------</span><br><span class="line"># 当前节点名字，如果不配置，系统会随机指定名字</span><br><span class="line">node.name: node-1</span><br><span class="line"># 设置节点是否可以成为主节点，默认为true</span><br><span class="line">node.master: true</span><br><span class="line"># 设置节点是否存储数据，默认为true</span><br><span class="line">node.data: true</span><br><span class="line">#===========================================</span><br><span class="line"># master 和 data 配置可以产生一些奇异的效果</span><br><span class="line"># 1). 当master为false，而data为true时，该节点将会作为负载器，负荷会比较大</span><br><span class="line"># 2). 当master为true，而data为false时，该节点作为一个协调者</span><br><span class="line"># 3). 当master为false，data也为false时，该节点将会作为搜索器，从节点中获取数据并生成搜索结果</span><br><span class="line">#===========================================</span><br><span class="line"># 为节点添加自定义的属性，可以作为集群分片 分布/过滤 规则的属性</span><br><span class="line">node.attr.rack: r1</span><br><span class="line"></span><br><span class="line"># ----------------------------- 日志和持久化相关 ---------------------------------</span><br><span class="line"># 数据文件存储目录，可以设置多个路径，用【逗号】隔开 </span><br><span class="line">path.data: /path/to/data1,/path/to/data2</span><br><span class="line"># 日志文件存储目录</span><br><span class="line">path.logs: /path/to/logs</span><br><span class="line"># 临时文件目录</span><br><span class="line">path.work: /path/to/work</span><br><span class="line"># 配置文件目录</span><br><span class="line">path.conf: /path/to/conf</span><br><span class="line"># 插件安装路径</span><br><span class="line">path.plugins: /path/to/plugins</span><br><span class="line"></span><br><span class="line"># ----------------------------------- 内存配置 -----------------------------------</span><br><span class="line"># 锁定物理内存地址，防止es内存被交换出去，也就是避免es使用swap交换分区。频繁的交换，会导致IOPS变高。</span><br><span class="line">bootstrap.memory_lock: true</span><br><span class="line"># 要确保堆大小设置为系统可用内存的一半</span><br><span class="line"></span><br><span class="line"># ---------------------------------- 网络配置 -----------------------------------</span><br><span class="line"># 本机绑定ip地址，默认0.0.0.0</span><br><span class="line">network.host: 192.168.0.1</span><br><span class="line"># 本机绑定端口，默认9200</span><br><span class="line">http.port: 9200</span><br><span class="line"></span><br><span class="line"># ----------------------------- 集群节点服务发现配置 ------------------------------</span><br><span class="line"># 设置一个集群中主节点的数量，当多于三个节点时，该值可在2-4之间：</span><br><span class="line">discovery.zen.minimum_master_nodes: 1</span><br><span class="line">#</span><br><span class="line"># 设置ping其他节点时的超时时间，网络比较慢时可将该值设大：</span><br><span class="line">discovery.zen.ping.timeout: 3s</span><br><span class="line"># 设置新节点被启动时能够发现的主节点列表（主要用于不同网段机器连接）：</span><br><span class="line">discovery.zen.ping.unicast.hosts: ["host1", "host2:port", "host3[portX-portY]"]</span><br><span class="line"></span><br><span class="line"># 设置是否可以通过正则或者_all删除或者关闭索引</span><br><span class="line">action.destructive_requires_name 默认false 允许 可设置true不允许 </span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>其中很多配置请访问<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/index.html">官方文档</a></li>
 </ul>
 <h2 id="jvm-options"><a class="header-anchor" href="#jvm-options">¶</a><code>jvm.options</code></h2>
 <p>对于学习来说，这个配置文件中我们只需要关注两个参数即可</p>
-<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Xms4g</span><br><span class="line">-Xmx4g</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Xms4g</span><br><span class="line">-Xmx4g</span><br></pre></td></tr></tbody></table></figure>
 <ul>
 <li>这两个参数用于设置 JVM 的内存，两个值设置为一致大小可以防止内存抖动（一个很正常的现象），ES 学习时推荐设置 512M 就基本足够了</li>
+</ul>
+<h1>ES 的数据结构设计</h1>
+<h2 id="逻辑设计"><a class="header-anchor" href="#逻辑设计">¶</a> 逻辑设计</h2>
+<blockquote>
+<p>包含<strong>文档</strong>、<strong>类型</strong>、<strong>索引</strong>，可以理解为分别对应关系型数据库的 <em>记录（行）</em>、<em>表（我觉得更像是 schema）</em>、<em>数据库</em>，但是区别在于：<br><br>
+关系型数据库中一个数据库中可以有多张表，但是 ES 从 6 开始，建议一个索引中只能有一个类型，在未来版本中会规定一个索引只有一个类型</p>
+</blockquote>
+<h3 id="文档（document）"><a class="header-anchor" href="#文档（document）">¶</a> 文档（document）</h3>
+<p><code>elasticsearch</code> 是面向文档的，意味着它搜索和索引数据的最小单位就是文档。文档有几个属性：</p>
+<ul>
+<li>文档是 <code>key-value</code> 的形式，需要同时有值</li>
+<li>文档中可以包含另一个文档，可以理解为 json 的 value 也可以是一个 json</li>
+<li> 结构灵活。文档中，字段不需要预先定义，可以忽略某个字段，甚至可以可以动态的添加字段</li>
+<li>无模式。文档的字段对应的值可以是任意类型
+<ul>
+<li>有一点需要注意，尽管文档是无模式的，但是字段的类型依旧很重要，明确的类型可以提高存储和索引时的效率 </li>
+</ul>
+</li>
+</ul>
+<h3 id="类型（type）"><a class="header-anchor" href="#类型（type）">¶</a> 类型（type）</h3>
+<blockquote>
+<p>类型规定了文档的字段的<strong>类型</strong>，</p>
+</blockquote>
+<p>类型中对于字段的定义称为映射，比如将 <code>name</code> 映射为字符串类型，<code>age</code> 映射为整型</p>
+<p>ES 中的文档是无模式的，当文档中的字段没有映射类型时，ES 会猜该字段是什么类型。但是 ES 猜的那个类型也不一定是我们想要的类型，所以比较好的办法的是提前定义好所需要的映射</p>
+<h3 id="索引"><a class="header-anchor" href="#索引">¶</a> 索引</h3>
+<p>elasticsearch 的索引是一个非常大的文档集合，存储了文档和定义好的映射（如果有）</p>
+<h2 id="物理设计"><a class="header-anchor" href="#物理设计">¶</a> 物理设计</h2>
+<blockquote>
+<p>节点和分片</p>
+</blockquote>
+<p>es 是支持集群部署的，一个集群包含至少一个节点，一个节点就是一个 es 的实例（进程）。节点内可以有多个索引</p>
+<p>一个索引默认有 5 个分片（primary shard），每个分片又有一个副本（replica shard）</p>
+<p>当集群有三个节点时：</p>
+<p><img data-src="https://img2018.cnblogs.com/blog/1168165/201903/1168165-20190321171753955-918996558.png" alt="es node clus"></p>
+<p>可以看到主分片和对应的副本分片不会分布在同一节点上，这样就算某个节点挂了，数据也不会丢失</p>
+<p>实际上一个分片就是一个 Lucene 的索引，一个<em>倒排索引</em>的目录</p>
+<h3 id="倒排索引"><a class="header-anchor" href="#倒排索引">¶</a> 倒排索引</h3>
+<p><strong>索引</strong>可以理解为目录，一般是类似于 <em>标题 —— 页码</em> 的 <code>key-value</code> 结构。但是当我们使用关键词进行搜索时，就需要扫描索引库的所有文档，当文档很多时，这样的索引结构根本无法满足近实时的需求</p>
+<p><strong>倒排索引</strong>是将原本的索引结构转换为 <em>关键词 —— 文档 ID</em> 的映射结构，每个关键词都对应<strong>包含此关键词的文档的 id 列表</strong></p>
+<h4 id="举个栗子"><a class="header-anchor" href="#举个栗子">¶</a> 举个栗子</h4>
+<p>比如说，我们现在有两个文档，分别包含如下内容：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 文档1</span><br><span class="line">It is never too late to mend.</span><br><span class="line"># 文档2</span><br><span class="line">It is never too late to learn.</span><br></pre></td></tr></tbody></table></figure>
+<p>倒排索引创建后，是这样子的：</p>
+<table>
+<thead>
+<tr>
+<th>term</th>
+<th>doc1</th>
+<th>doc2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>It</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>is</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>never</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>too</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>late</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>to</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>mend</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>learn</td>
+<td>×</td>
+<td>√</td>
+</tr>
+</tbody>
+</table>
+<p>现在，我们搜索 <code>to learn</code>，只需要搜索每个词条包含的文档就好了</p>
+<table>
+<thead>
+<tr>
+<th>term</th>
+<th>doc1</th>
+<th>doc2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>to</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>learn</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr>
+<td>total</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>可以看出，两个文档都有匹配的地方，第 2 个文档匹配度更高</p>
+<h1>ES 的简单操作</h1>
+<blockquote>
+<p>本文中，ES 的操作在 Kibana 中进行：Kibana -&gt; Dev Tools -&gt; Console</p>
+<p>ES 提供了基于 RESTful 的 API，本节也会基于 HTTP 的方法分类</p>
+</blockquote>
+<h2 id="PUT"><a class="header-anchor" href="#PUT">¶</a>PUT</h2>
+<blockquote>
+<p>PUT 在 RESTful 语义中表示资源的全量更新，在 ES 中可以增加索引、映射，创建或全量更新文档</p>
+<p>在 Kibana 中，PUT/POST/GET…… 操作可以小写，但是为了重点表示其是一个操作，建议使用大写</p>
+</blockquote>
+<h3 id="PUT-操作增加索引"><a class="header-anchor" href="#PUT-操作增加索引">¶</a>PUT 操作增加索引</h3>
+<ul>
+<li>
+<p>请求：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">PUT test</span><br><span class="line">{</span><br><span class="line">  "settings": {</span><br><span class="line">    "number_of_shards": 5,</span><br><span class="line">    "number_of_replicas": 1,</span><br><span class="line">    "refresh_interval": "1s"</span><br><span class="line">  },</span><br><span class="line">  "mappings": {</span><br><span class="line">    "_doc": {</span><br><span class="line">      "properties": {</span><br><span class="line">        "uid": {"type": "long"},</span><br><span class="line">        "phone": {"type": "long"},</span><br><span class="line">        "message": {"type": "keyword"},</span><br><span class="line">        "sendTime": {</span><br><span class="line">          "type": "date",</span><br><span class="line">          "format": "yyyy-MM-dd HH:mm:ss"</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>需要注意的是，ES 中的时区默认是国际标准时区，我们是东 8 区</li>
+<li>此请求中，包含了映射</li>
+</ul>
+</li>
+<li>
+<p>响应</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "acknowledged" : true,</span><br><span class="line">  "shards_acknowledged" : true,</span><br><span class="line">  "index" : "test"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+</li>
+</ul>
+<h3 id="PUT-增加文档"><a class="header-anchor" href="#PUT-增加文档">¶</a>PUT 增加文档</h3>
+<ul>
+<li>
+<p>请求：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PUT test/users/2</span><br><span class="line">{</span><br><span class="line">  "uid": 10001,</span><br><span class="line">  "phone": 13133334445,</span><br><span class="line">  "message": "record4",</span><br><span class="line">  "sendTime": "2021-06-09 16:47:47"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li>
+<p>响应</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "_index" : "test",</span><br><span class="line">  "_type" : "users",</span><br><span class="line">  "_id" : "2",</span><br><span class="line">  "_version" : 1,</span><br><span class="line">  "result" : "created",</span><br><span class="line">  "_shards" : {</span><br><span class="line">    "total" : 2,</span><br><span class="line">    "successful" : 1,</span><br><span class="line">    "failed" : 0</span><br><span class="line">  },</span><br><span class="line">  "_seq_no" : 0,</span><br><span class="line">  "_primary_term" : 1</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>响应体中的 <code>result</code> 字段在第一次执行的时候是 <code>created</code>，表示此次操作是文档创建。第二次执行时是 <code>updated</code>，表示此次操作是文档更新 </li>
+</ul>
+</li>
+</ul>
+<h2 id="POST"><a class="header-anchor" href="#POST">¶</a>POST</h2>
+<blockquote>
+<p>PUT 在 RESTful 语义中表示资源的添加，在 ES 中可以创建或更新文档</p>
+</blockquote>
+<h3 id="POST-增加文档"><a class="header-anchor" href="#POST-增加文档">¶</a>POST 增加文档</h3>
+<ul>
+<li>
+<p>请求：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST test/users/2</span><br><span class="line">{</span><br><span class="line">  "uid": 10001,</span><br><span class="line">  "phone": 13133334445,</span><br><span class="line">  "message": "record4",</span><br><span class="line">  "sendTime": "2021-06-09 16:47:47"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li>
+<p>响应</p>
+<ul>
+<li>响应结果与 PUT 操作增加文档一致 </li>
+</ul>
+</li>
+</ul>
+<h2 id="GET"><a class="header-anchor" href="#GET">¶</a>GET</h2>
+<blockquote>
+<p>GET 在 RESTful 中表示查询资源，在 ES 中同样表示查询</p>
+</blockquote>
+<h3 id="GET-操作查看索引信息"><a class="header-anchor" href="#GET-操作查看索引信息">¶</a>GET 操作查看索引信息</h3>
+<ul>
+<li>
+<p>请求：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET test</span><br></pre></td></tr></tbody></table></figure>
+<p>只需要 GET 后面跟上索引的名字就行了</p>
+</li>
+<li>
+<p>响应</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "test" : {</span><br><span class="line">    "aliases" : { },</span><br><span class="line">    "mappings" : {</span><br><span class="line">      "users" : {</span><br><span class="line">        "properties" : {</span><br><span class="line">          "message" : {</span><br><span class="line">            "type" : "keyword"</span><br><span class="line">          },</span><br><span class="line">          "phone" : {</span><br><span class="line">            "type" : "long"</span><br><span class="line">          },</span><br><span class="line">          "sendTime" : {</span><br><span class="line">            "type" : "date",</span><br><span class="line">            "format" : "yyyy-MM-dd HH:mm:ss"</span><br><span class="line">          },</span><br><span class="line">          "uid" : {</span><br><span class="line">            "type" : "long"</span><br><span class="line">          }</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    },</span><br><span class="line">    "settings" : {</span><br><span class="line">      "index" : {</span><br><span class="line">        "refresh_interval" : "1s",</span><br><span class="line">        "number_of_shards" : "5",</span><br><span class="line">        "provided_name" : "test",</span><br><span class="line">        "creation_date" : "1624526067403",</span><br><span class="line">        "number_of_replicas" : "1",</span><br><span class="line">        "uuid" : "zf2LNEBnTk27P_8Gm9yc5A",</span><br><span class="line">        "version" : {</span><br><span class="line">          "created" : "6050499"</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>响应体中包含索引的详细信息 </li>
+</ul>
+</li>
+</ul>
+<h3 id="GET查询所有文档"><a class="header-anchor" href="#GET查询所有文档">¶</a>GET 查询所有文档</h3>
+<ul>
+<li>
+<p>请求：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET _search</span><br></pre></td></tr></tbody></table></figure>
+</li>
+<li>
+<p>响应</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "took" : 0,</span><br><span class="line">  "timed_out" : false,</span><br><span class="line">  "_shards" : {</span><br><span class="line">    "total" : 6,</span><br><span class="line">    "successful" : 6,</span><br><span class="line">    "skipped" : 0,</span><br><span class="line">    "failed" : 0</span><br><span class="line">  },</span><br><span class="line">  "hits" : {</span><br><span class="line">    "total" : 3,</span><br><span class="line">    "max_score" : 1.0,</span><br><span class="line">    "hits" : [</span><br><span class="line">      {</span><br><span class="line">        "_index" : ".kibana_1",</span><br><span class="line">        "_type" : "doc",</span><br><span class="line">        "_id" : "space:default",</span><br><span class="line">        "_score" : 1.0,</span><br><span class="line">        "_source" : {</span><br><span class="line">          "space" : {</span><br><span class="line">            "name" : "Default",</span><br><span class="line">            "description" : "This is your default space!",</span><br><span class="line">            "color" : "#00bfb3",</span><br><span class="line">            "_reserved" : true</span><br><span class="line">          },</span><br><span class="line">          "type" : "space",</span><br><span class="line">          "updated_at" : "2021-06-24T09:05:12.000Z"</span><br><span class="line">        }</span><br><span class="line">      },</span><br><span class="line">      {</span><br><span class="line">        "_index" : ".kibana_1",</span><br><span class="line">        "_type" : "doc",</span><br><span class="line">        "_id" : "config:6.5.4",</span><br><span class="line">        "_score" : 1.0,</span><br><span class="line">        "_source" : {</span><br><span class="line">          "config" : {</span><br><span class="line">            "buildNum" : 18878</span><br><span class="line">          },</span><br><span class="line">          "type" : "config",</span><br><span class="line">          "updated_at" : "2021-06-24T09:05:37.978Z"</span><br><span class="line">        }</span><br><span class="line">      },</span><br><span class="line">      {</span><br><span class="line">        "_index" : "test",</span><br><span class="line">        "_type" : "users",</span><br><span class="line">        "_id" : "2",</span><br><span class="line">        "_score" : 1.0,</span><br><span class="line">        "_source" : {</span><br><span class="line">          "uid" : 10001,</span><br><span class="line">          "phone" : 13133334445,</span><br><span class="line">          "message" : "record4",</span><br><span class="line">          "sendTime" : "2021-06-09 16:47:47"</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    ]</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>响应中包含了 es 中所有的文档信息，会进行分页 </li>
+</ul>
+</li>
+</ul>
+<h2 id="DELETE"><a class="header-anchor" href="#DELETE">¶</a>DELETE</h2>
+<blockquote>
+<p>GET 在 RESTful 中表示删除资源，在 ES 中同样表示删除，可以删除索引、文档</p>
+</blockquote>
+<h3 id="DELETE-删除索引"><a class="header-anchor" href="#DELETE-删除索引">¶</a>DELETE 删除索引</h3>
+<ul>
+<li>
+<p>请求：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE test</span><br></pre></td></tr></tbody></table></figure>
+<p>DELETE 后面加索引名即可</p>
+</li>
+<li>
+<p>响应</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "acknowledged" : true</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>表示删除成功</p>
+</li>
 </ul>
 
     </div>
@@ -549,6 +778,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2021/06/feaeef89.html" rel="next" title="专题 ——elasticsearch03 ES 的 CURD">
+                  专题 ——elasticsearch03 ES 的 CURD <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
@@ -603,13 +835,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">43k</span>
+    <span title="站点总字数">56k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">39 分钟</span>
+    <span title="站点阅读时长">51 分钟</span>
   </span>
 </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
@@ -620,7 +852,6 @@
   <script size="300" alpha="0.6" zIndex="-1" src="//cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
 
 
-  <script src="//cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
@@ -628,23 +859,6 @@
   <script src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js"></script>
 
 
-<script>
-var options = {
-  bottom: '64px', // default: '32px'
-  right: 'unset', // default: '32px'
-  left: '32px', // default: 'unset'
-  time: '0.5s', // default: '0.3s'
-  mixColor: '#fff', // default: '#fff'
-  backgroundColor: '#fff',  // default: '#fff'
-  buttonColorDark: '#100f2c',  // default: '#100f2c'
-  buttonColorLight: '#fff', // default: '#fff'
-  saveInCookies: true, // default: true,
-  label: '🌓', // default: ''
-  autoMatchOsTheme: true // default: true
-}
-const darkmode = new Darkmode(options);
-darkmode.showWidget();
-</script>
 <script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
 
   
