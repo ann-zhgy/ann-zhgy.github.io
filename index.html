@@ -345,7 +345,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-07-11 23:13:44" itemprop="dateModified" datetime="2021-07-11T23:13:44+08:00">2021-07-11</time>
+        <time title="修改时间：2021-07-14 16:47:59" itemprop="dateModified" datetime="2021-07-14T16:47:59+08:00">2021-07-14</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -386,14 +386,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.2k</span>
+      <span>15k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>14 分钟</span>
     </span>
 </div>
 
@@ -408,105 +408,14 @@
 <blockquote>
 <p>PL/SQL 是一种高级数据库程序设计语言，该专门用于在各种环境下对 ORACLE 数据库进行访问 。由于该语言集成于数据库服务器中，所以 PL/SQL 代码可以对数据进行快速高效的处理。</p>
 </blockquote>
-<h2 id="docker-安装-oracle"><a class="header-anchor" href="#docker-安装-oracle">¶</a>docker 安装 oracle</h2>
-<p>docker-compose.yml</p>
-<blockquote>
-<p>ps：我还没有找到可以用的，暂时先空着吧……</p>
-</blockquote>
-<h1>PL/SQL 概述</h1>
-<h2 id="简介"><a class="header-anchor" href="#简介">¶</a> 简介</h2>
-<p>PLSQL 是 Oracle 公司在 SQL 基础上进行扩展而成的一种过程语言。PLSQL 提供了典型的高级语言特性，包括封装，例外处理机制，信息隐藏，面向对象等；并把最新的编程思想带到了数据库服务器和工具集中</p>
-<h2 id="优势"><a class="header-anchor" href="#优势">¶</a> 优势</h2>
-<p>与使用<strong>数据库连接</strong>操作数据库相比，PLSQL 的优势是：SQL 语言可以直接写到 PLSQL 的 “块” 中或者是 PLSQL 的过程、函数中。没有必要先创建 Statement 对象来执行 SQL; 这使得 PLSQL 成为很强大的事务处理语言，即：使用 SQL 来处理数据，使用控制结构来处理业务逻辑</p>
-<p>另外一个优势是：可以减轻数据库与应用来回交互的次数，从而节省网络资源</p>
-<h1>PL/SQL 语法</h1>
-<blockquote>
-<p>PL/SQL 中不区分大小写，但是建议关键字全部使用大写</p>
-</blockquote>
-<h2 id="PL-SQL-的-块"><a class="header-anchor" href="#PL-SQL-的-块">¶</a>PL/SQL 的 <code>块</code></h2>
-<blockquote>
-<p>PL/SQL 是一种类 PASCAL 语言，每一段程序都是由 <strong>块 (Block)</strong> 组成的</p>
-</blockquote>
-<p>PL/SQL 中的块包含：匿名块、存储过程、函数</p>
-<ol>
-<li>
-<p>匿名块</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">DECLARE</span>]</span><br><span class="line">  <span class="comment">-- 变量声明部分</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="comment">-- 语句执行部分</span></span><br><span class="line">[EXCEPTION]</span><br><span class="line">  <span class="comment">-- 异常处理部分</span></span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p>存储过程</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PROCEDURE</span> procedure_name <span class="keyword">IS</span></span><br><span class="line">  <span class="comment">-- 变量声明部分</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="comment">-- 语句执行部分</span></span><br><span class="line">[EXCEPTION]</span><br><span class="line">  <span class="comment">-- 异常处理部分</span></span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p>函数</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FUNCTION</span> func_name <span class="keyword">RETURN</span> dateType <span class="keyword">IS</span></span><br><span class="line">  <span class="comment">-- 变量声明</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="comment">-- 执行语句</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">value</span>;</span><br><span class="line">[EXCEPTION]</span><br><span class="line">  <span class="comment">-- 异常处理部分</span></span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-</ol>
-<p><strong>注意：</strong></p>
-<ol>
-<li>在 pl/sql 中，sql 语句可以写一行，但是不方便阅读，所以并不推荐这样写</li>
-<li> pl/sql 中的块是可以嵌套的，就像 java 中可以有内部类一样 </li>
-</ol>
-<h2 id="PL-SQL-变量"><a class="header-anchor" href="#PL-SQL-变量">¶</a>PL/SQL 变量</h2>
-<h3 id="PL-SQL-中的变量类型"><a class="header-anchor" href="#PL-SQL-中的变量类型">¶</a>PL/SQL 中的变量类型</h3>
-<ol>
-<li>简单变量类型：大多数数据库表的字段类型都可以作为简单变量类型</li>
-<li>用户自定义的变量：简单变量类型的组合（类似于 C 语言中的结构体）</li>
-<li>引用类型：指针</li>
-<li>大对象类型 (LOB)：保存了大对象的地址 </li>
-</ol>
-<h3 id="PL-SQL-变量声明"><a class="header-anchor" href="#PL-SQL-变量声明">¶</a>PL/SQL 变量声明</h3>
-<ol>
-<li>
-<p>语法</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- identifier [CONSTANT] dataType [NOT NULL] [:= | DEFAULT expr]</span></span><br><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  v_hiredate <span class="type">DATE</span>;</span><br><span class="line">  <span class="comment">-- plsql 中使用 := 给变量赋值</span></span><br><span class="line">  v_dept_no NUMBER(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> :<span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">  v_location <span class="type">VARCHAR</span>(<span class="number">2</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>;</span><br><span class="line">  c_con CONSTANT NUMBER :<span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p>说明</p>
-<ol>
-<li>变量命名建议遵循通用规则，如：<code>v_</code> 开头表示<strong>变量</strong>，<code>c_</code> 开头表示<strong>常量</strong>，<code>p_</code> 开头表示参数，<code>_couser</code> 结尾表示游标等……</li>
-<li> 建议一行声明一个变量，便于阅读</li>
-<li>声明但是未初始化的变量的值为 <strong>NULL</strong></li>
-<li> 在同一个块中，要避免变量的命名与数据库表中的字段名相同 </li>
-</ol>
-</li>
-</ol>
-<h3 id="PL-SQL-特有的声明变量类型的方式"><a class="header-anchor" href="#PL-SQL-特有的声明变量类型的方式">¶</a>PL/SQL 特有的声明变量类型的方式</h3>
-<ol>
-<li>
-<p><code>%TYPE</code>：用来声明与某变量类型一致</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- identifier Table.column_name%TYPPE;</span></span><br><span class="line">  v_name employees.last_name<span class="operator">%</span>TYPE;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p><code>%ROWTYPE</code>：用来声明与数据库表中一行数据的类型一致</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- identifier table_name%ROWTYPE;</span></span><br><span class="line">  v_employee employees<span class="operator">%</span>ROWTYPE;</span><br></pre></td></tr></tbody></table></figure>
-</li>
-</ol>
-<h2 id="PL-SQL-命令行输出"><a class="header-anchor" href="#PL-SQL-命令行输出">¶</a>PL/SQL 命令行输出</h2>
-<blockquote>
-<p>DBMS_OUTPUT.PUT_LINE()</p>
-</blockquote>
-<p>例子：</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  <span class="comment">-- &amp;p_annual_sal 表示 p_annual_sal 是需要用户从外界输入的</span></span><br><span class="line">  v_sal NUMBER(<span class="number">9</span>,<span class="number">2</span>) :<span class="operator">=</span> <span class="operator">&amp;</span>p_annual_sal;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  v_sal :<span class="operator">=</span> v_sal<span class="operator">/</span><span class="number">12</span>;</span><br><span class="line">  <span class="comment">-- plsql 中 || 用来连接字符串</span></span><br><span class="line">  DBMS_OUTPUT.PUT_LINE (<span class="string">'The monthly salary is '</span><span class="operator">||</span>TO_CHAR(v_sal));</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
-<h2 id="PL-SQL-注释"><a class="header-anchor" href="#PL-SQL-注释">¶</a>PL/SQL 注释</h2>
-<ol>
-<li>
-<p>单行注释</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 注释内容</span></span><br></pre></td></tr></tbody></table></figure>
-</li>
-<li>
-<p>多行注释</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 多行注释</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></tbody></table></figure>
-</li>
-</ol>
-<h2 id="PL-SQL-变量作用域"><a class="header-anchor" href="#PL-SQL-变量作用域">¶</a>PL/SQL 变量作用域</h2>
-<blockquote>
-<p>与其他编程语言一样，plsql 的变量也是有作用域的，变量只在<strong>当前作用域 (块) <strong>中可以被访问，而在块中寻找变量时，同样遵循</strong>就近原则</strong></p>
-</blockquote>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">begin</span></span><br><span class="line"> <span class="comment">-- 这种写法是标签，也可以理解为 C++ 里面的标签(label)</span></span><br><span class="line">    <span class="operator">&lt;&lt;</span><span class="keyword">OUTER</span><span class="operator">&gt;&gt;</span></span><br><span class="line">    <span class="keyword">declare</span></span><br><span class="line">        v_number number;</span><br><span class="line">    <span class="keyword">begin</span></span><br><span class="line">        <span class="keyword">declare</span></span><br><span class="line">            v_number number;</span><br><span class="line">        <span class="keyword">begin</span></span><br><span class="line">            OUTER.v_number :<span class="operator">=</span> <span class="number">200</span>;</span><br><span class="line">        <span class="keyword">end</span>;</span><br><span class="line">        <span class="comment">-- DBMS_OUTPUT.put_line 是向控制台打印的函数</span></span><br><span class="line">        <span class="comment">-- 在 sql plus 中，需要设置：SET SERVEROUTPUT ON</span></span><br><span class="line">        DBMS_OUTPUT.put_line(<span class="string">'v_hire_date: '</span> <span class="operator">||</span> v_number);</span><br><span class="line">    <span class="keyword">end</span>;</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></tbody></table></figure>
-<p>注意第 9 行代码，如果不写 <code>OUTER</code>，程序会给第 7 行的变量赋值，加上 <code>OUTER</code> 之后，程序会给第 4 行的变量赋值</p>
-<h2 id="PL-SQL中的sql语句"><a class="header-anchor" href="#PL-SQL中的sql语句">¶</a>PL/SQL 中的 sql 语句</h2>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/07/8e65df1b.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1201,7 +1110,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2021-06-28 20:25:21" itemprop="dateModified" datetime="2021-06-28T20:25:21+08:00">2021-06-28</time>
+        <time title="修改时间：2021-07-14 16:47:59" itemprop="dateModified" datetime="2021-07-14T16:47:59+08:00">2021-07-14</time>
       </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1737,13 +1646,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">56k</span>
+    <span title="站点总字数">69k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">51 分钟</span>
+    <span title="站点阅读时长">1:03</span>
   </span>
 </div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
 
