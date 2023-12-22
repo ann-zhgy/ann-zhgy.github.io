@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ann-zhgy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ps: Java 的新特性有一个预览版本，预览版本的新特性会在两个版本后更新到正式版，编译执行代码预览版本的特性的 Java 文件需要添加 --enable-preview 参数 本篇所有内容摘自：https:&#x2F;&#x2F;pdai.tech&#x2F;md&#x2F;java&#x2F;java8up&#x2F;java12.html  Java12 新的 switch 语句支持（preview）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java12～17 新特">
+<meta property="og:url" content="http://ann-zhgy.github.io/2023/03/ced4de58.html">
+<meta property="og:site_name" content="ann-zhgy">
+<meta property="og:description" content="ps: Java 的新特性有一个预览版本，预览版本的新特性会在两个版本后更新到正式版，编译执行代码预览版本的特性的 Java 文件需要添加 --enable-preview 参数 本篇所有内容摘自：https:&#x2F;&#x2F;pdai.tech&#x2F;md&#x2F;java&#x2F;java8up&#x2F;java12.html  Java12 新的 switch 语句支持（preview）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-pic-bed.oss-cn-beijing.aliyuncs.com/blog-pic1678267319255.png">
+<meta property="article:published_time" content="2023-03-07T09:49:41.000Z">
+<meta property="article:modified_time" content="2023-11-15T06:22:06.578Z">
+<meta property="article:author" content="ann-zhgy">
+<meta property="article:tag" content="Java12～17新特性">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-pic-bed.oss-cn-beijing.aliyuncs.com/blog-pic1678267319255.png">
+
+
+<link rel="canonical" href="http://ann-zhgy.github.io/2023/03/ced4de58.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://ann-zhgy.github.io/2023/03/ced4de58.html","path":"2023/03/ced4de58.html","title":"Java12～17 新特"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java12～17 新特 | ann-zhgy</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="ann-zhgy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ann-zhgy</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">blog 学习笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-messages"><a href="/messages/" rel="section"><i class="fa fa-comments fa-fw"></i>messages</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java12"><span class="nav-number">1.</span> <span class="nav-text">Java12</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B0%E7%9A%84-switch-%E8%AF%AD%E5%8F%A5%E6%94%AF%E6%8C%81preview"><span class="nav-number">1.1.</span> <span class="nav-text">新的 switch
+语句支持（preview）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shenandoah-%E4%BD%8E%E6%9A%82%E5%81%9C%E6%97%B6%E9%97%B4%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8%E5%AE%9E%E9%AA%8C"><span class="nav-number">1.2.</span> <span class="nav-text">Shenandoah
+低暂停时间垃圾回收器（实验）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java13"><span class="nav-number">2.</span> <span class="nav-text">Java13</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#switch-%E6%94%AF%E6%8C%81%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9Cpreview"><span class="nav-number">2.1.</span> <span class="nav-text">switch 支持返回结果（preview）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%9D%97preview"><span class="nav-number">2.2.</span> <span class="nav-text">文本块（preview）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java14"><span class="nav-number">3.</span> <span class="nav-text">Java14</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#switch-%E7%89%B9%E6%80%A7%E6%8F%90%E5%8D%87%E4%B8%BA%E6%AD%A3%E5%BC%8F%E7%89%88"><span class="nav-number">3.1.</span> <span class="nav-text">switch 特性提升为正式版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npe-%E6%8F%90%E7%A4%BA%E5%A2%9E%E5%BC%BA%E5%8F%AF%E4%BB%A5%E6%8F%90%E7%A4%BA%E5%88%B0%E6%98%AF%E5%93%AA%E4%B8%AA%E5%8F%98%E9%87%8F%E5%BC%95%E8%B5%B7%E7%9A%84-npe"><span class="nav-number">3.2.</span> <span class="nav-text">NPE
+提示增强，可以提示到是哪个变量引起的 NPE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instanceof-%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E8%AF%AD%E6%B3%95%E5%A2%9E%E5%BC%BApreview"><span class="nav-number">3.3.</span> <span class="nav-text">instanceof
+模式匹配语法增强（preview）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#record-%E7%B1%BB%E5%9E%8Bpreview"><span class="nav-number">3.4.</span> <span class="nav-text">Record 类型（preview）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%9D%97%E5%A2%9E%E5%BC%BApreview"><span class="nav-number">3.5.</span> <span class="nav-text">文本块增强（preview）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7%E5%AD%B5%E5%8C%96%E7%89%88"><span class="nav-number">3.6.</span> <span class="nav-text">打包工具（孵化版）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%90%E4%B8%AA%E7%BB%84%E5%90%88%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8%E8%A2%AB%E5%BC%83%E7%94%A8"><span class="nav-number">3.7.</span> <span class="nav-text">某个组合垃圾回收器被弃用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java15"><span class="nav-number">4.</span> <span class="nav-text">Java15</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E5%B0%81%E7%9A%84%E7%B1%BB%E5%92%8C%E6%8E%A5%E5%8F%A3preview"><span class="nav-number">4.1.</span> <span class="nav-text">密封的类和接口（preview）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java16"><span class="nav-number">5.</span> <span class="nav-text">Java16</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#instanceof-%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E5%A2%9E%E5%BC%BA%E6%8F%90%E5%8D%87%E4%B8%BA%E6%AD%A3%E5%BC%8F%E7%89%88"><span class="nav-number">5.1.</span> <span class="nav-text">instanceof
+模式匹配增强提升为正式版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#record-%E7%B1%BB%E5%9E%8B%E6%8F%90%E5%8D%87%E4%B8%BA%E6%AD%A3%E5%BC%8F%E7%89%88"><span class="nav-number">5.2.</span> <span class="nav-text">Record 类型提升为正式版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%91%E9%87%8Fapi%E5%AD%B5%E5%8C%96%E7%89%88"><span class="nav-number">5.3.</span> <span class="nav-text">向量 API（孵化版）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#java17"><span class="nav-number">6.</span> <span class="nav-text">Java17</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%86%E5%B0%81%E7%B1%BB%E6%8F%90%E5%8D%87%E4%B8%BA%E6%AD%A3%E5%BC%8F%E7%89%88"><span class="nav-number">6.1.</span> <span class="nav-text">密封类提升为正式版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%AA%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%94%9F%E6%88%90%E5%99%A8%E9%87%8D%E6%9E%84%E5%8F%8A%E5%A2%9E%E5%BC%BA"><span class="nav-number">6.2.</span> <span class="nav-text">伪随机数生成器重构及增强</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E4%B8%80%E6%AC%A1%E6%9B%B4%E6%96%B0%E5%B0%86%E6%98%AF-java23-%E5%8F%91%E5%B8%83%E6%97%B6"><span class="nav-number">7.</span> <span class="nav-text">下一次更新将是 Java23 发布时</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ann-zhgy"
+      src="http://ann-zhgy.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ann-zhgy</p>
+  <div class="site-description" itemprop="description">做一个纯粹的技术人</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAP%E3%80%81ACID%E3%80%81BASE/" rel="tag">CAP、ACID、BASE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E4%BB%8B%E7%BB%8D/" rel="tag">ES介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" rel="tag">ES安装及入门</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E7%9A%84CURD/" rel="tag">ES的CURD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95/" rel="tag">Java 扩展方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java10%E3%80%8111%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java10、11新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java12%EF%BD%9E17%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java12～17新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java8新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java9%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java9新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" rel="tag">Java开发规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LaTeX/" rel="tag">LaTeX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manifold/" rel="tag">Manifold</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Paxos/" rel="tag">Paxos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quick-Start/" rel="tag">Quick Start</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raft/" rel="tag">Raft</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-compose/" rel="tag">docker-compose</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker%E4%B8%80%E9%94%AE%E6%9E%84%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8/" rel="tag">docker一键构建并启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/" rel="tag">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F/" rel="tag">elasticsearch查询方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E7%9A%84mapping/" rel="tag">elasticsearch的mapping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github-emoji/" rel="tag">github emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea-jrebel%E6%8F%92%E4%BB%B6%E6%BF%80%E6%B4%BB/" rel="tag">idea-jrebel插件激活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/latex-%E8%AF%AD%E6%B3%95/" rel="tag">latex 语法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-%E8%84%9A%E6%9C%AC/" rel="tag">linux 脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macos/" rel="tag">macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-emoji/" rel="tag">markdown emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E7%A1%80/" rel="tag">markdown基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E8%AF%AD%E6%B3%95%E8%BF%9B%E9%98%B6/" rel="tag">markdown语法进阶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-a/" rel="tag">passwd-a</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-b/" rel="tag">passwd-b</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pl-sql/" rel="tag">pl&#x2F;sql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware/" rel="tag">vmware</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware%E5%AE%89%E8%A3%85macos/" rel="tag">vmware安装macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" rel="tag">分布式算法学习路径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E8%AF%8D%E5%99%A8/" rel="tag">分词器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%BD%BF%E7%94%A8/" rel="tag">动态规划使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="tag">动态规划学习方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%93%A8%E5%85%B5/" rel="tag">哨兵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="tag">存储过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/" rel="tag">容器引擎</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BB%BA%E8%AE%AE%E5%99%A8/" rel="tag">建议器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E9%97%AE%E9%A2%98/" rel="tag">拜占庭问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%87%E9%92%88/" rel="tag">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84/" rel="tag">数组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%98%A0%E5%B0%84/" rel="tag">映射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88/" rel="tag">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%BA%94%E7%94%A8/" rel="tag">栈应用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/" rel="tag">表达式求值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%81%8A%EF%BD%9E/" rel="tag">闲聊～</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%9F%E5%88%97/" rel="tag">队列</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ann-zhgy.github.io/2023/03/ced4de58.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://ann-zhgy.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="ann-zhgy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ann-zhgy">
+      <meta itemprop="description" content="做一个纯粹的技术人">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java12～17 新特 | ann-zhgy">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java12～17 新特
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-07 17:49:41" itemprop="dateCreated datePublished" datetime="2023-03-07T17:49:41+08:00">2023-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-15 14:22:06" itemprop="dateModified" datetime="2023-11-15T14:22:06+08:00">2023-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java%E6%96%B0%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">Java新特性</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2023/03/ced4de58.html" class="post-meta-item leancloud_visitors" data-flag-title="Java12～17 新特" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>ps:
+Java 的新特性有一个预览版本，预览版本的新特性会在两个版本后更新到正式版，编译执行代码预览版本的特性的
+Java 文件需要添加 <code>--enable-preview</code> 参数</p>
+<p>本篇所有内容摘自：<a target="_blank" rel="noopener" href="https://pdai.tech/md/java/java8up/java12.html">https://pdai.tech/md/java/java8up/java12.html</a></p>
+</blockquote>
+<h1 id="java12">Java12</h1>
+<h2 id="新的-switch-语句支持preview">新的 switch
+语句支持（preview）</h2>
+<span id="more"></span>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">outputSeasonByMonth1</span><span class="params">(<span class="type">int</span> month)</span> {</span><br><span class="line">    <span class="keyword">switch</span> (month) {</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>:</span><br><span class="line">            System.out.println(<span class="string">"spring"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>:</span><br><span class="line">            System.out.println(<span class="string">"summer"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>:</span><br><span class="line">            System.out.println(<span class="string">"autumn"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">12</span>, <span class="number">1</span>, <span class="number">2</span>:</span><br><span class="line">            System.out.println(<span class="string">"winter"</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            System.out.println(<span class="string">"wrong"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">outputSeasonByMonth2</span><span class="params">(<span class="type">int</span> month)</span> {</span><br><span class="line">    <span class="keyword">switch</span> (month) {</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span> -&gt; System.out.println(<span class="string">"spring"</span>);</span><br><span class="line">        <span class="keyword">case</span> <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span> -&gt; System.out.println(<span class="string">"summer"</span>);</span><br><span class="line">        <span class="keyword">case</span> <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span> -&gt; System.out.println(<span class="string">"autumn"</span>);</span><br><span class="line">        <span class="keyword">case</span> <span class="number">12</span>, <span class="number">1</span>, <span class="number">2</span> -&gt; System.out.println(<span class="string">"winter"</span>);</span><br><span class="line">        <span class="keyword">default</span> -&gt; System.out.println(<span class="string">"wrong"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>case 项支持合并在一起</li>
+<li> case 的执行语句支持使用 lambda 的形式</li>
+</ul>
+<h2 id="shenandoah-低暂停时间垃圾回收器实验">Shenandoah
+低暂停时间垃圾回收器（实验）</h2>
+<blockquote>
+<p>JDK 12 引入的回收算法（实验阶段），该算法通过与正在运行的 Java
+线程同时进行疏散工作来减少 GC 暂停时间。Shenandoah
+的暂停时间与堆大小无关，无论堆栈是 200 MB 还是 200
+GB，都具有相同的一致暂停时间。</p>
+<p>ps: Shenandoah 只存在于 OpenJDK 中，可以使用
+<code>-XX:+UseShenandoahGC</code> 命令行参数打开</p>
+</blockquote>
+<p><strong>Shenandoah 适用于高吞吐和大内存场景，不适合高实时性场景</strong>
+。Shenandoah 算法设计目标主要是响应性和一致可控的短暂停顿，对于垃圾回收生命周期中安全点停顿（TTSP) 和内存增长监控的时间开销并无帮助。</p>
+<p>Shenandoah 算法为每个 Java 对象添加了一个间接指针，使得 GC 线程能够在 Java 线程运行时压缩堆。标记和压缩是同时执行的，因此我们只需要暂停 Java 线程在一致可控的时间内扫描线程堆栈以查找和更新对象图的根。</p>
+<h1 id="java13">Java13</h1>
+<h2 id="switch-支持返回结果preview">switch 支持返回结果（preview）</h2>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">outputSeasonByMonth1</span><span class="params">(<span class="type">int</span> month)</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">switch</span> (month) {</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span> -&gt; <span class="string">"spring"</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span> -&gt; <span class="string">"summer"</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span> -&gt; <span class="string">"autumn"</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">12</span>, <span class="number">1</span>, <span class="number">2</span> -&gt; <span class="string">"winter"</span>;</span><br><span class="line">        <span class="keyword">default</span> -&gt; <span class="string">"wrong"</span>;</span><br><span class="line">    };</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title function_">outputSeasonByMonth2</span><span class="params">(<span class="type">int</span> month)</span> {</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">switch</span> (month) {</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>:</span><br><span class="line">            <span class="keyword">yield</span> <span class="string">"spring"</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>:</span><br><span class="line">            <span class="keyword">yield</span> <span class="string">"summer"</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>:</span><br><span class="line">            <span class="keyword">yield</span> <span class="string">"autumn"</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">12</span>, <span class="number">1</span>, <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">yield</span> <span class="string">"winter"</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="keyword">yield</span> <span class="string">"wrong"</span>;</span><br><span class="line">    };</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>上述两种 <code>switch</code> 的写法都不需要添加 <code>break</code>
+关键字来中断 <code>case</code>，所以也不会出现忘写 break 而出现 switch
+穿透的问题</li>
+<li>如果是使用 case 后面添加代码块的方式，需要使用 <code>yield</code>
+关键字返回当前 case 块需要返回的数据
+<ul>
+<li>ps：<code>yield</code>：产出、提供 的意思</li>
+</ul></li>
+</ul>
+<h2 id="文本块preview">文本块（preview）</h2>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">textBlock</span><span class="params">()</span> {</span><br><span class="line">    <span class="type">String</span> <span class="variable">text</span> <span class="operator">=</span> <span class="string">"""</span></span><br><span class="line"><span class="string">            床前明月光，</span></span><br><span class="line"><span class="string">            疑是地上霜。</span></span><br><span class="line"><span class="string">            举头望明月，</span></span><br><span class="line"><span class="string">            低头思故乡。</span></span><br><span class="line"><span class="string">            """</span>;</span><br><span class="line">    System.out.println(text);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>文本块可以省去我们手动添加 <code>\n</code>
+和拼接字符串的烦恼，可以联系 js 中使用 `` 包裹的字符串，除了不能使用
+<code>${}</code> 来直接替换变量，其他的也差不多</li>
+</ul>
+<h1 id="java14">Java14</h1>
+<h2 id="switch-特性提升为正式版">switch 特性提升为正式版</h2>
+<p>switch 表达式的新特性使得 switch
+语句在编码方式上简化不少，但是同时还是需要注意：</p>
+<ul>
+<li>需要保持与之前 switch 语句同样的 case 分支情况。</li>
+<li>switch 表达式中不再需要显式地使用 return、break 或者 continue
+来跳出当前分支。</li>
+</ul>
+<h2 id="npe-提示增强可以提示到是哪个变量引起的-npe">NPE
+提示增强，可以提示到是哪个变量引起的 NPE</h2>
+<p>使用 <code>-XX:+ShowCodeDetailsInExceptionMessages</code> 开启</p>
+<h2 id="instanceof-模式匹配语法增强preview"><code>instanceof</code>
+模式匹配语法增强（preview）</h2>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">instanceOfDemo</span><span class="params">(Object obj)</span> {</span><br><span class="line">    <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> Serializable serial) {</span><br><span class="line">        System.out.println(<span class="string">"is serializable"</span>);</span><br><span class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> String str &amp;&amp; !str.isBlank()) {</span><br><span class="line">        System.out.println(<span class="string">"is String"</span>);</span><br><span class="line">        <span class="keyword">if</span> (str.contains(<span class="string">"aab"</span>)) {</span><br><span class="line">            System.out.println(<span class="string">"str contains aab"</span>);</span><br><span class="line">        }</span><br><span class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> List&lt;?&gt; list) {</span><br><span class="line">        System.out.println(<span class="string">"is List"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>instanceof</code>
+后面可以直接声明的变量，声明的变量是判断的类型，作用范围是之后的
+<code>if</code> 块</li>
+<li>在 <code>&amp;&amp;</code> 运算符中，<code>&amp;&amp;</code>
+前面使用 <code>instanceof</code> 声明的变量可以在
+<code>&amp;&amp;</code>
+之后使用，即：变量的作用范围延长了，但是这种延长不适用于 <code>||</code>
+运算符，因为 <code>||</code>
+运算符即使前面没有匹配成功，也会执行后面的判断，此时使用会产生问题</li>
+</ul>
+<h2 id="record-类型preview"><code>Record</code> 类型（preview）</h2>
+<blockquote>
+<p>Record
+类型允许在代码中使用紧凑的语法形式来声明类，而这些类能够作为不可变数据类型的封装持有者。Record
+这一特性主要用在特定领域的类上；与枚举类型一样，Record
+类型是一种受限形式的类型，主要用于存储、保存数据，并且没有其它额外自定义行为的场景下。</p>
+</blockquote>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">record</span> <span class="title class_">Person</span><span class="params">(String name)</span> {</span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> {</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>record 类型的实体反编译后会继承于 <code>java.lang.Record</code>
+类【与枚举类型类似】，且拥有部分特征：</p>
+<ul>
+<li>有且仅有一个构造方法</li>
+<li>拥有获取成员属性的方法：<code>name()</code></li>
+<li>重写了 <code>hashcode()</code> 和 <code>equals()</code></li>
+<li>重写了 <code>toString()</code></li>
+<li>类对象和属性均被 <code>final</code>
+修饰，表示类不可被继承，属性不可被再次赋值</li>
+</ul>
+<p>同时，<code>Class</code> 中也引入了新的方法</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RecordComponent[] getRecordComponents() <span class="comment">// 返回类中 Recode 类型的字段</span></span><br><span class="line"><span class="type">boolean</span> <span class="title function_">isRecord</span><span class="params">()</span> <span class="comment">// 判断当前类是否是 Record 类型</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="文本块增强preview">文本块增强（preview）</h2>
+<p>引入了 <code>\</code> 和 <code>\s</code></p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">textBlockEnhance</span><span class="params">()</span> {</span><br><span class="line">    <span class="type">String</span> <span class="variable">str1</span> <span class="operator">=</span> <span class="string">"""</span></span><br><span class="line"><span class="string">            床前明月光，\</span></span><br><span class="line"><span class="string">            疑是地上霜。\</span></span><br><span class="line"><span class="string">            举头望明月，\</span></span><br><span class="line"><span class="string">            低头思故乡。</span></span><br><span class="line"><span class="string">            """</span>;</span><br><span class="line">    System.out.println(str1);</span><br><span class="line">    <span class="type">String</span> <span class="variable">str2</span> <span class="operator">=</span> <span class="string">"""</span></span><br><span class="line"><span class="string">            床前明月光，\s</span></span><br><span class="line"><span class="string">            疑是地上霜。 \s</span></span><br><span class="line"><span class="string">            举头望明月， </span></span><br><span class="line"><span class="string">            低头思故乡。</span></span><br><span class="line"><span class="string">            """</span>;</span><br><span class="line">    System.out.println(str2);</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>\</code> 与各种配置文件中的用法一致，表示当前行没有结束</li>
+<li><code>\s</code> 表示一行末尾的空格，因为文本块会删掉一行末尾的
+<code>\r\n</code>，同时也会删除末尾的空格
+<ul>
+<li>注意：代码第 12 行的空格并不会在控制台打印出来</li>
+</ul></li>
+</ul>
+<hr>
+<blockquote>
+<p>接下来的特性对于使用 <code>Java</code> 进行开发的开发人员关系不大</p>
+</blockquote>
+<h2 id="打包工具孵化版">打包工具（孵化版）</h2>
+<p>用于将 Java 项目打包成可在 windows、macos、linux
+系统直接运行的程序包</p>
+<p>在 <strong>Java
+13</strong> 发布前的最后一刻被从外围移除的打包工具 jpackage 终于可以在 Java
+14 中使用了。但是要注意，它只在 Incubator 版本中提供。</p>
+<p>这个打包工具应该可以让开发人员创建自主的 Java 应用程序，它以 JavaFXjavapackager 这个打包工具为基础。它的主要特点有如下三个：</p>
+<ul>
+<li>支持本地打包格式，为用户提供自然的安装体验；</li>
+<li>打包时可以指定启动参数；</li>
+<li>通过命令行或使用 ToolProvider API 的程序来启动。</li>
+</ul>
+<h2 id="某个组合垃圾回收器被弃用">某个组合垃圾回收器被弃用</h2>
+<p>Java 14 打算弃用 ParallelScavenge + SerialOld 垃圾收集器组合。</p>
+<p>支持这一改变的 JEP
+366 清楚地表明，他们的目的不是要删除掉这个组合，而是要弃用它。</p>
+<p>弃用这种算法组合的原因是：它很少被使用，同时需要大量的维护工作。</p>
+<h1 id="java15">Java15</h1>
+<h2 id="密封的类和接口preview">密封的类和接口（preview）</h2>
+<p>密封的类和接口用于显示那些类可以继承当前类，限制了类的层次结构，是一个很实用的特性</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加sealed修饰符，permits后面跟上只能被继承的子类名称</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">Person</span> <span class="keyword">permits</span> Teacher, Worker, Student{ } <span class="comment">//人</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 子类可以被修饰为 final</span></span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Teacher</span> <span class="keyword">extends</span> <span class="title class_">Person</span> { }<span class="comment">//教师</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// 子类可以被修饰为 non-sealed，此时 Worker类就成了普通类，谁都可以继承它</span></span><br><span class="line"><span class="keyword">non-sealed</span> <span class="keyword">class</span> <span class="title class_">Worker</span> <span class="keyword">extends</span> <span class="title class_">Person</span> { }  <span class="comment">//工人</span></span><br><span class="line"><span class="comment">// 任何类都可以继承Worker</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AnyClass</span> <span class="keyword">extends</span> <span class="title class_">Worker</span>{}</span><br><span class="line"> </span><br><span class="line"><span class="comment">//子类可以被修饰为 sealed,同上</span></span><br><span class="line"><span class="keyword">sealed</span> <span class="keyword">class</span> <span class="title class_">Student</span> <span class="keyword">extends</span> <span class="title class_">Person</span> <span class="keyword">permits</span> MiddleSchoolStudent,GraduateStudent{ } <span class="comment">//学生</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">MiddleSchoolStudent</span> <span class="keyword">extends</span> <span class="title class_">Student</span> { }  <span class="comment">//中学生</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">GraduateStudent</span> <span class="keyword">extends</span> <span class="title class_">Student</span> { }  <span class="comment">//研究生</span></span><br></pre></td></tr></tbody></table></figure>
+<h1 id="java16">Java16</h1>
+<h2 id="instanceof-模式匹配增强提升为正式版">instanceof
+模式匹配增强提升为正式版</h2>
+<h2 id="record-类型提升为正式版">Record 类型提升为正式版</h2>
+<h2 id="向量api孵化版">向量 API（孵化版）</h2>
+<blockquote>
+<p>向量 API 存在于 <code>jdk.incubator.vector</code> 包中，属于
+<code>jdk.incubator.vector</code>
+模块。向量计算也成为矢量计算，指的是充分运用多核 CPU 的特性，使多个计算<strong>并行</strong>进行，同时计算</p>
+</blockquote>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义256bit的向量浮点运算</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> VectorSpecies&lt;Float&gt; SPECIES = FloatVector.SPECIES_256;</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">vectorComputation</span><span class="params">(<span class="type">float</span>[] a, <span class="type">float</span>[] b, <span class="type">float</span>[] c)</span> {</span><br><span class="line">    <span class="type">var</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="type">var</span> <span class="variable">upperBound</span> <span class="operator">=</span> SPECIES.loopBound(a.length);</span><br><span class="line">    <span class="keyword">for</span> (; i &lt; upperBound; i += SPECIES.length()) {</span><br><span class="line">        <span class="type">var</span> <span class="variable">va</span> <span class="operator">=</span> FloatVector.fromArray(SPECIES, a, i);</span><br><span class="line">        <span class="type">var</span> <span class="variable">vb</span> <span class="operator">=</span> FloatVector.fromArray(SPECIES, b, i);</span><br><span class="line">        <span class="type">var</span> <span class="variable">vc</span> <span class="operator">=</span> va.mul(va).</span><br><span class="line">                add(vb.mul(vb)).</span><br><span class="line">                neg();</span><br><span class="line">        vc.intoArray(c, i);</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">for</span> (; i &lt; a.length; i++) {</span><br><span class="line">        c[i] = (a[i] * a[i] + b[i] * b[i]) * -<span class="number">1.0f</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h1 id="java17">Java17</h1>
+<h2 id="密封类提升为正式版">密封类提升为正式版</h2>
+<h2 id="伪随机数生成器重构及增强">伪随机数生成器重构及增强</h2>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">RandomGenerator</span> <span class="variable">g</span> <span class="operator">=</span> RandomGenerator.of(<span class="string">"L64X128MixRandom"</span>);</span><br></pre></td></tr></tbody></table></figure>
+<p>关于参数，建议看 javadoc 或注释</p>
+<div style="max-width: 75%; margin: auto; opacity: 0.95;">
+<p><img alt="1678267319255" data-src="https://blog-pic-bed.oss-cn-beijing.aliyuncs.com/blog-pic1678267319255.png" style="width: 100%;"></p>
+</div>
+<ul>
+<li>这一大坨就是可选的参数</li>
+</ul>
+<h1 id="下一次更新将是-java23-发布时">下一次更新将是 Java23 发布时</h1>
+<p>Java19 开放了预览版的
+虚拟线程，结构化并发也已进入孵化阶段，推测这两块新的 API
+将是很大的亮点</p>
+<p>关于 Java 各个版本的新特性信息，可以关注 <a target="_blank" rel="noopener" href="https://openjdk.org/projects/jdk/20/">https://openjdk.org/projects/jdk/20/</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>ann-zhgy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ann-zhgy.github.io/2023/03/ced4de58.html" title="Java12～17 新特">http://ann-zhgy.github.io/2023/03/ced4de58.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java12%EF%BD%9E17%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag"># Java12～17新特性</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/ca210e65.html" rel="prev" title="Java10、11 新特">
+                  <i class="fa fa-chevron-left"></i> Java10、11 新特
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/03/91e3fecf.html" rel="next" title="动归 ——（一）动态规划学习方法">
+                  动归 ——（一）动态规划学习方法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ann-zhgy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">78k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:43</span>
+  </span>
+</div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/ann-zhgy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.3.0/mermaid.min.js","integrity":"sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"yYOHRyhsgIO8haBfdx0wQUTx-MdYXbMMI","appKey":"Hucp0iKzTAYc4qnH1pbB6aTC","serverURLs":"https://yyohryhs.api.lncldglobal.com","placeholder":"ヾﾉ≧∀≦)o来啊，快活啊! Just go go (在昵称框输入QQ号码，按下Tab键，自动获取QQ昵称和QQ头像)","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"el":"#valine-comments","path":"/2023/03/ced4de58.html"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

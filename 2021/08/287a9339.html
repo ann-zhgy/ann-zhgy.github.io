@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ann-zhgy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="什么是建议器  建议器就是我们进行搜索时，浏览器进行的自动补全和自动纠错的行为 其意义在于可以提升用户体验，减少用户搜索的次数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elasticsearch 建议器">
+<meta property="og:url" content="http://ann-zhgy.github.io/2021/08/287a9339.html">
+<meta property="og:site_name" content="ann-zhgy">
+<meta property="og:description" content="什么是建议器  建议器就是我们进行搜索时，浏览器进行的自动补全和自动纠错的行为 其意义在于可以提升用户体验，减少用户搜索的次数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-08-04T05:00:33.000Z">
+<meta property="article:modified_time" content="2023-11-15T06:22:06.585Z">
+<meta property="article:author" content="ann-zhgy">
+<meta property="article:tag" content="elasticsearch">
+<meta property="article:tag" content="建议器">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://ann-zhgy.github.io/2021/08/287a9339.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://ann-zhgy.github.io/2021/08/287a9339.html","path":"2021/08/287a9339.html","title":"elasticsearch 建议器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>elasticsearch 建议器 | ann-zhgy</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="ann-zhgy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ann-zhgy</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">blog 学习笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-messages"><a href="/messages/" rel="section"><i class="fa fa-comments fa-fw"></i>messages</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BB%BA%E8%AE%AE%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">什么是建议器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#es-%E4%B8%AD%E5%BB%BA%E8%AE%AE%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">ES 中建议器的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#es-%E7%9A%84-4-%E7%A7%8D%E5%BB%BA%E8%AE%AE%E5%99%A8"><span class="nav-number">3.</span> <span class="nav-text">ES 的 4 种建议器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%8D%E6%9D%A1%E5%BB%BA%E8%AE%AE%E5%99%A8"><span class="nav-number">3.1.</span> <span class="nav-text">词条建议器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE%E5%99%A8%E4%B8%AD%E7%9A%84%E5%85%B6%E4%BB%96%E5%8F%82%E6%95%B0"><span class="nav-number">3.1.1.</span> <span class="nav-text">建议器中的其他参数：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E8%AE%AE%E5%99%A8%E9%80%89%E6%8B%A9%E8%AF%8D%E6%9D%A1%E7%9A%84%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.1.2.</span> <span class="nav-text">建议器选择词条的条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%8D%E7%BB%84%E5%BB%BA%E8%AE%AE%E5%99%A8"><span class="nav-number">3.2.</span> <span class="nav-text">词组建议器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E6%88%90%E5%BB%BA%E8%AE%AE%E5%99%A8"><span class="nav-number">3.3.</span> <span class="nav-text">完成建议器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E5%BB%BA%E8%AE%AE%E5%99%A8"><span class="nav-number">3.4.</span> <span class="nav-text">上下文建议器</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ann-zhgy"
+      src="http://ann-zhgy.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ann-zhgy</p>
+  <div class="site-description" itemprop="description">做一个纯粹的技术人</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAP%E3%80%81ACID%E3%80%81BASE/" rel="tag">CAP、ACID、BASE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E4%BB%8B%E7%BB%8D/" rel="tag">ES介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" rel="tag">ES安装及入门</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E7%9A%84CURD/" rel="tag">ES的CURD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95/" rel="tag">Java 扩展方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java10%E3%80%8111%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java10、11新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java12%EF%BD%9E17%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java12～17新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java8新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java9%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java9新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" rel="tag">Java开发规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LaTeX/" rel="tag">LaTeX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manifold/" rel="tag">Manifold</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Paxos/" rel="tag">Paxos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quick-Start/" rel="tag">Quick Start</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raft/" rel="tag">Raft</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-compose/" rel="tag">docker-compose</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker%E4%B8%80%E9%94%AE%E6%9E%84%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8/" rel="tag">docker一键构建并启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/" rel="tag">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F/" rel="tag">elasticsearch查询方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E7%9A%84mapping/" rel="tag">elasticsearch的mapping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github-emoji/" rel="tag">github emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea-jrebel%E6%8F%92%E4%BB%B6%E6%BF%80%E6%B4%BB/" rel="tag">idea-jrebel插件激活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/latex-%E8%AF%AD%E6%B3%95/" rel="tag">latex 语法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-%E8%84%9A%E6%9C%AC/" rel="tag">linux 脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macos/" rel="tag">macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-emoji/" rel="tag">markdown emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E7%A1%80/" rel="tag">markdown基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E8%AF%AD%E6%B3%95%E8%BF%9B%E9%98%B6/" rel="tag">markdown语法进阶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-a/" rel="tag">passwd-a</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-b/" rel="tag">passwd-b</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pl-sql/" rel="tag">pl&#x2F;sql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware/" rel="tag">vmware</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware%E5%AE%89%E8%A3%85macos/" rel="tag">vmware安装macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" rel="tag">分布式算法学习路径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E8%AF%8D%E5%99%A8/" rel="tag">分词器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%BD%BF%E7%94%A8/" rel="tag">动态规划使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="tag">动态规划学习方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%93%A8%E5%85%B5/" rel="tag">哨兵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="tag">存储过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/" rel="tag">容器引擎</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BB%BA%E8%AE%AE%E5%99%A8/" rel="tag">建议器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E9%97%AE%E9%A2%98/" rel="tag">拜占庭问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%87%E9%92%88/" rel="tag">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84/" rel="tag">数组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%98%A0%E5%B0%84/" rel="tag">映射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88/" rel="tag">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%BA%94%E7%94%A8/" rel="tag">栈应用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/" rel="tag">表达式求值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%81%8A%EF%BD%9E/" rel="tag">闲聊～</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%9F%E5%88%97/" rel="tag">队列</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ann-zhgy.github.io/2021/08/287a9339.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://ann-zhgy.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="ann-zhgy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ann-zhgy">
+      <meta itemprop="description" content="做一个纯粹的技术人">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="elasticsearch 建议器 | ann-zhgy">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          elasticsearch 建议器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-08-04 13:00:33" itemprop="dateCreated datePublished" datetime="2021-08-04T13:00:33+08:00">2021-08-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-15 14:22:06" itemprop="dateModified" datetime="2023-11-15T14:22:06+08:00">2023-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/elasticsearch/" itemprop="url" rel="index"><span itemprop="name">elasticsearch</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2021/08/287a9339.html" class="post-meta-item leancloud_visitors" data-flag-title="elasticsearch 建议器" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="什么是建议器">什么是建议器</h1>
+<blockquote>
+<p>建议器就是我们进行搜索时，浏览器进行的自动补全和自动纠错的行为</p>
+<p>其意义在于可以提升用户体验，减少用户搜索的次数</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="es-中建议器的使用">ES 中建议器的使用</h1>
+<p>elasticsearch 的建议器存在于 <code>Suggesters API</code>
+中，需要注意的是：<code>_suggest</code> 已经弃用了，现在可以通过
+<code>_search</code> api 进行建议器的查询</p>
+<!-- more -->
+<p>在使用建议器前，我们先插入一些数据</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">PUT iktest</span><br><span class="line">{</span><br><span class="line">  "mappings": {</span><br><span class="line">    "dynamic": false,</span><br><span class="line">    "properties": {</span><br><span class="line">      "content": {</span><br><span class="line">        "type": "text",</span><br><span class="line">        "analyzer": "ik_max_word"</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">POST iktest/_doc</span><br><span class="line">{</span><br><span class="line">  "content": "I want something just like this"</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">POST iktest/_doc</span><br><span class="line">{</span><br><span class="line">  "content": "I want to know something of you"</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">POST iktest/_doc</span><br><span class="line">{</span><br><span class="line">  "content": "I want to know anything of you"</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">POST iktest/_doc</span><br><span class="line">{</span><br><span class="line">  "content": "I love you more than anyone"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>现在我们可以来使用建议器：</p>
+<ul>
+<li><p>补全词条</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET iktest/_search</span><br><span class="line">{</span><br><span class="line">  "suggest": {</span><br><span class="line">    "make_up_suggest": {</span><br><span class="line">      "text": "somethi",</span><br><span class="line">      "term": {</span><br><span class="line">        "field": "content"</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>自动纠错</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET iktest/_search</span><br><span class="line">{</span><br><span class="line">  "suggest": {</span><br><span class="line">    "make_up_suggest": {</span><br><span class="line">      "text": "semothing",</span><br><span class="line">      "term": {</span><br><span class="line">        "field": "content"</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h1 id="es-的-4-种建议器">ES 的 4 种建议器</h1>
+<p>ES 有四种建议器：</p>
+<ul>
+<li>词条建议器（term
+suggester）：对于给定文本的每个词条，该键议器从索引中抽取要建议的关键词，这对于短字段（如分类标签）很有效。</li>
+<li>词组建议器（phrase
+suggester）：我们可以认为它是词条建议器的扩展，为整个文本（而不是单个词条）提供了替代方案，它考虑了各词条彼此临近出现的频率，使得该建议器更适合较长的字段，比如商品的描述。</li>
+<li>完成建议器（completion
+suggester）：该建议器根据词条的前缀，提供自动完成的功能（智能提示，有点最左前缀查询的意思），为了实现这种实时的建议功能，它得到了优化，工作在内存中。所以，速度要比之前说的 <code>match_phrase_prefix</code> 快的多！</li>
+<li>上下文建议器（context
+suggester）：它是完成建议器的扩展，允许我们根据词条或分类亦或是地理位置对结果进行过滤。</li>
+</ul>
+<h2 id="词条建议器">词条建议器</h2>
+<blockquote>
+<p>词条建议器可以实现对结果的自动纠错或自动补全，主要是以词条为单位进行建议</p>
+</blockquote>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">GET iktest/_search</span><br><span class="line">{</span><br><span class="line">  "suggest": {</span><br><span class="line">    "term_suggest1": {</span><br><span class="line">      "text": "anythi",</span><br><span class="line">      "term": {</span><br><span class="line">        "field": "content"</span><br><span class="line">      }</span><br><span class="line">    },</span><br><span class="line">    "term_suggest2": {</span><br><span class="line">      "text": "anynoe",</span><br><span class="line">      "term": {</span><br><span class="line">        "field": "content"</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="建议器中的其他参数">建议器中的其他参数：</h3>
+<ul>
+<li>text：建议文本，建议文本是必需的选项，可以通过全局（多个建议器中查询相同的内容）或者按照单个建议器的格式来</li>
+<li> field：从 field 字段中获取候选建议的字段。这是一个必需的选项，需要全局设置或根据建议设置</li>
+<li> analyzer：用于分析建议文本的分析器。默认为建议字段的搜索分析器</li>
+<li> size：建议文本标记返回的最大条目</li>
+<li> sort：定义如何根据建议文本术语对建议进行排序。它有两个可能的值
+<ul>
+<li>score，先按分数排序，然后按文档频率排序，再按术语本身排序</li>
+<li> frequency，首先按文档频率排序，然后按相似性分数排序，然后按术语本身排序。也可以理解为按照流行度排序</li>
+</ul></li>
+<li> suggest_mode：控制建议的模式，有 3 个模式可选择
+<ul>
+<li>missing，仅为不在索引中的建议文本术语提供建议。这是默认值</li>
+<li> popular，仅建议在比原始建议文本术语更多的文档中出现的建议。也就是说提供比原有输入词频更高的词条</li>
+<li> always，根据建议文本中的条款建议任何匹配的建议。说白了就是无论如何都会提供建议</li>
+</ul></li>
+<li> lowercase_terms：在文本分析之后降低建议文本术语的大小写</li>
+<li> min_word_length：建议文本术语必须具有的最小长度才能包含在内。默认为 4.（旧名称 <code>min_word_len</code> 已弃用）</li>
+<li>shard_size：设置从每个单独分片中检索的最大建议数。在减少阶段，仅根据 size 选项返回前 N 个建议。默认为该
+size 选项。将此值设置为高于该值的值 size 可能非常有用，以便以性能为代价获得更准确的拼写更正文档频率。由于术语在分片之间被划分，因此拼写校正频率的分片级文档可能不准确。增加这些将使这些文档频率更精确</li>
+<li> max_inspections：用于乘以的因子，
+shards_size 以便在碎片级别上检查更多候选拼写更正。可以以性能为代价提高准确性。默认为 5</li>
+<li>string_distance：用于比较类似建议术语的字符串距离实现
+<ul>
+<li>internal：默认值基于 damerau_levenshtein，但高度优化用于比较索引中术语的字符串距离</li>
+<li> damerau_levenshtein：基于 Damerau-Levenshtein 算法的字符串距离算法</li>
+<li> levenshtein：基于 Levenshtein 编辑距离算法的字符串距离算法</li>
+<li> jaro_winkler：基于 Jaro-Winkler 算法的字符串距离算法</li>
+<li> ngram：基于字符 n-gram 的字符串距离算法</li>
+</ul></li>
+</ul>
+<h3 id="建议器选择词条的条件">建议器选择词条的条件</h3>
+<p>词条建议器使用了 Lucene 的错拼检查器模块，该模块会根据给定词条的<strong>编辑距离</strong>（es 使用了叫做 Levenstein
+edit
+distance 的算法，其核心思想就是一个词改动多少字符就可以和另外一个词一致），从索引中返回最大编辑距离不超过某个值的那些词条。比如说为了从
+<code>mik</code> 得到
+<code>mick</code>，需要加入一个字母（也就是说需要至少要改动一次），所以这两个词的编辑距离就是 1。我们可以通过配置一系列的选项，来均衡灵活和性能：</p>
+<ul>
+<li>max_edits：最大编辑距离候选建议可以具有以便被视为建议。只能是介于 1 和 2 之间的值。任何其他值都会导致抛出错误的请求错误。默认为 2。</li>
+<li>prefix_length：必须匹配的最小前缀字符的数量才是候选建议。默认为 1. 增加此数字可提高拼写检查性能。通常拼写错误不会出现在术语的开头。（旧名
+<code>prefix_len</code> 已弃用）。</li>
+<li>min_doc_freq：建议应出现的文档数量的最小阈值。可以指定为绝对数字或文档数量的相对百分比。这可以仅通过建议高频项来提高质量。默认为 0f 且未启用。如果指定的值大于 1，则该数字不能是小数。分片级文档频率用于此选项。</li>
+<li>max_term_freq：建议文本令牌可以存在的文档数量的最大阈值，以便包括在内。可以是表示文档频率的相对百分比数（例如 0.4）或绝对数。如果指定的值大于 1，则不能指定小数。默认为 0.01f。这可用于排除高频术语的拼写检查。高频术语通常拼写正确，这也提高了拼写检查的性能。分片级文档频率用于此选项。</li>
+</ul>
+<h2 id="词组建议器">词组建议器</h2>
+<blockquote>
+<p>词组建议器为整个文本进行建议</p>
+</blockquote>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">GET iktest/_search</span><br><span class="line">{</span><br><span class="line">  "suggest": {</span><br><span class="line">    "phrase_suggest": {</span><br><span class="line">      "text": "I lore you moer than anyoeo",</span><br><span class="line">      "phrase": {</span><br><span class="line">        "field": "content",</span><br><span class="line">        "highlight": {</span><br><span class="line">          "pre_tag": "&lt;em&gt;",</span><br><span class="line">          "post_tag": "&lt;/em&gt;"</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>注意点：</p>
+<ol type="1">
+<li><p>建议器的类型为：<code>phrase</code></p></li>
+<li><p>建议器返回的结果不一定就是我们想要的结果</p></li>
+<li><p>对于纠错内容，我们可以直接高亮显示，但是一定要与查询时的高亮区分开</p>
+<p><code>suggest</code>：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">GET iktest/_search</span><br><span class="line">{</span><br><span class="line">  // ...</span><br><span class="line">  "field": "content",</span><br><span class="line">  "highlight": {</span><br><span class="line">    "pre_tag": "&lt;em&gt;",</span><br><span class="line">    "post_tag": "&lt;/em&gt;"</span><br><span class="line">  }</span><br><span class="line">  // ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p><code>_search</code></p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">GET test/users/_search</span><br><span class="line">{</span><br><span class="line">  // ...</span><br><span class="line">  "highlight": {</span><br><span class="line">    "fields": {</span><br><span class="line">      "message": {}</span><br><span class="line">    }, </span><br><span class="line">    "pre_tags": "&lt;span style='color: red;'&gt;",</span><br><span class="line">    "post_tags": "&lt;/span&gt;"</span><br><span class="line">  }</span><br><span class="line">  // ...</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<blockquote>
+<p><code>phrase suggester</code> 在 <code>term suggester</code> 的基础上，会考虑多个 <code>term</code> 之间的关系，比如是否同时出现索引的原文中，临近程度，词频等</p>
+</blockquote>
+<h2 id="完成建议器">完成建议器</h2>
+<blockquote>
+<p>关于完成建议器，可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Neeo/articles/10695019.html">大佬</a>的博客，我的笔记有很多也是从其博客摘抄的。</p>
+</blockquote>
+<h2 id="上下文建议器">上下文建议器</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Neeo/articles/10695019.html">大佬</a>的博客</p>
+</blockquote>
+<blockquote>
+<p>ES 的笔记暂时告一段落，有时间再继续补充...</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ann-zhgy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ann-zhgy.github.io/2021/08/287a9339.html" title="elasticsearch 建议器">http://ann-zhgy.github.io/2021/08/287a9339.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/elasticsearch/" rel="tag"># elasticsearch</a>
+              <a href="/tags/%E5%BB%BA%E8%AE%AE%E5%99%A8/" rel="tag"># 建议器</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/08/f74f8050.html" rel="prev" title="wordpress - 建站笔记">
+                  <i class="fa fa-chevron-left"></i> wordpress - 建站笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/e50044fa.html" rel="next" title="vmware 虚拟机安装 Macos">
+                  vmware 虚拟机安装 Macos <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ann-zhgy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">78k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:43</span>
+  </span>
+</div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/ann-zhgy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.3.0/mermaid.min.js","integrity":"sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"yYOHRyhsgIO8haBfdx0wQUTx-MdYXbMMI","appKey":"Hucp0iKzTAYc4qnH1pbB6aTC","serverURLs":"https://yyohryhs.api.lncldglobal.com","placeholder":"ヾﾉ≧∀≦)o来啊，快活啊! Just go go (在昵称框输入QQ号码，按下Tab键，自动获取QQ昵称和QQ头像)","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"el":"#valine-comments","path":"/2021/08/287a9339.html"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

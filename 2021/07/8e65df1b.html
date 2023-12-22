@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ann-zhgy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="前言  PL&#x2F;SQL 是一种高级数据库程序设计语言，该专门用于在各种环境下对 ORACLE 数据库进行访问 。由于该语言集成于数据库服务器中，所以 PL&#x2F;SQL 代码可以对数据进行快速高效的处理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pl&#x2F;sql 笔记">
+<meta property="og:url" content="http://ann-zhgy.github.io/2021/07/8e65df1b.html">
+<meta property="og:site_name" content="ann-zhgy">
+<meta property="og:description" content="前言  PL&#x2F;SQL 是一种高级数据库程序设计语言，该专门用于在各种环境下对 ORACLE 数据库进行访问 。由于该语言集成于数据库服务器中，所以 PL&#x2F;SQL 代码可以对数据进行快速高效的处理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/07/13/9azHtNi2nQsbkjW.png">
+<meta property="article:published_time" content="2021-07-06T01:58:04.000Z">
+<meta property="article:modified_time" content="2023-11-15T06:22:06.580Z">
+<meta property="article:author" content="ann-zhgy">
+<meta property="article:tag" content="pl&#x2F;sql">
+<meta property="article:tag" content="存储过程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/07/13/9azHtNi2nQsbkjW.png">
+
+
+<link rel="canonical" href="http://ann-zhgy.github.io/2021/07/8e65df1b.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://ann-zhgy.github.io/2021/07/8e65df1b.html","path":"2021/07/8e65df1b.html","title":"pl/sql 笔记"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>pl/sql 笔记 | ann-zhgy</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="ann-zhgy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ann-zhgy</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">blog 学习笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-messages"><a href="/messages/" rel="section"><i class="fa fa-comments fa-fw"></i>messages</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-%E5%AE%89%E8%A3%85-oracle"><span class="nav-number">1.1.</span> <span class="nav-text">docker 安装 oracle</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#plsql-%E6%A6%82%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">PL&#x2F;SQL 概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF"><span class="nav-number">2.2.</span> <span class="nav-text">优势</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#plsql-%E8%AF%AD%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">PL&#x2F;SQL 语法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql-%E7%9A%84-%E5%9D%97"><span class="nav-number">3.1.</span> <span class="nav-text">PL&#x2F;SQL 的 块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql-%E5%8F%98%E9%87%8F"><span class="nav-number">3.2.</span> <span class="nav-text">PL&#x2F;SQL 变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#plsql-%E4%B8%AD%E7%9A%84%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.2.1.</span> <span class="nav-text">PL&#x2F;SQL 中的变量类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plsql-%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="nav-number">3.2.2.</span> <span class="nav-text">PL&#x2F;SQL 变量声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plsql-%E4%B8%AD%E7%9A%84table%E7%B1%BB%E5%9E%8B%E7%B1%BB%E4%BC%BC%E4%BA%8E%E6%95%B0%E7%BB%84"><span class="nav-number">3.2.3.</span> <span class="nav-text">PL&#x2F;SQL
+中的 table 类型（类似于数组）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plsql-%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E8%AE%B0%E5%BD%95-record"><span class="nav-number">3.2.4.</span> <span class="nav-text">PL&#x2F;SQL
+自定义变量类型（记录 - record）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plsql-%E7%89%B9%E6%9C%89%E7%9A%84%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">3.2.5.</span> <span class="nav-text">PL&#x2F;SQL
+特有的声明变量类型的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql-%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%BE%93%E5%87%BA"><span class="nav-number">3.3.</span> <span class="nav-text">PL&#x2F;SQL 命令行输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql-%E6%B3%A8%E9%87%8A"><span class="nav-number">3.4.</span> <span class="nav-text">PL&#x2F;SQL 注释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql-%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="nav-number">3.5.</span> <span class="nav-text">PL&#x2F;SQL 变量作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql%E4%B8%AD%E7%9A%84sql%E8%AF%AD%E5%8F%A5"><span class="nav-number">3.6.</span> <span class="nav-text">PL&#x2F;SQL 中的 sql 语句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select-into"><span class="nav-number">3.6.1.</span> <span class="nav-text">select into</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E8%AF%AD%E5%8F%A5insertupdatedeletemerge"><span class="nav-number">3.6.2.</span> <span class="nav-text">其他语句：insert、update、delete、merge</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="nav-number">3.7.</span> <span class="nav-text">PL&#x2F;SQL 流程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%A1%E4%BB%B6"><span class="nav-number">3.7.1.</span> <span class="nav-text">条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AA%E7%8E%AF"><span class="nav-number">3.7.2.</span> <span class="nav-text">循环</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql%E4%B8%AD%E7%9A%84%E6%B8%B8%E6%A0%87"><span class="nav-number">3.8.</span> <span class="nav-text">PL&#x2F;SQL 中的游标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E5%BC%8F%E6%B8%B8%E6%A0%87%E7%9A%84%E5%87%A0%E4%B8%AA%E5%B1%9E%E6%80%A7"><span class="nav-number">3.8.1.</span> <span class="nav-text">隐式游标的几个属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%BE%E5%BC%8F%E6%B8%B8%E6%A0%87"><span class="nav-number">3.8.2.</span> <span class="nav-text">显式游标</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql-%E4%BE%8B%E5%A4%96%E7%B1%BB%E4%BC%BC%E4%BA%8E-java-%E7%9A%84%E5%BC%82%E5%B8%B8"><span class="nav-number">3.9.</span> <span class="nav-text">PL&#x2F;SQL 例外 (类似于 Java
+的异常)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%A4%96%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">3.9.1.</span> <span class="nav-text">例外的分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%A4%96%E6%8D%95%E8%8E%B7%E5%92%8C%E4%BC%A0%E9%80%92"><span class="nav-number">3.9.2.</span> <span class="nav-text">例外捕获和传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%A4%96%E6%8D%95%E8%8E%B7%E7%9A%84%E8%AF%AD%E6%B3%95"><span class="nav-number">3.9.3.</span> <span class="nav-text">例外捕获的语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BE%8B%E5%A4%96%E5%A4%84%E7%90%86"><span class="nav-number">3.9.4.</span> <span class="nav-text">例外处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#raise_application_error-%E5%87%BD%E6%95%B0"><span class="nav-number">3.9.5.</span> <span class="nav-text">RAISE_APPLICATION_ERROR ()
+函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql-%E7%9A%84%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B%E5%92%8C%E5%87%BD%E6%95%B0"><span class="nav-number">3.10.</span> <span class="nav-text">PL&#x2F;SQL 的存储过程和函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">3.10.1.</span> <span class="nav-text">存储过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">3.10.2.</span> <span class="nav-text">函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plsql-%E7%9A%84%E5%8C%85"><span class="nav-number">3.11.</span> <span class="nav-text">PL&#x2F;SQL 的包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">3.11.1.</span> <span class="nav-text">语法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#oracle-%E5%A4%A7%E5%AF%B9%E8%B1%A1%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">Oracle 大对象操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lob-%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.1.</span> <span class="nav-text">LOB 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lob-%E6%93%8D%E4%BD%9C"><span class="nav-number">4.2.</span> <span class="nav-text">LOB 操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E9%83%A8-lob"><span class="nav-number">4.2.1.</span> <span class="nav-text">内部 LOB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E9%83%A8-lobbfile"><span class="nav-number">4.2.2.</span> <span class="nav-text">外部 LOB（Bfile）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#plsql-%E5%86%85%E7%BD%AE%E5%B7%A5%E5%85%B7%E5%8C%85"><span class="nav-number">5.</span> <span class="nav-text">PL&#x2F;SQL 内置工具包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81sql"><span class="nav-number">5.1.</span> <span class="nav-text">动态 SQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E6%97%B6---job"><span class="nav-number">5.2.</span> <span class="nav-text">定时 - JOB</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-number">6.</span> <span class="nav-text">数据库触发器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95-1"><span class="nav-number">6.1.</span> <span class="nav-text">语法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AF%B9%E8%B1%A1%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="nav-number">7.</span> <span class="nav-text">数据库对象的依赖关系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#oracle-%E5%8D%95%E8%A1%8C%E5%87%BD%E6%95%B0"><span class="nav-number">8.</span> <span class="nav-text">Oracle 单行函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E5%87%BD%E6%95%B0"><span class="nav-number">8.1.</span> <span class="nav-text">字符函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E5%87%BD%E6%95%B0"><span class="nav-number">8.2.</span> <span class="nav-text">数字函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%87%BD%E6%95%B0"><span class="nav-number">8.3.</span> <span class="nav-text">转换函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0"><span class="nav-number">8.4.</span> <span class="nav-text">其他函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0"><span class="nav-number">8.5.</span> <span class="nav-text">聚合函数</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ann-zhgy"
+      src="http://ann-zhgy.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ann-zhgy</p>
+  <div class="site-description" itemprop="description">做一个纯粹的技术人</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAP%E3%80%81ACID%E3%80%81BASE/" rel="tag">CAP、ACID、BASE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E4%BB%8B%E7%BB%8D/" rel="tag">ES介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" rel="tag">ES安装及入门</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E7%9A%84CURD/" rel="tag">ES的CURD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95/" rel="tag">Java 扩展方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java10%E3%80%8111%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java10、11新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java12%EF%BD%9E17%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java12～17新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java8新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java9%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java9新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" rel="tag">Java开发规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LaTeX/" rel="tag">LaTeX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manifold/" rel="tag">Manifold</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Paxos/" rel="tag">Paxos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quick-Start/" rel="tag">Quick Start</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raft/" rel="tag">Raft</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-compose/" rel="tag">docker-compose</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker%E4%B8%80%E9%94%AE%E6%9E%84%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8/" rel="tag">docker一键构建并启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/" rel="tag">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F/" rel="tag">elasticsearch查询方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E7%9A%84mapping/" rel="tag">elasticsearch的mapping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github-emoji/" rel="tag">github emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea-jrebel%E6%8F%92%E4%BB%B6%E6%BF%80%E6%B4%BB/" rel="tag">idea-jrebel插件激活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/latex-%E8%AF%AD%E6%B3%95/" rel="tag">latex 语法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-%E8%84%9A%E6%9C%AC/" rel="tag">linux 脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macos/" rel="tag">macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-emoji/" rel="tag">markdown emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E7%A1%80/" rel="tag">markdown基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E8%AF%AD%E6%B3%95%E8%BF%9B%E9%98%B6/" rel="tag">markdown语法进阶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-a/" rel="tag">passwd-a</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-b/" rel="tag">passwd-b</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pl-sql/" rel="tag">pl&#x2F;sql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware/" rel="tag">vmware</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware%E5%AE%89%E8%A3%85macos/" rel="tag">vmware安装macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" rel="tag">分布式算法学习路径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E8%AF%8D%E5%99%A8/" rel="tag">分词器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%BD%BF%E7%94%A8/" rel="tag">动态规划使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="tag">动态规划学习方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%93%A8%E5%85%B5/" rel="tag">哨兵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="tag">存储过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/" rel="tag">容器引擎</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BB%BA%E8%AE%AE%E5%99%A8/" rel="tag">建议器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E9%97%AE%E9%A2%98/" rel="tag">拜占庭问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%87%E9%92%88/" rel="tag">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84/" rel="tag">数组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%98%A0%E5%B0%84/" rel="tag">映射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88/" rel="tag">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%BA%94%E7%94%A8/" rel="tag">栈应用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/" rel="tag">表达式求值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%81%8A%EF%BD%9E/" rel="tag">闲聊～</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%9F%E5%88%97/" rel="tag">队列</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ann-zhgy.github.io/2021/07/8e65df1b.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://ann-zhgy.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="ann-zhgy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ann-zhgy">
+      <meta itemprop="description" content="做一个纯粹的技术人">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="pl/sql 笔记 | ann-zhgy">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pl/sql 笔记
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-06 09:58:04" itemprop="dateCreated datePublished" datetime="2021-07-06T09:58:04+08:00">2021-07-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-15 14:22:06" itemprop="dateModified" datetime="2023-11-15T14:22:06+08:00">2023-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/pl-sql/" itemprop="url" rel="index"><span itemprop="name">pl/sql</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2021/07/8e65df1b.html" class="post-meta-item leancloud_visitors" data-flag-title="pl/sql 笔记" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>21 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="前言">前言</h1>
+<blockquote>
+<p>PL/SQL 是一种高级数据库程序设计语言，该专门用于在各种环境下对 ORACLE
+数据库进行访问 。由于该语言集成于数据库服务器中，所以 PL/SQL
+代码可以对数据进行快速高效的处理。</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="docker-安装-oracle">docker 安装 oracle</h2>
+<p>docker-compose.yml</p>
+<blockquote>
+<p>ps：我还没有找到可以用的，暂时先空着吧……</p>
+</blockquote>
+<h1 id="plsql-概述">PL/SQL 概述</h1>
+<h2 id="简介">简介</h2>
+<p>PLSQL
+是 Oracle 公司在 SQL 基础上进行扩展而成的一种过程语言。PLSQL 提供了典型的高级语言特性，包括封装，例外处理机制，信息隐藏，面向对象等；并把最新的编程思想带到了数据库服务器和工具集中</p>
+<h2 id="优势">优势</h2>
+<p>与使用<strong>数据库连接</strong>操作数据库相比，PLSQL 的优势是：SQL 语言可以直接写到 PLSQL 的 “块” 中或者是 PLSQL 的过程、函数中。没有必要先创建 Statement 对象来执行 SQL;
+这使得 PLSQL 成为很强大的事务处理语言，即：使用 SQL 来处理数据，使用控制结构来处理业务逻辑</p>
+<p>另外一个优势是：可以减轻数据库与应用来回交互的次数，从而节省网络资源</p>
+<h1 id="plsql-语法">PL/SQL 语法</h1>
+<blockquote>
+<p>PL/SQL 中不区分大小写，但是建议关键字全部使用大写</p>
+</blockquote>
+<h2 id="plsql-的-块">PL/SQL 的 <code>块</code></h2>
+<blockquote>
+<p>PL/SQL 是一种类 PASCAL 语言，每一段程序都是由 <strong>块 (Block)</strong>
+组成的，而 PL/SQL 中的块都必须有开始和结尾 (联想一下 java、c 中的函数体必须有大括号包裹)</p>
+</blockquote>
+<p>PL/SQL 中的块包含：匿名块、存储过程、函数</p>
+<ol type="1">
+<li><p>匿名块</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="keyword">DECLARE</span>]</span><br><span class="line">  <span class="comment">-- 变量声明部分</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="comment">-- 语句执行部分</span></span><br><span class="line">[EXCEPTION]</span><br><span class="line">  <span class="comment">-- 异常处理部分</span></span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>存储过程</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">PROCEDURE</span> procedure_name <span class="keyword">IS</span></span><br><span class="line">  <span class="comment">-- 变量声明部分</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="comment">-- 语句执行部分</span></span><br><span class="line">[EXCEPTION]</span><br><span class="line">  <span class="comment">-- 异常处理部分</span></span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>函数</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FUNCTION</span> func_name <span class="keyword">RETURN</span> dateType <span class="keyword">IS</span></span><br><span class="line">  <span class="comment">-- 变量声明</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="comment">-- 执行语句</span></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">value</span>;</span><br><span class="line">[EXCEPTION]</span><br><span class="line">  <span class="comment">-- 异常处理部分</span></span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<p><strong>注意：</strong></p>
+<ol type="1">
+<li>在 pl/sql 中，sql
+语句可以写一行，但是不方便阅读，所以并不推荐这样写</li>
+<li> pl/sql 中的块是可以嵌套的，就像 java 中可以有内部类一样</li>
+</ol>
+<h2 id="plsql-变量">PL/SQL 变量</h2>
+<h3 id="plsql-中的变量类型">PL/SQL 中的变量类型</h3>
+<ol type="1">
+<li>简单变量类型：大多数数据库表的字段类型都可以作为简单变量类型</li>
+<li>用户自定义的变量：简单变量类型的组合（类似于 C 语言中的结构体）</li>
+<li>引用类型：指针</li>
+<li>大对象类型 (LOB)：保存了大对象的地址</li>
+</ol>
+<h3 id="plsql-变量声明">PL/SQL 变量声明</h3>
+<ol type="1">
+<li><p>语法</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- identifier [CONSTANT] dataType [NOT NULL] [:= | DEFAULT expr]</span></span><br><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  v_hiredate <span class="type">DATE</span>;</span><br><span class="line">  <span class="comment">-- plsql 中使用 := 给变量赋值</span></span><br><span class="line">  v_dept_no NUMBER(<span class="number">4</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span> :<span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">  v_location <span class="type">VARCHAR</span>(<span class="number">2</span>) <span class="keyword">DEFAULT</span> <span class="keyword">NULL</span>;</span><br><span class="line">  c_con CONSTANT NUMBER :<span class="operator">=</span> <span class="number">1</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>说明</p>
+<ol type="1">
+<li>变量命名建议遵循通用规则，如：<code>v_</code>
+开头表示<strong>变量</strong>，<code>c_</code>
+开头表示<strong>常量</strong>，<code>p_</code>
+开头表示参数，<code>_couser</code> 结尾表示游标等……</li>
+<li> 建议一行声明一个变量，便于阅读</li>
+<li>声明但是未初始化的变量的值为 <strong>NULL</strong></li>
+<li> 在同一个块中，要避免变量的命名与数据库表中的字段名相同</li>
+</ol></li>
+</ol>
+<h3 id="plsql-中的table类型类似于数组">PL/SQL
+中的 table 类型（类似于数组）</h3>
+<p>语法：</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 这种结构类似于数组，可以使用下标访问，INDEX BY BINARY_INTEGER 规定了下标的数据类型是 BINARY_INTEGER</span></span><br><span class="line">TYPE type_name <span class="keyword">IS</span> <span class="keyword">TABLE</span> <span class="keyword">OF</span> data_type [<span class="keyword">NOT</span> <span class="keyword">NULL</span>] [INDEX <span class="keyword">BY</span> BINARY_INTEGER];</span><br></pre></td></tr></tbody></table></figure>
+<p>如：</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span></span><br><span class="line">  type emp <span class="keyword">is</span> <span class="keyword">table</span> <span class="keyword">of</span> number index <span class="keyword">by</span> binary_integer;</span><br><span class="line">  v_emp emp;</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">  v_emp(<span class="number">-1</span>) :<span class="operator">=</span> <span class="number">-100</span>;</span><br><span class="line">  v_emp(<span class="number">-20</span>) :<span class="operator">=</span> <span class="number">-200</span>;</span><br><span class="line">  v_emp(<span class="number">0</span>) :<span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">  v_emp(<span class="number">1</span>) :<span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line">  v_emp(<span class="number">56</span>) :<span class="operator">=</span> <span class="number">5600</span>;</span><br><span class="line">  v_emp(<span class="number">132</span>) :<span class="operator">=</span> <span class="number">13200</span>;</span><br><span class="line">  dbms_output.put_line(v_emp(<span class="number">132</span>));</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>table 类型的下标可以是负数，但是不可以使用 for 循环遍历</p>
+<h3 id="plsql-自定义变量类型记录-record">PL/SQL
+自定义变量类型（记录 - record）</h3>
+<p>语法：</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TYPE type_name <span class="keyword">IS</span> RECORD (</span><br><span class="line">  field1_name field1_type,</span><br><span class="line">  field2_name field2_type</span><br><span class="line">);</span><br><span class="line">identifier type_name;</span><br></pre></td></tr></tbody></table></figure>
+<p>如：</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TYPE emp_record_type <span class="keyword">IS</span> RECORD (</span><br><span class="line">  last_name VARCHAR2(<span class="number">25</span>),</span><br><span class="line">  job_id VARCHAR2(<span class="number">10</span>) :<span class="operator">=</span> <span class="string">'hello'</span>,</span><br><span class="line">  salary NUMBER(<span class="number">8</span>,<span class="number">2</span>)</span><br><span class="line">); </span><br><span class="line">emp_record emp_record_type;</span><br></pre></td></tr></tbody></table></figure>
+<p>这个可以理解为 C 语言中的结构体</p>
+<h3 id="plsql-特有的声明变量类型的方式">PL/SQL
+特有的声明变量类型的方式</h3>
+<ol type="1">
+<li><p><code>%TYPE</code>：用来声明与某变量类型一致</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- identifier Table.column_name%TYPPE;</span></span><br><span class="line">  v_name employees.last_name<span class="operator">%</span>TYPE;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p><code>%ROWTYPE</code>：用来声明与数据库表中一行数据的类型一致</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- identifier table_name%ROWTYPE;</span></span><br><span class="line">  v_employee employees<span class="operator">%</span>ROWTYPE;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h2 id="plsql-命令行输出">PL/SQL 命令行输出</h2>
+<blockquote>
+<p>DBMS_OUTPUT.PUT_LINE()</p>
+</blockquote>
+<p>例子：</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  <span class="comment">-- &amp;p_annual_sal 表示 p_annual_sal 是需要用户从外界输入的</span></span><br><span class="line">  v_sal NUMBER(<span class="number">9</span>,<span class="number">2</span>) :<span class="operator">=</span> <span class="operator">&amp;</span>p_annual_sal;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  v_sal :<span class="operator">=</span> v_sal<span class="operator">/</span><span class="number">12</span>;</span><br><span class="line">  <span class="comment">-- plsql 中 || 用来连接字符串</span></span><br><span class="line">  DBMS_OUTPUT.PUT_LINE (<span class="string">'The monthly salary is '</span><span class="operator">||</span>TO_CHAR(v_sal));</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="plsql-注释">PL/SQL 注释</h2>
+<ol type="1">
+<li><p>单行注释</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 注释内容</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>多行注释</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> 多行注释</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h2 id="plsql-变量作用域">PL/SQL 变量作用域</h2>
+<blockquote>
+<p>与其他编程语言一样，plsql 的变量也是有作用域的，变量只在<strong>当前作用域 (块)</strong> 中可以被访问，而在块中寻找变量时，同样遵循<strong>就近原则</strong></p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line"> <span class="comment">-- 这种写法是标签，也可以理解为 C++ 里面的标签(label)</span></span><br><span class="line">    <span class="operator">&lt;&lt;</span><span class="keyword">OUTER</span><span class="operator">&gt;&gt;</span></span><br><span class="line">    <span class="keyword">DECLARE</span></span><br><span class="line">        v_number number;</span><br><span class="line">    <span class="keyword">BEGIN</span></span><br><span class="line">        <span class="keyword">DECLARE</span></span><br><span class="line">            v_number number;</span><br><span class="line">        <span class="keyword">BEGIN</span></span><br><span class="line">            OUTER.v_number :<span class="operator">=</span> <span class="number">200</span>;</span><br><span class="line">        <span class="keyword">END</span>;</span><br><span class="line">        <span class="comment">-- DBMS_OUTPUT.put_line 是向控制台打印的函数</span></span><br><span class="line">        <span class="comment">-- 在 sql plus 中，需要设置：SET SERVEROUTPUT ON</span></span><br><span class="line">        DBMS_OUTPUT.put_line(<span class="string">'v_hire_date: '</span> <span class="operator">||</span> v_number);</span><br><span class="line">    <span class="keyword">END</span>;</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>注意第 9 行代码，如果不写
+<code>OUTER</code>，程序会给第 7 行的变量赋值，加上 <code>OUTER</code>
+之后，程序会给第 4 行的变量赋值</p>
+<h2 id="plsql中的sql语句">PL/SQL 中的 sql 语句</h2>
+<h3 id="select-into">select into</h3>
+<blockquote>
+<p>用于把从数据库查处的内容存入变量</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span></span><br><span class="line">  v_sum_sal NUMBER(<span class="number">10</span>,<span class="number">2</span>);</span><br><span class="line">  v_deptno NUMBER <span class="keyword">NOT</span> <span class="keyword">NULL</span> :<span class="operator">=</span> <span class="number">60</span>;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">SELECT</span> <span class="built_in">SUM</span>(salary)</span><br><span class="line">  <span class="keyword">INTO</span> v_sum_sal</span><br><span class="line">  <span class="keyword">FROM</span> employees</span><br><span class="line">  <span class="keyword">WHERE</span> department_id <span class="operator">=</span> v_deptno;</span><br><span class="line">  DBMS_OUTPUT.PUT_LINE (<span class="string">'The sum salary is '</span> <span class="operator">||</span> TO_CHAR(v_sum_sal));</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>注意</strong>：该语句仅支持查询出一条结果进行赋值，如果查询出多条结果将会抛
+<code>Too_many_rows</code> 错误</p>
+<h3 id="其他语句insertupdatedeletemerge">其他语句：insert、update、delete、merge</h3>
+<blockquote>
+<p>这些语句和平时执行时差不多，只不过是可以使用 pl/sql
+中定义的变量了</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  v_empno employees.employee_id<span class="operator">%</span>TYPE :<span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="comment">-- merge 可以用来执行符合某种条件应该执行的语句</span></span><br><span class="line">  <span class="keyword">MERGE</span> <span class="keyword">INTO</span> copy_emp c <span class="comment">-- 目标表</span></span><br><span class="line">  <span class="keyword">USING</span> employees e <span class="comment">-- 源表</span></span><br><span class="line">    <span class="keyword">ON</span> (e.employee_id <span class="operator">=</span> v_empno) <span class="comment">-- 声明条件</span></span><br><span class="line">  <span class="keyword">WHEN</span> MATCHED <span class="keyword">THEN</span> <span class="comment">-- 条件满足时</span></span><br><span class="line">    <span class="keyword">UPDATE</span> <span class="keyword">SET</span></span><br><span class="line">      c.first_name <span class="operator">=</span> e.first_name,</span><br><span class="line">      c.last_name <span class="operator">=</span> e.last_name,</span><br><span class="line">      c.email <span class="operator">=</span> e.email</span><br><span class="line">      <span class="comment">-- ...</span></span><br><span class="line">  <span class="keyword">WHEN</span> <span class="keyword">NOT</span> MATCHED <span class="keyword">THEN</span> <span class="comment">-- 条件不满足时</span></span><br><span class="line">    <span class="keyword">INSERT</span> <span class="keyword">VALUES</span>(e.employee_id, e.first_name, e.last_name, e.department_id);</span><br><span class="line">  <span class="comment">-- merge 会基于源表对目标表做 insert、update、delete 操作，所以一般用于数据同步、数据转换</span></span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="plsql-流程控制">PL/SQL 流程控制</h2>
+<h3 id="条件">条件</h3>
+<ol type="1">
+<li><p>if-else</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">IF <span class="keyword">condition</span> <span class="keyword">THEN</span></span><br><span class="line">  statements;</span><br><span class="line">[ELSIF <span class="keyword">condition</span> <span class="keyword">THEN</span></span><br><span class="line">  statements;]</span><br><span class="line">[<span class="keyword">ELSE</span></span><br><span class="line">  statements;]</span><br><span class="line"><span class="keyword">END</span> IF;</span><br></pre></td></tr></tbody></table></figure>
+<p>类似于 Java 的 if</p></li>
+<li><p>case-when</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CASE</span> selector</span><br><span class="line">  <span class="keyword">WHEN</span> expression1 <span class="keyword">THEN</span> result1;</span><br><span class="line">  <span class="keyword">WHEN</span> expression2 <span class="keyword">THEN</span> result2;</span><br><span class="line">  <span class="keyword">WHEN</span> expression3 <span class="keyword">THEN</span> result3;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">WHEN</span> expressionN <span class="keyword">THEN</span> resultN;</span><br><span class="line">  [<span class="keyword">ELSE</span> resultN <span class="operator">+</span><span class="number">1</span>;]</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>类似于 Java 中的 switch</p></li>
+<li><p> 需要注意对 null 的处理</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">NULL</span> <span class="keyword">and</span> <span class="keyword">NULL</span> <span class="operator">=</span> <span class="keyword">NULL</span></span><br><span class="line"><span class="keyword">NULL</span> <span class="keyword">and</span> <span class="literal">TRUE</span> <span class="operator">=</span> <span class="keyword">NULL</span></span><br><span class="line"><span class="keyword">NULL</span> <span class="keyword">and</span> <span class="literal">FALSE</span> <span class="operator">=</span> <span class="literal">FALSE</span></span><br><span class="line"><span class="keyword">NULL</span> <span class="keyword">or</span> <span class="keyword">NULL</span> <span class="operator">=</span> <span class="keyword">NULL</span></span><br><span class="line"><span class="keyword">NULL</span> <span class="keyword">or</span> <span class="literal">TRUE</span> <span class="operator">=</span> <span class="literal">TRUE</span></span><br><span class="line"><span class="keyword">NULL</span> <span class="keyword">or</span> <span class="literal">FALSE</span> <span class="operator">=</span> <span class="keyword">NULL</span></span><br><span class="line"><span class="keyword">not</span> <span class="keyword">NULL</span> <span class="operator">=</span> <span class="keyword">NULL</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h3 id="循环">循环</h3>
+<ol type="1">
+<li><p>基本循环</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LOOP </span><br><span class="line">  statement <span class="number">1</span>;</span><br><span class="line">  ...</span><br><span class="line">  EXIT [<span class="keyword">WHEN</span> codition]</span><br><span class="line"><span class="keyword">END</span> LOOP;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>while</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">WHILE <span class="keyword">condition</span> LOOP</span><br><span class="line">  statement1;</span><br><span class="line">  ...</span><br><span class="line"><span class="keyword">END</span> LOOP;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>for</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FOR</span> counter <span class="keyword">in</span> [RESERVE] lower_bound..upper_bound<span class="operator">|</span>iterator LOOP</span><br><span class="line">  statement1;</span><br><span class="line">  ...</span><br><span class="line"><span class="keyword">END</span> LOOP;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h2 id="plsql中的游标">PL/SQL 中的游标</h2>
+<blockquote>
+<p>游标是一个私有的 SQL 工作区域，Oracle 数据库中有两种游标，分别是隐式游标和显式游标，隐式游标不易被用户和程序员察觉和意识到，实际上 Oracle 服务器使用隐式游标来解析和执行我们提交的 SQL
+语句；而显式游标是程序员在程序中显式声明的；通常我们说的游标均指显式游标</p>
+</blockquote>
+<h3 id="隐式游标的几个属性">隐式游标的几个属性</h3>
+<ul>
+<li><p>SQL% ROWCOUNT：sql 操作影响的行数</p></li>
+<li><p> SQL% FOUND：游标是否还有数据</p></li>
+<li><p> SQL% NOTFOUNT：游标是否没有数据</p></li>
+<li><p> SQL% ISOPEN：隐式游标该属性永远是 false</p></li>
+</ul>
+<h3 id="显式游标">显式游标</h3>
+<blockquote>
+<p>对于返回多行结果的 SQL 语句的返回结果，可使用显式游标独立的处理器中每一行的数据。</p>
+<p><strong>游标需要先声明再使用</strong></p>
+</blockquote>
+<ol type="1">
+<li><p>显式游标一般的处理流程</p>
+<div style="max-width: 75%; margin: auto; opacity: 0.95;">
+<p><img alt="显式游标的使用过程" data-src="https://i.loli.net/2021/07/13/9azHtNi2nQsbkjW.png" style="width: 100%;"></p>
+</div>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  <span class="keyword">CURSOR</span> emp_cursor <span class="keyword">IS</span> (<span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> test_demo_employee);</span><br><span class="line">  v_emp test_demo_employee<span class="operator">%</span>ROWTYPE;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">OPEN</span> emp_cursor;</span><br><span class="line">  LOOP</span><br><span class="line">    <span class="keyword">FETCH</span> emp_cursor <span class="keyword">into</span> v_emp;</span><br><span class="line">    EXIT <span class="keyword">WHEN</span> emp_cursor<span class="operator">%</span>NOTFOUND;</span><br><span class="line">    dbms_output.put_line(v_emp.employee_id <span class="operator">||</span> <span class="string">'-'</span> <span class="operator">||</span> v_emp.employee_name <span class="operator">||</span> <span class="string">', '</span>);</span><br><span class="line">  <span class="keyword">END</span> LOOP;</span><br><span class="line">  <span class="keyword">CLOSE</span> emp_cursor;</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>显式游标的 for 循环</p>
+<blockquote>
+<p>for 循环可以省去游标的 open、close、fetch 和判断 NOTFOUND 的操作</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  <span class="keyword">CURSOR</span> emp_cursor <span class="keyword">IS</span> (<span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> test_demo_employee);</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">FOR</span> v_emp <span class="keyword">in</span> emp_cursor LOOP</span><br><span class="line">    dbms_output.put_line(v_emp.employee_id <span class="operator">||</span> <span class="string">'-'</span> <span class="operator">||</span> v_emp.employee_name <span class="operator">||</span> <span class="string">', '</span>);</span><br><span class="line">  <span class="keyword">END</span> LOOP;</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line"><span class="comment">----------demo2----------------</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">FOR</span> v_emp <span class="keyword">in</span> (<span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> test_demo_employee) LOOP</span><br><span class="line">    dbms_output.put_line(v_emp.employee_id <span class="operator">||</span> <span class="string">'-'</span> <span class="operator">||</span> v_emp.employee_name <span class="operator">||</span> <span class="string">', '</span>);</span><br><span class="line">  <span class="keyword">END</span> LOOP;</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>游标的参数</p>
+<blockquote>
+<p>游标是可以带有参数的，因为查询时也有条件啊</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 语法</span></span><br><span class="line"><span class="comment">-- CURSOR cursor_name [(param_name data_type, param_name data_type...)] </span></span><br><span class="line"><span class="comment">--   IS select_statemant;</span></span><br><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  <span class="keyword">CURSOR</span> emp_cursor(dept_id NUMBER) <span class="keyword">IS</span> </span><br><span class="line">    (<span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> test_demo_employee </span><br><span class="line">       <span class="comment">-- FOR UPDATE [OF column_reference] [NOWAIT] 是为了给查询出来的行加锁</span></span><br><span class="line">       <span class="comment">-- NOEAIT可以避免死锁</span></span><br><span class="line">       <span class="keyword">WHERE</span> department_id <span class="operator">=</span> dept_id <span class="keyword">FOR</span> <span class="keyword">UPDATE</span> NOWAIT);</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">FOR</span> v_emp <span class="keyword">in</span> emp_cursor(<span class="number">3</span>) LOOP</span><br><span class="line">    dbms_output.put_line(v_emp.employee_id <span class="operator">||</span> <span class="string">'-'</span> <span class="operator">||</span> v_emp.employee_name <span class="operator">||</span> <span class="string">', '</span>);</span><br><span class="line">  <span class="keyword">END</span> LOOP;</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>WHERE CURRENT OF cursor</p>
+<blockquote>
+<p>WHERE CURRENT OF cursor
+用于锁定是哪条记录，可用于更新和删除，需要注意的是此写法不可以用于参数
+游标</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  <span class="keyword">CURSOR</span> emp_cursor <span class="keyword">IS</span> </span><br><span class="line">    <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> test_demo_employee <span class="keyword">FOR</span> <span class="keyword">UPDATE</span> NOWAIT;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">FOR</span> v_emp <span class="keyword">in</span> emp_cursor LOOP</span><br><span class="line">    IF v_emp.employee_name <span class="keyword">like</span> <span class="string">'%a%'</span> <span class="keyword">THEN</span></span><br><span class="line">      <span class="keyword">UPDATE</span> test_demo_employee <span class="keyword">SET</span> email <span class="operator">=</span> email <span class="operator">+</span> <span class="string">'.oo'</span> </span><br><span class="line">      <span class="keyword">WHERE</span> <span class="keyword">CURRENT</span> <span class="keyword">OF</span> emp_cursor;</span><br><span class="line">    <span class="keyword">END</span> IF;</span><br><span class="line">  <span class="keyword">END</span> LOOP;</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h2 id="plsql-例外类似于-java-的异常">PL/SQL 例外 (类似于 Java
+的异常)</h2>
+<h3 id="例外的分类">例外的分类</h3>
+<p>Oracle 中的例外一般有两种</p>
+<ol type="1">
+<li><p>Oracle
+内部错误抛出的例外：这又分为预定义例外（有错误号 + 常量定义） 和
+非预定义例外（仅有错误号，无常量定义）</p>
+<p>oracle 预定义的常见例外可以参考大佬的博客：<a target="_blank" rel="noopener" href="https://blog.csdn.net/lord_is_layuping/article/details/5509477">https://blog.csdn.net/lord_is_layuping/article/details/5509477</a></p></li>
+<li><p> 程序员显式的抛出的例外</p></li>
+</ol>
+<h3 id="例外捕获和传递">例外捕获和传递</h3>
+<p>与其他语言类似，如果例外在当前块中被处理，则到此为止，否则会被传递到外层（外层 BLOCK 或者外层调用者函数）</p>
+<h3 id="例外捕获的语法">例外捕获的语法</h3>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">EXCEPTION</span><br><span class="line">  <span class="keyword">WHEN</span> exception1 [<span class="keyword">OR</span> exception2 . . .] <span class="keyword">THEN</span></span><br><span class="line">    statement1;</span><br><span class="line">    statement2;</span><br><span class="line">    . . .</span><br><span class="line">  [<span class="keyword">WHEN</span> exception3 [<span class="keyword">OR</span> exception4 . . .] <span class="keyword">THEN</span></span><br><span class="line">    statement1;</span><br><span class="line">    statement2;</span><br><span class="line">    . . .]</span><br><span class="line">  <span class="comment">-- OTHERS 必须放在最后</span></span><br><span class="line">  [<span class="keyword">WHEN</span> OTHERS <span class="keyword">THEN</span></span><br><span class="line">    statement1;</span><br><span class="line">    statement2;</span><br><span class="line">    . . .]</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li><p><strong>others</strong> 的处理</p>
+<blockquote>
+<p>Others 表明我们程序员未能预计到这种错误</p>
+</blockquote>
+<p>Oracle 提供了两个内置函数 <code>SQLCODE</code> 和
+<code>SQLERRM</code> 分别用来返回 Oracle 错误号和错误描述</p></li>
+</ul>
+<h3 id="例外处理">例外处理</h3>
+<blockquote>
+<p>例外处理流程：声明部分：声明；程序执行部分：抛出例外；例外处理部分：处理例外；</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  <span class="comment">-- 声明例外</span></span><br><span class="line">  e_invalid_department EXCEPTION;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">UPDATE</span> departments</span><br><span class="line">    <span class="keyword">SET</span> department_name <span class="operator">=</span> <span class="operator">&amp;</span>p_department_desc</span><br><span class="line">    <span class="keyword">WHERE</span> department_id <span class="operator">=</span> <span class="operator">&amp;</span>p_department_number;</span><br><span class="line">  IF <span class="keyword">SQL</span><span class="operator">%</span>NOTFOUND <span class="keyword">THEN</span></span><br><span class="line">    <span class="comment">-- 抛出例外</span></span><br><span class="line">    RAISE e_invalid_department;</span><br><span class="line">  <span class="keyword">END</span> IF;</span><br><span class="line">  <span class="keyword">COMMIT</span>;</span><br><span class="line">EXCEPTION</span><br><span class="line">  <span class="comment">-- 处理例外</span></span><br><span class="line">  <span class="keyword">WHEN</span> e_invalid_department <span class="keyword">THEN</span></span><br><span class="line">    DBMS_OUTPUT.PUT_LINE(<span class="string">'No such department id.'</span>);</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="raise_application_error-函数">RAISE_APPLICATION_ERROR ()
+函数</h3>
+<blockquote>
+<p>对于用户自定义的业务错误，也可以简单的使用 raise_application_error ()
+抛出例外。它无需预先定义错误，在需要抛出错误的地方直接使用此函数抛出例外即可，例外可以包含用户自定义的错误码和错误描述</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  <span class="keyword">CURSOR</span> emp_cursor <span class="keyword">IS</span> <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> test_demo_employee;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">FOR</span> v_emp <span class="keyword">in</span> emp_cursor LOOP</span><br><span class="line">    IF v_emp.employee_name <span class="keyword">like</span> <span class="string">'%a%'</span> <span class="keyword">THEN</span></span><br><span class="line">      <span class="comment">-- 错误码是有范围的：[-20000, -20999]</span></span><br><span class="line">      raise_application_error(<span class="number">-20006</span>, <span class="string">'raise_application_error 函数抛出例外'</span>);</span><br><span class="line">    <span class="keyword">END</span> IF;</span><br><span class="line">  <span class="keyword">END</span> LOOP;</span><br><span class="line"><span class="keyword">end</span>;</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="plsql-的存储过程和函数">PL/SQL 的存储过程和函数</h2>
+<h3 id="存储过程">存储过程</h3>
+<ol type="1">
+<li><p>语法：</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> [<span class="keyword">OR</span> REPLACE] <span class="keyword">PROCEDURE</span> procedure_name[(</span><br><span class="line">    parameter1 [mode1] datatype1,</span><br><span class="line">    parameter2 [mode2] datatype2,</span><br><span class="line">    . . .)]</span><br><span class="line">  <span class="keyword">IS</span><span class="operator">|</span><span class="keyword">AS</span></span><br><span class="line">    PL<span class="operator">/</span><span class="keyword">SQL</span> Block;</span><br></pre></td></tr></tbody></table></figure>
+<p>如：</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> REPLACE <span class="keyword">PROCEDURE</span> raise_salary(p_id <span class="keyword">IN</span> employees.employee_id<span class="operator">%</span>TYPE)</span><br><span class="line">  <span class="keyword">IS</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">UPDATE</span> employees</span><br><span class="line">    <span class="keyword">SET</span> salary <span class="operator">=</span> salary <span class="operator">*</span> <span class="number">1.10</span></span><br><span class="line">    <span class="keyword">WHERE</span> employee_id <span class="operator">=</span> p_id;</span><br><span class="line"><span class="keyword">END</span> raise_salary;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>参数的模式</p>
+<table>
+<colgroup>
+<col style="width: 31%">
+<col style="width: 31%">
+<col style="width: 37%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>IN</th>
+<th>OUT</th>
+<th>IN OUT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td> 默认模式（不指定默认就是 IN）</td>
+<td>必须显式指定</td>
+<td>必须显式指定</td>
+</tr>
+<tr class="even">
+<td>用于把值传递给过程</td>
+<td>用于把值从过程返回给调用环境</td>
+<td>用于把值传递给过程并返回给调用环境</td>
+</tr>
+<tr class="odd">
+<td>参数可以是常量、变量、表达式</td>
+<td>必须是变量</td>
+<td>必须是变量</td>
+</tr>
+<tr class="even">
+<td>可以赋默认值</td>
+<td>不可以赋默认值</td>
+<td>不可以赋默认值</td>
+</tr>
+</tbody>
+</table>
+<p>如：</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> REPLACE <span class="keyword">PROCEDURE</span> query_emp(</span><br><span class="line">    p_id <span class="keyword">IN</span> test_demo_employee.employee_id<span class="operator">%</span>TYPE,</span><br><span class="line">    p_name <span class="keyword">OUT</span> test_demo_employee.employee_name<span class="operator">%</span>TYPE,</span><br><span class="line">    p_email <span class="keyword">OUT</span> test_demo_employee.email<span class="operator">%</span>TYPE)</span><br><span class="line">  <span class="keyword">IS</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  <span class="keyword">SELECT</span> employee_name, email</span><br><span class="line">    <span class="keyword">INTO</span> p_name, p_email</span><br><span class="line">    <span class="keyword">FROM</span> test_demo_employee</span><br><span class="line">    <span class="keyword">WHERE</span> employee_id <span class="operator">=</span> p_id;</span><br><span class="line"><span class="keyword">END</span> query_emp;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>参数的传递方式</p>
+<blockquote>
+<p>按顺序传递 或者 使用 <code>=&gt;</code> 传递</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 调用上面存储过程</span></span><br><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  p_name test_demo_employee.employee_name<span class="operator">%</span>type;</span><br><span class="line">  p_email test_demo_employee.email<span class="operator">%</span>type;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  query_emp(</span><br><span class="line">    p_id <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">'5'</span>,</span><br><span class="line">    p_name <span class="operator">=</span><span class="operator">&gt;</span> p_name,</span><br><span class="line">    p_email <span class="operator">=</span><span class="operator">&gt;</span> p_email</span><br><span class="line">  );</span><br><span class="line">  dbms_output.put_line(p_name <span class="operator">||</span> <span class="string">'-'</span> <span class="operator">||</span> p_email);</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>删除存储过程</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">procedure</span> procedure_name;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h3 id="函数">函数</h3>
+<ol type="1">
+<li><p>语法：</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> [<span class="keyword">OR</span> REPLACE] <span class="keyword">FUNCTION</span> function_name[(</span><br><span class="line">    parameter1 [mode1] datatype1,</span><br><span class="line"> parameter2 [mode2] datatype2,</span><br><span class="line"> . . .)]</span><br><span class="line">  <span class="keyword">RETURN</span> datatype</span><br><span class="line"><span class="keyword">IS</span><span class="operator">|</span><span class="keyword">AS</span></span><br><span class="line">  PL<span class="operator">/</span><span class="keyword">SQL</span> Block;</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>与存储过程的差异在于函数有返回值了</li>
+</ul></li>
+<li><p>在哪里可以使用：</p>
+<ul>
+<li>select 语句</li>
+<li> where 条件和 having 子句</li>
+<li> connect by、start with、order by 和 group by 子句</li>
+<li> insert 的 values 子句</li>
+<li> update 的 set 子句</li>
+</ul></li>
+<li><p>在 sql 中使用自定义函数的限制</p>
+<ol type="1">
+<li>必须是个函数（Function）</li>
+<li>只能使用 IN 模式的参数</li>
+<li>只能接收 SQL 数据类型的参数，不能接收 PL/SQL
+中特有类型的参数（record、table...）</li>
+<li>函数返回的数据必须是 SQL 类型的数据</li>
+<li>在 SQL 语句中使用的函数，不能有 DML 语句</li>
+<li>在 UPDATE/DELETE 中使用的函数，其内部不能有针对该表的查询语句</li>
+<li>在 SQL
+中调用的函数，其函数体内不能有结束事务的语句：commit、rollback</li>
+</ol></li>
+<li><p> 删除存储函数</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">FUNCTION</span> function_name;</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h2 id="plsql-的包">PL/SQL 的包</h2>
+<blockquote>
+<p>按照业务逻辑、把相关的 Func , Procedure
+组织到一起，形成一个函数或者过程集合</p>
+</blockquote>
+<h3 id="语法">语法</h3>
+<ol type="1">
+<li><p>pl/sql 的包分为包头和包体：类似于 java
+中的<strong>接口</strong>和<strong>实现类</strong>、C
+中的<strong>头文件</strong>和 <strong><code>.c</code>
+文件</strong></p></li>
+<li><p> sql 语法</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建包头</span></span><br><span class="line"><span class="keyword">CREATE</span> [<span class="keyword">OR</span> REPLACE] PACKAGE package_name <span class="keyword">AS</span></span><br><span class="line">  <span class="comment">-- 函数或过程声明</span></span><br><span class="line"><span class="keyword">END</span> package_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建包体</span></span><br><span class="line"><span class="keyword">CREATE</span> [<span class="keyword">OR</span> REPLACE] PACKAGE BODY package_name <span class="keyword">AS</span></span><br><span class="line">  <span class="comment">-- 函数或过程实现</span></span><br><span class="line"><span class="keyword">END</span> package_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 删除包头和包体</span></span><br><span class="line"><span class="keyword">DROP</span> PACKAGE package_name;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 仅删除包体</span></span><br><span class="line"><span class="keyword">DROP</span> PACKAGE BODY package_name;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>package 中被调用到的函数需要更早的声明</p></li>
+</ol>
+<h1 id="oracle-大对象操作">Oracle 大对象操作</h1>
+<blockquote>
+<p>LOB：大对象类型，用于存储非结构化的大数据，比如大文本、图片、电影、音乐等</p>
+</blockquote>
+<h2 id="lob-介绍">LOB 介绍</h2>
+<ol type="1">
+<li><p>类型：Oracle 数据库里面的 LOB 有四种类型</p>
+<ol type="1">
+<li>CLOB ：字符大对象，存储在数据库内部</li>
+<li> NCLOB：多字节字符大对象，存储在数据库内部</li>
+<li> BLOB：二进制大对象，存储在数据库内部</li>
+<li> BFILE：二进制文件，存储在数据库外部</li>
+</ol></li>
+<li><p>存储方式</p>
+<p>LOB 分为 Value 和 Locator 两部分，Locator 存储在数据库表中</p>
+<p>Value 由其内外部类型和大小决定存储位置：</p>
+<ul>
+<li>默认情况下，内部 LOB 小于 4000 字节会被存储在同一行上，超过部分则会存储在数据库内部的其他地方，由 Oracle 数据库管理</li>
+</ul></li>
+</ol>
+<h2 id="lob-操作">LOB 操作</h2>
+<h3 id="内部-lob">内部 LOB</h3>
+<p>操作步骤</p>
+<ol type="1">
+<li>在表中添加 LOB 类型的列</li>
+<li>在程序中声明和初始化 LOB 的 Locator</li>
+<li> 使用 SELECT FOR UPDATE
+锁定目标行，准备更新行上的 LOB 列（LOB 的 Locator）</li>
+<li>生成 LOB 对象，可使用 DBMS_LOB 这样的 PLSQL 包，也可以使用 OCI,JDBC 等</li>
+<li> Commit 提交更改</li>
+</ol>
+<h3 id="外部-lobbfile">外部 LOB（Bfile）</h3>
+<blockquote>
+<p>Bfile 是数据库外部文件，在数据库表上这种类型的字段实际只是存储一个
+Locator</p>
+</blockquote>
+<ol type="1">
+<li><p>Bfile 使用限制：</p>
+<ul>
+<li>Bfile 是数据库外部文件，是只读的，所以不参与事务操作；用户必须先创建文件并放到特定的目录下，给予 Oracle 进程该目录和文件的读取权限</li>
+<li>在 Oracle
+中删除 Bfile 这样的 LOB 数据的时候，它并没有实际的去删除对应的操作系统上的文件，实际文件的删除是 DBA (系统管理员) 的工作，Bfile 的大小限制取决于操作系统，不受 Oracle 限制</li>
+</ul></li>
+<li><p> Oracle Directory</p>
+<p>在 Oracle 内部创建的 Directory 默认的所有者是 sys, 并由 DBA (
+或者是另一个拥有 CREATE ANY DIRECTORY 权限的用户) 创建；Directory
+对象可以像表那样给其他用户赋权</p></li>
+<li><p> Bfile 使用步骤</p>
+<ol type="1">
+<li><p>在操作系统上创建目录，并给 Oracle 数据库进程赋予阅读权限，把外部文件放入这个目录</p></li>
+<li><p>在 Oracle 数据库中表添加 Bfile 类型字段</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> employees <span class="keyword">ADD</span> emp_video BFILE;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>在 Oracle 数据库中创建 Directory 对象</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DIRECTORY dir_name <span class="keyword">AS</span> os_path;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>授权读权限给特定的数据库用户</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GRANT</span> READ <span class="keyword">ON</span> DIRECTORY dir_name <span class="keyword">TO</span> <span class="keyword">user</span><span class="operator">|</span>role<span class="operator">|</span>PUBLIC;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>往表中插入数据时使用 BFILENAME
+函数，它可以关联外部文件和表上的 Bfile 列</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- FUNCTION BFILENAME (directory_alias IN VARCHAR2, filename IN VARCHAR2)</span></span><br><span class="line"><span class="comment">--   RETURN BFILE;</span></span><br><span class="line"><span class="keyword">UPDATE</span> employees</span><br><span class="line"><span class="keyword">SET</span> emp_video <span class="operator">=</span> BFILENAME(<span class="string">'LOG_FILES'</span>, <span class="string">'King.avi'</span>)</span><br><span class="line"><span class="keyword">WHERE</span> employee_id <span class="operator">=</span> <span class="number">100</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>在程序中声明和初始化 LOB 的 Locator</p></li>
+<li><p>Select 指定行上 Bfile 列 到 Locator</p></li>
+<li><p> 使用 DBMS_LOB 或者通过 OCI 读取 Bfile
+(使用 Locator 作为文件的一个引用）</p></li>
+</ol></li>
+</ol>
+<h1 id="plsql-内置工具包">PL/SQL 内置工具包</h1>
+<h2 id="动态sql">动态 SQL</h2>
+<blockquote>
+<p>动态 sql 实现了 plsql 程序运行期间执行自定义 sql 的能力</p>
+</blockquote>
+<p>动态 SQL 可以使用 Oracle 的内置包 <code>DBMS_SQL</code>
+来执行，也可以使用 <code>EXECUTE IMMEDIATE</code> 语句执行</p>
+<ol type="1">
+<li><p>DMSL_SQL</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> REPLACE <span class="keyword">PROCEDURE</span> delete_all_rows (</span><br><span class="line">    p_tab_name <span class="keyword">IN</span> VARCHAR2, p_rows_del <span class="keyword">OUT</span> NUMBER</span><br><span class="line">) <span class="keyword">IS</span></span><br><span class="line">    cursor_name <span class="type">INTEGER</span>;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    cursor_name :<span class="operator">=</span> DBMS_SQL.OPEN_CURSOR;</span><br><span class="line">    DBMS_SQL.PARSE(cursor_name, <span class="string">'DELETE FROM '</span><span class="operator">||</span>p_tab_name, DBMS_SQL.NATIVE );</span><br><span class="line">    p_rows_del :<span class="operator">=</span> DBMS_SQL.EXECUTE (cursor_name);</span><br><span class="line">    DBMS_SQL.CLOSE_CURSOR(cursor_name);</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>EXECUTE IMMEDIATE</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">PROCEDURE</span> del_rows (</span><br><span class="line">    p_table_name <span class="keyword">IN</span> VARCHAR2,</span><br><span class="line"> p_rows_deld <span class="keyword">OUT</span> NUMBER</span><br><span class="line">) <span class="keyword">IS</span></span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">    <span class="keyword">EXECUTE</span> IMMEDIATE <span class="string">'delete from '</span><span class="operator">||</span>p_table_name;</span><br><span class="line">    p_rows_deld :<span class="operator">=</span> <span class="keyword">SQL</span><span class="operator">%</span>ROWCOUNT;</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>在程序中执行 DDL</p>
+<blockquote>
+<p>在程序中执行 DDL, 可使用 Oracle 内置包：DBMS_DDL</p>
+</blockquote>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 在程序中执行编译命令</span></span><br><span class="line">DBMS_DDL.ALTER_COMPILE(<span class="string">'PROCEDURE'</span>,<span class="string">'A_USER'</span>,<span class="string">'QUERY_EMP'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 在程序中执行数据收集命令</span></span><br><span class="line">DBMS_DDL.ANALYZE_OBJECT(<span class="string">'TABLE'</span>,<span class="string">'A_USER'</span>,<span class="string">'JOBS'</span>,<span class="string">'COMPUTE'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>详情请看官方文档：<a target="_blank" rel="noopener" href="https://docs.oracle.com/database/121/ARPLS/d_ddl.htm#ARPLS66079">https://docs.oracle.com/database/121/ARPLS/d_ddl.htm#ARPLS66079</a></p></li>
+</ol>
+<h2 id="定时---job">定时 - JOB</h2>
+<blockquote>
+<p>JOB 可以定期执行某个程序，Oracle 提供内置包 DBMS_JOB，可完成 JOB
+的定义、提交、更改、停止、移除</p>
+</blockquote>
+<ol type="1">
+<li><p>应用场景</p>
+<ul>
+<li>每隔一周对某些表进行数据收集，以确保 CBO 正确</li>
+<li>在消息处理机制中，每隔 5 分钟对消息队列进行扫描处理</li>
+<li>...</li>
+</ul></li>
+<li><p> 例子</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">  jobno NUMBER;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">  DBMS_JOB.SUBMIT (</span><br><span class="line">    <span class="comment">-- job编号，由 oracle 返回。范围为1～32767。当使用select调用dbms.submit时，该参数可以省略。</span></span><br><span class="line">    job <span class="operator">=</span><span class="operator">&gt;</span> jobno,</span><br><span class="line">    <span class="comment">-- job 做什么</span></span><br><span class="line">    what <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">'OVER_PACK.ADD_DEPT(''EDUCATION'',2710);'</span>,</span><br><span class="line">    <span class="comment">-- 什么时候做</span></span><br><span class="line">    next_date <span class="operator">=</span><span class="operator">&gt;</span> TRUNC(SYSDATE <span class="operator">+</span> <span class="number">1</span>),</span><br><span class="line">    <span class="comment">-- 执行间隔</span></span><br><span class="line">    <span class="type">interval</span> <span class="operator">=</span><span class="operator">&gt;</span> <span class="string">'TRUNC(SYSDATE + 1)'</span></span><br><span class="line">  );</span><br><span class="line">  dbms_output.put_line(„job_no <span class="operator">=</span>„ <span class="operator">||</span> jobno )</span><br><span class="line">  <span class="keyword">COMMIT</span>;</span><br><span class="line"><span class="keyword">END</span>;</span><br></pre></td></tr></tbody></table></figure>
+<p>详情看：</p>
+<ol type="1">
+<li>官网：<a target="_blank" rel="noopener" href="https://docs.oracle.com/database/121/ARPLS/d_job.htm#ARPLS66560">https://docs.oracle.com/database/121/ARPLS/d_job.htm#ARPLS66560</a></li>
+<li> 华为云文档：<a target="_blank" rel="noopener" href="https://support.huaweicloud.com/devg-dws/dws_04_0399.html">https://support.huaweicloud.com/devg-dws/dws_04_0399.html</a></li>
+</ol></li>
+</ol>
+<h1 id="数据库触发器">数据库触发器</h1>
+<blockquote>
+<p>对数据库的操作有很多特殊的时间点，如：before Insert、before update
+等，在这些时间点，我们可以做一下操作，这些操作就被称为<strong>触发器 (Trigger)</strong></p>
+</blockquote>
+<p><strong>尽量不要添加触发器，会使数据库的维护变得困难</strong></p>
+<h2 id="语法-1">语法</h2>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> [<span class="keyword">or</span> replace] <span class="keyword">trigger</span> trigger_name timing trigger_event</span><br><span class="line"><span class="keyword">on</span> table_name</span><br><span class="line">    [<span class="keyword">for</span> <span class="keyword">each</span> <span class="type">row</span>]</span><br><span class="line"><span class="keyword">begin</span></span><br><span class="line">    <span class="comment">-- pl/sql语句</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
+<ol type="1">
+<li><p>触发时间 (trigger_name)</p>
+<p>after 和 before</p></li>
+<li><p> 触发事件 (trigger_event)</p>
+<p>insert、update、delete</p></li>
+<li><p><code>for each row</code></p>
+<ul>
+<li>加上之后表明此触发器是行级，sql 每操作一行相关联记录就触发一次</li>
+<li>不加的话表明此触发器是语句级，只会在 sql
+操作的指定触发时间触发一次</li>
+</ul></li>
+</ol>
+<h1 id="数据库对象的依赖关系">数据库对象的依赖关系</h1>
+<p>数据库里面有些对象的定义是依赖于其他对象的，比如 View 依赖于 Table ,
+Procedure 中有 Select 其他 Table 或者视图的语句，可能依赖于 Table 或者视图；
+在这里 View 或者 Procedure 就被称为依赖对象，而 table 则被称为引用对象。
+当引用对象发生定义变更的时候，会导致其<strong>依赖对象失效</strong>，需要<strong>重新编译</strong>。</p>
+<h1 id="oracle-单行函数">Oracle 单行函数</h1>
+<blockquote>
+<p>仅列出常用函数</p>
+</blockquote>
+<h2 id="字符函数">字符函数</h2>
+<table>
+<colgroup>
+<col style="width: 28%">
+<col style="width: 71%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td> ASCII(X)</td>
+<td> 返回字符 X 的 ASCII 码</td>
+</tr>
+<tr class="even">
+<td> CHR(X)</td>
+<td> 根据 ASCII 码返回对应的字符</td>
+</tr>
+<tr class="odd">
+<td> CONCAT(X,Y)</td>
+<td> 连接字符串 X 和 Y</td>
+</tr>
+<tr class="even">
+<td>INSTR(X,STR[,START][,N)</td>
+<td> 从 X 中查找 str，可以指定从 start 开始，也可以指定从 n 开始</td>
+</tr>
+<tr class="odd">
+<td> LENGTH(X)</td>
+<td> 返回 X 的长度</td>
+</tr>
+<tr class="even">
+<td> LPAD(STR, LEN, STR1)</td>
+<td> 在 STR 左边填充 STR1，直到填充后的字符串长度为 LEN</td>
+</tr>
+<tr class="odd">
+<td>RPAD(STR, LEN, STR1)</td>
+<td> 在 STR 右边填充 STR1，直到填充后的字符串长度为 LEN</td>
+</tr>
+<tr class="even">
+<td>LOWER(X)</td>
+<td>X 转换成小写</td>
+</tr>
+<tr class="odd">
+<td> UPPER(X)</td>
+<td>X 转换成大写</td>
+</tr>
+<tr class="even">
+<td> LTRIM(X[,TRIM_STR])</td>
+<td> 把 X 的左边截去 trim_str 字符串，缺省截去空格</td>
+</tr>
+<tr class="odd">
+<td> RTRIM(X[,TRIM_STR])</td>
+<td> 把 X 的右边截去 trim_str 字符串，缺省截去空格</td>
+</tr>
+<tr class="even">
+<td> TRIM([TRIM_STR FROM]X)</td>
+<td> 把 X 的两边截去 trim_str 字符串，缺省截去空格</td>
+</tr>
+<tr class="odd">
+<td> REPLACE(X,old,new)</td>
+<td> 在 X 中查找 old，并替换成 new</td>
+</tr>
+<tr class="even">
+<td>SUBSTR(X,start[,length])</td>
+<td> 返回 X 的字串，从 start 处开始，截取 length 个字符，缺省 length，默认到结尾</td>
+</tr>
+</tbody>
+</table>
+<p><code>DECODE</code>：类似与 case-end|switch 结构</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sname, DECODE(ssex,<span class="string">'m'</span>,<span class="string">'男'</span>,<span class="string">'f'</span>,<span class="string">'女'</span>)  <span class="keyword">as</span>  ssex</span><br><span class="line"><span class="keyword">FROM</span> t_student;</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="数字函数">数字函数</h2>
+<table>
+<thead>
+<tr class="header">
+<th>函数</th>
+<th>说明</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td> ABS(X)</td>
+<td>X 的绝对值</td>
+<td> ABS(-3)=3</td>
+</tr>
+<tr class="even">
+<td>ACOS(X)</td>
+<td>X 的反余弦</td>
+<td> ACOS(1)=0</td>
+</tr>
+<tr class="odd">
+<td>COS(X)</td>
+<td> 余弦</td>
+<td> COS(1)=0.54030230586814</td>
+</tr>
+<tr class="even">
+<td>CEIL(X)</td>
+<td> 大于或等于 X 的最小值</td>
+<td> CEIL(5.4)=6</td>
+</tr>
+<tr class="odd">
+<td>FLOOR(X)</td>
+<td> 小于或等于 X 的最大值</td>
+<td> FLOOR(5.8)=5</td>
+</tr>
+<tr class="even">
+<td>LOG(X,Y)</td>
+<td>X 为底 Y 的对数</td>
+<td> LOG(2, 4)=2</td>
+</tr>
+<tr class="odd">
+<td>MOD(X,Y)</td>
+<td>X 除以 Y 的余数</td>
+<td> MOD(8, 3)=2</td>
+</tr>
+<tr class="even">
+<td>POWER(X,Y)</td>
+<td>X 的 Y 次幂</td>
+<td> POWER(2, 3)=8</td>
+</tr>
+<tr class="odd">
+<td>ROUND(X[,Y])</td>
+<td>X 在第 Y 位四舍五入</td>
+<td> ROUND(3.456, 2)=3.46</td>
+</tr>
+<tr class="even">
+<td>SQRT(X)</td>
+<td>X 的平方根</td>
+<td> SQRT(4)=2</td>
+</tr>
+<tr class="odd">
+<td>TRUNC(X[,Y])</td>
+<td>X 在第 Y 位截断</td>
+<td> TRUNC(3.456, 2)=3.45</td>
+</tr>
+</tbody>
+</table>
+<p>## 日期函数</p>
+<ol type="1">
+<li><p>ADD_MONTHS(d,n)</p>
+<p>在某一个日期 d 上，加上指定的月数 n，返回计算后的新日期</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SYSDATE,add_months(SYSDATE,<span class="number">5</span>) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>LAST_DAY(d)</p>
+<p>返回指定日期当月的最后一天</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SYSDATE,last_day(SYSDATE) <span class="keyword">FROM</span> dual;</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>ROUND(d[,fmt])</p>
+<p>返回一个以 fmt 为格式的四舍五入日期值，d 是日期，fmt 是格式</p>
+<p>模型：默认 fmt 为 DDD，即月中的某一天</p>
+<ul>
+<li>如果 fmt 为 “YEAR” 则舍入到某年的 1 月 1
+日，即前半年舍去，后半年作为下一年</li>
+<li>如果 fmt 为 “MONTH” 则舍入到某月的 1
+日，即前月舍去，后半月作为下一月</li>
+<li>默认为 “DDD”，即月中的某一天，最靠近的天，前半天舍去，后半天作为第二天</li>
+<li>如果 fmt
+为 “DAY” 则舍入到最近的周的周日，即上半周舍去，下半周作为下一周周日 </li>
+</ul>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SYSDATE,ROUND(SYSDATE),ROUND(SYSDATE,<span class="string">'day'</span>)</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>EXTRACT(fmt FROM d)</p>
+<p>提取日期中的特定部分</p>
+<p>fmt 为：YEAR、MONTH、DAY、HOUR、MINUTE、SECOND。其中
+YEAR、MONTH、DAY 可以为 DATE 类型匹配，也可以与 TIMESTAMP 类型匹配；但是
+HOUR、MINUTE、SECOND 必须与 TIMESTAMP 类型匹配</p>
+<p>HOUR 有时区的区分</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SYSDATE "date",</span><br><span class="line">       <span class="built_in">EXTRACT</span>(<span class="keyword">YEAR</span> <span class="keyword">FROM</span> SYSDATE)"year",</span><br><span class="line">       <span class="built_in">EXTRACT</span>(<span class="keyword">MONTH</span> <span class="keyword">FROM</span> SYSDATE)"month",</span><br><span class="line">       <span class="built_in">EXTRACT</span>(<span class="keyword">DAY</span> <span class="keyword">FROM</span> SYSDATE)"day",</span><br><span class="line">       <span class="built_in">EXTRACT</span>(<span class="keyword">HOUR</span> <span class="keyword">FROM</span> SYSTIMESTAMP)"hour",</span><br><span class="line">       <span class="built_in">EXTRACT</span>(<span class="keyword">MINUTE</span> <span class="keyword">FROM</span> SYSTIMESTAMP)"minute",</span><br><span class="line">       <span class="built_in">EXTRACT</span>(<span class="keyword">SECOND</span> <span class="keyword">FROM</span> SYSTIMESTAMP)"second"</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<h2 id="转换函数">转换函数</h2>
+<ol type="1">
+<li><p>TO_CHAR(d|n[,fmt])</p>
+<p>把日期和数字转换为制定格式的字符串。Fmt 是格式化字符串</p>
+<p>日期格式：</p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td> yyyy</td>
+<td> 年</td>
+</tr>
+<tr class="even">
+<td> mm</td>
+<td> 月</td>
+</tr>
+<tr class="odd">
+<td> dd</td>
+<td> 日</td>
+</tr>
+<tr class="even">
+<td> day</td>
+<td> 星期几</td>
+</tr>
+<tr class="odd">
+<td> hh24</td>
+<td>24 小时格式：时</td>
+</tr>
+<tr class="even">
+<td> hh</td>
+<td>12 小时格式：时</td>
+</tr>
+<tr class="odd">
+<td> mi</td>
+<td> 分</td>
+</tr>
+<tr class="even">
+<td> ss</td>
+<td> 秒</td>
+</tr>
+</tbody>
+</table>
+<p>数字格式：</p>
+<table>
+<thead>
+<tr class="header">
+<th>参数</th>
+<th>示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td> 9</td>
+<td>999</td>
+<td> 指定位置处显示数字</td>
+</tr>
+<tr class="even">
+<td>.</td>
+<td>9.9</td>
+<td> 指定位置返回小数点</td>
+</tr>
+<tr class="odd">
+<td> ,</td>
+<td>99,99</td>
+<td> 指定位置返回一个逗号</td>
+</tr>
+<tr class="even">
+<td> $</td>
+<td>$999</td>
+<td> 数字开头返回一个美元符号</td>
+</tr>
+<tr class="odd">
+<td> EEEE</td>
+<td>9.99EEEE</td>
+<td> 科学计数法表示</td>
+</tr>
+<tr class="even">
+<td> L</td>
+<td>L999</td>
+<td> 数字前加一个本地货币符号</td>
+</tr>
+<tr class="odd">
+<td> PR</td>
+<td>999PR</td>
+<td> 如果数字式负数则用尖括号进行表示</td>
+</tr>
+</tbody>
+</table></li>
+<li><p> TO_DATE(X,[,fmt])</p>
+<p>把一个字符串以 fmt 格式转换成一个日期类型</p></li>
+<li><p> TO_NUMBER(X,[,fmt])</p>
+<p>把一个字符串以 fmt 格式转换为一个数字</p></li>
+</ol>
+<h2 id="其他函数">其他函数</h2>
+<ol type="1">
+<li>NVL (X,VALUE)：如果 X 为空，返回 value，否则返回 X</li>
+<li>NVL2 (x,value1,value2)：如果 x 非空，返回 value1，否则返回 value2（想一下三元表达式～）</li>
+<li>NULLIF (表达式 1,
+表达式 2)：如果表达式 1 和表达式 2 相等则返回空值，如果表达式 1 和表达式 2 不相等则返回表达式 1 的结果</li>
+</ol>
+<h2 id="聚合函数">聚合函数</h2>
+<table>
+<thead>
+<tr class="header">
+<th>名称</th>
+<th>作用</th>
+<th>语法</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td> AVG</td>
+<td> 平均值</td>
+<td> AVG（表达式）</td>
+</tr>
+<tr class="even">
+<td>SUM</td>
+<td> 求和</td>
+<td> SUM (表达式)</td>
+</tr>
+<tr class="odd">
+<td>MIN、MAX</td>
+<td> 最小值、最大值</td>
+<td> MIN (表达式)、MAX (表达式)</td>
+</tr>
+<tr class="even">
+<td>COUNT</td>
+<td> 数据统计</td>
+<td> COUNT（表达式）</td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>ann-zhgy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ann-zhgy.github.io/2021/07/8e65df1b.html" title="pl&#x2F;sql 笔记">http://ann-zhgy.github.io/2021/07/8e65df1b.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/pl-sql/" rel="tag"># pl/sql</a>
+              <a href="/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="tag"># 存储过程</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/5377447a.html" rel="prev" title="ES 的查询">
+                  <i class="fa fa-chevron-left"></i> ES 的查询
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/07/5b46e255.html" rel="next" title="ES 的 mapping">
+                  ES 的 mapping <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ann-zhgy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">78k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:43</span>
+  </span>
+</div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/ann-zhgy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.3.0/mermaid.min.js","integrity":"sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"yYOHRyhsgIO8haBfdx0wQUTx-MdYXbMMI","appKey":"Hucp0iKzTAYc4qnH1pbB6aTC","serverURLs":"https://yyohryhs.api.lncldglobal.com","placeholder":"ヾﾉ≧∀≦)o来啊，快活啊! Just go go (在昵称框输入QQ号码，按下Tab键，自动获取QQ昵称和QQ头像)","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"el":"#valine-comments","path":"/2021/07/8e65df1b.html"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

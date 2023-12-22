@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ann-zhgy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="动态规划是一种思想 “动态规划算法 &quot;，相信有很多人这个叫，但是更贴切的来说，动态规划是一种思想，指导我们解决问题的思想">
+<meta property="og:type" content="article">
+<meta property="og:title" content="动归 ——（四）动态规划是啥？">
+<meta property="og:url" content="http://ann-zhgy.github.io/2023/04/61a8be5c.html">
+<meta property="og:site_name" content="ann-zhgy">
+<meta property="og:description" content="动态规划是一种思想 “动态规划算法 &quot;，相信有很多人这个叫，但是更贴切的来说，动态规划是一种思想，指导我们解决问题的思想">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-04-18T08:45:53.000Z">
+<meta property="article:modified_time" content="2023-11-15T06:22:06.593Z">
+<meta property="article:author" content="ann-zhgy">
+<meta property="article:tag" content="动态规划使用">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://ann-zhgy.github.io/2023/04/61a8be5c.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://ann-zhgy.github.io/2023/04/61a8be5c.html","path":"2023/04/61a8be5c.html","title":"动归 ——（四）动态规划是啥？"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>动归 ——（四）动态规划是啥？ | ann-zhgy</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="ann-zhgy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ann-zhgy</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">blog 学习笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-messages"><a href="/messages/" rel="section"><i class="fa fa-comments fa-fw"></i>messages</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E6%98%AF%E4%B8%80%E7%A7%8D%E6%80%9D%E6%83%B3"><span class="nav-number">1.</span> <span class="nav-text">动态规划是一种思想</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3"><span class="nav-number">1.1.</span> <span class="nav-text">算法？思想？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98%E7%9A%84%E5%85%B8%E5%9E%8B%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">动态规划问题的典型特点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E6%9C%80%E4%BC%98%E8%A7%A3%E9%97%AE%E9%A2%98%E6%9C%80%E5%A4%A7%E5%80%BC%E6%9C%80%E5%B0%8F%E5%80%BC"><span class="nav-number">2.1.</span> <span class="nav-text">求 “最” 优解问题（最大值、最小值）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B9%98%E7%A7%AF%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E7%BB%84"><span class="nav-number">2.1.1.</span> <span class="nav-text">1. 乘积最大子数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E9%95%BF%E5%9B%9E%E6%96%87%E5%AD%90%E4%B8%B2"><span class="nav-number">2.1.2.</span> <span class="nav-text">2. 最长回文子串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E9%95%BF%E4%B8%8A%E5%8D%87%E5%AD%90%E5%BA%8F%E5%88%97"><span class="nav-number">2.1.3.</span> <span class="nav-text">3. 最长上升子序列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E5%8F%AF%E8%A1%8C%E6%80%A7true%E6%88%96false"><span class="nav-number">2.2.</span> <span class="nav-text">求可行性（True 或 False）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%91%E9%9B%B6%E5%85%91%E6%8D%A2%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.1.</span> <span class="nav-text">1. 凑零兑换问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BA%A4%E9%94%99%E7%BB%84%E6%88%90%E9%97%AE%E9%A2%98"><span class="nav-number">2.2.2.</span> <span class="nav-text">2. 字符串交错组成问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%82%E6%96%B9%E6%A1%88%E6%80%BB%E6%95%B0"><span class="nav-number">2.3.</span> <span class="nav-text">求方案总数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A1%AC%E5%B8%81%E7%BB%84%E5%90%88%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.1.</span> <span class="nav-text">1. 硬币组合问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%E9%97%AE%E9%A2%98"><span class="nav-number">2.3.2.</span> <span class="nav-text">2. 路径规划问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%89%E4%BA%9B%E9%97%AE%E9%A2%98%E5%B9%B6%E4%B8%8D%E6%98%AF%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">有些问题并不是动态规划的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%8D%E5%8F%AF%E6%8E%92%E5%BA%8F"><span class="nav-number">3.1.</span> <span class="nav-text">数据不可排序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E7%9A%84k%E4%B8%AA%E6%95%B0"><span class="nav-number">3.1.1.</span> <span class="nav-text">最小的 k 个数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%B8%8D%E5%8F%AF%E4%BA%A4%E6%8D%A2non-swapable"><span class="nav-number">3.2.</span> <span class="nav-text">数据不可交换（Non-swapable）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E6%8E%92%E5%88%97"><span class="nav-number">3.2.1.</span> <span class="nav-text">全排列</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%94%B1%E4%BA%8E%E6%9C%AC%E4%BA%BA%E5%AF%B9%E4%BA%8E%E5%8A%A8%E5%BD%92%E7%9C%8B%E7%9A%84%E5%BE%88%E8%BF%B7%E6%89%80%E4%BB%A5%E6%9A%82%E6%97%B6%E5%81%9C%E6%AD%A2%E4%BA%86%E4%B9%8B%E5%90%8E%E8%BF%98%E4%BC%9A%E7%BB%A7%E7%BB%AD%E7%9A%84"><span class="nav-number">4.</span> <span class="nav-text">由于本人对于动归看的很迷，所以暂时停止了，之后还会继续的</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ann-zhgy"
+      src="http://ann-zhgy.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ann-zhgy</p>
+  <div class="site-description" itemprop="description">做一个纯粹的技术人</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAP%E3%80%81ACID%E3%80%81BASE/" rel="tag">CAP、ACID、BASE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E4%BB%8B%E7%BB%8D/" rel="tag">ES介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" rel="tag">ES安装及入门</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E7%9A%84CURD/" rel="tag">ES的CURD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95/" rel="tag">Java 扩展方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java10%E3%80%8111%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java10、11新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java12%EF%BD%9E17%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java12～17新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java8新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java9%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java9新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" rel="tag">Java开发规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LaTeX/" rel="tag">LaTeX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manifold/" rel="tag">Manifold</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Paxos/" rel="tag">Paxos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quick-Start/" rel="tag">Quick Start</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raft/" rel="tag">Raft</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-compose/" rel="tag">docker-compose</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker%E4%B8%80%E9%94%AE%E6%9E%84%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8/" rel="tag">docker一键构建并启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/" rel="tag">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F/" rel="tag">elasticsearch查询方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E7%9A%84mapping/" rel="tag">elasticsearch的mapping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github-emoji/" rel="tag">github emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea-jrebel%E6%8F%92%E4%BB%B6%E6%BF%80%E6%B4%BB/" rel="tag">idea-jrebel插件激活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/latex-%E8%AF%AD%E6%B3%95/" rel="tag">latex 语法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-%E8%84%9A%E6%9C%AC/" rel="tag">linux 脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macos/" rel="tag">macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-emoji/" rel="tag">markdown emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E7%A1%80/" rel="tag">markdown基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E8%AF%AD%E6%B3%95%E8%BF%9B%E9%98%B6/" rel="tag">markdown语法进阶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-a/" rel="tag">passwd-a</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-b/" rel="tag">passwd-b</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pl-sql/" rel="tag">pl&#x2F;sql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware/" rel="tag">vmware</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware%E5%AE%89%E8%A3%85macos/" rel="tag">vmware安装macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" rel="tag">分布式算法学习路径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E8%AF%8D%E5%99%A8/" rel="tag">分词器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%BD%BF%E7%94%A8/" rel="tag">动态规划使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="tag">动态规划学习方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%93%A8%E5%85%B5/" rel="tag">哨兵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="tag">存储过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/" rel="tag">容器引擎</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BB%BA%E8%AE%AE%E5%99%A8/" rel="tag">建议器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E9%97%AE%E9%A2%98/" rel="tag">拜占庭问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%87%E9%92%88/" rel="tag">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84/" rel="tag">数组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%98%A0%E5%B0%84/" rel="tag">映射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88/" rel="tag">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%BA%94%E7%94%A8/" rel="tag">栈应用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/" rel="tag">表达式求值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%81%8A%EF%BD%9E/" rel="tag">闲聊～</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%9F%E5%88%97/" rel="tag">队列</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ann-zhgy.github.io/2023/04/61a8be5c.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://ann-zhgy.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="ann-zhgy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ann-zhgy">
+      <meta itemprop="description" content="做一个纯粹的技术人">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="动归 ——（四）动态规划是啥？ | ann-zhgy">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          动归 ——（四）动态规划是啥？
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-04-18 16:45:53" itemprop="dateCreated datePublished" datetime="2023-04-18T16:45:53+08:00">2023-04-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-15 14:22:06" itemprop="dateModified" datetime="2023-11-15T14:22:06+08:00">2023-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" itemprop="url" rel="index"><span itemprop="name">动态规划</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2023/04/61a8be5c.html" class="post-meta-item leancloud_visitors" data-flag-title="动归 ——（四）动态规划是啥？" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="动态规划是一种思想">动态规划是一种思想</h1>
+<p>“动态规划算法 "，相信有很多人这个叫，但是更贴切的来说，动态规划是一种思想，指导我们解决问题的思想</p>
+<span id="more"></span>
+<h2 id="算法思想">算法？思想？</h2>
+<p>我们知道<strong>算法 +
+数据结构</strong>，这是一个紧密的组合，比如说要对一个无序数组排序，数据结构就是数组，可供选择的算法比如：快速排序、选择排序等</p>
+<p>所以，算法其实是一类问题的经验总结，是解决问题的套路。那么思想是什么呢？在学习《数据结构与算法》这门课时，应该都听过很多算法都是使用的<strong>分治思想</strong>，尤其是在归并排序中经常被提及。</p>
+<p>动态规划的思想在于：<strong>你需要利用已经计算好的结果来推导你的计算，即：大规模问题的结果是由小规模问题的结果运算得来的</strong></p>
+<p><strong>算法是一种经验总结，而思想是用来指导我们解决问题的</strong></p>
+<h1 id="动态规划问题的典型特点">动态规划问题的典型特点</h1>
+<h2 id="求最优解问题最大值最小值">求 “最” 优解问题（最大值、最小值）</h2>
+<p>除非碰到的问题是简单到找出一个数组中最大的值这样，对这种问题来说，你可以对数组进行排序，然后取数组头或尾部的元素，如果觉得麻烦，你也可以直接遍历得到最值。否则，你就得考虑使用动态规划来解决这个问题了。这样的问题一般都会让你求最大子数组、求最长递增子数组、求最长递增子序列或求最长公共子串、子序列等等。</p>
+<p>既然是要求最值，不妨先想一下核心问题是什么。其实在真的解决最值问题的时候，你应该按照这样的思考顺序来解决问题：</p>
+<ul>
+<li>优先考虑使用贪心算法的可能性；</li>
+<li>然后是暴力递归进行穷举（但这里的数据规模不大）；</li>
+<li>还是不行呢？选择动态规划！</li>
+</ul>
+<h3 id="乘积最大子数组">1. <strong>乘积最大子数组</strong></h3>
+<p>问题：给你一个整数数组
+numbers，找出数组中乘积最大的连续子数组（该子数组中至少包含一个数字），返回该子数组的乘积。</p>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例1：</span><br><span class="line"><span class="section">输入: [2,7,-2,4]</span></span><br><span class="line"><span class="section">输出: 14</span></span><br><span class="line"><span class="section">解释: 子数组 [2,7] 有最大乘积 14。</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight subunit"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例2：</span><br><span class="line">输入: [<span class="string">-5</span>,0,3,<span class="string">-1</span>]</span><br><span class="line">输出: 3</span><br><span class="line">解释: 结果不能为 15, 因为 [<span class="string">-5</span>,3,<span class="string">-1</span>] 不是子数组，是子序列。</span><br></pre></td></tr></tbody></table></figure>
+<p>首先，很明显这个题目当中包含一个 “最” 字，使用动态规划求解的概率就很大。这个问题的目的就是从数组中寻找一个最大的连续区间，确保这个区间的乘积最大。由于每个连续区间可以划分成两个更小的连续区间，而且大的连续区间的结果是两个小连续区间的乘积，因此这个问题还是求解满足条件的最大值，同样可以进行问题分解，而且属于求最值问题。同时，这个问题与求最大连续子序列和比较相似，唯一的区别就是你需要在这个问题里考虑正负号的问题，其它就相同了。</p>
+<h3 id="最长回文子串">2. <strong>最长回文子串</strong></h3>
+<p>问题：给定一个字符串 s，找到 s 中最长的回文子串。你可以假设 s 的最大长度为 1000。</p>
+<figure class="highlight 1c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例<span class="number">1</span>：</span><br><span class="line">输入: <span class="string">"babad"</span></span><br><span class="line">输出: <span class="string">"bab"</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight 1c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例<span class="number">2</span>：</span><br><span class="line">输入: <span class="string">"cbbd"</span></span><br><span class="line">输出: <span class="string">"bb"</span></span><br></pre></td></tr></tbody></table></figure>
+<p>这个问题依然包含一个 “最” 字，同样由于求解的最长回文子串肯定包含一个更短的回文子串，因此我们依然可以使用动态规划来求解这个问题。</p>
+<h3 id="最长上升子序列">3. <strong>最长上升子序列</strong></h3>
+<p>问题：给定一个无序的整数数组，找到其中最长上升子序列的长度。可能会有多种最长上升子序列的组合，你只需要输出对应的长度即可。</p>
+<figure class="highlight dns"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例：</span><br><span class="line">输入: [<span class="number">10,9,2,5</span>,<span class="number">3,7,66,18</span>]</span><br><span class="line">输出: <span class="number">4</span></span><br><span class="line">解释: 最长的上升子序列是 [<span class="number">2,3,7,66</span>]，它的长度是 <span class="number">4</span>。</span><br></pre></td></tr></tbody></table></figure>
+<p>这个问题依然是一个最优解问题，假设我们要求一个长度为 5 的字符串中的上升自序列，我们只需要知道长度为 4 的字符串最长上升子序列是多长，就可以根据剩下的数字确定最后的结果。</p>
+<h2 id="求可行性true或false">求可行性（True 或 False）</h2>
+<p>判断是否存在一条总和为 x 的路径（如果找到了，就是 True；如果找不到，自然就是 False），或者让你判断能否找到一条符合某种条件的路径，那么这类问题都可以归纳为求可行性问题，硬币找零就属于求可行性的一种</p>
+<h3 id="凑零兑换问题">1. <strong>凑零兑换问题</strong></h3>
+<p>问题：给你 k 种面值的硬币，面值分别为 c1, c2 …
+ck，每种硬币的数量无限，再给一个总金额
+amount，问你最少需要几枚硬币凑出这个金额，如果不可能凑出，算法返回 -1
+。</p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例1：</span><br><span class="line">输入: <span class="attribute">c1</span>=1, <span class="attribute">c2</span>=2, <span class="attribute">c3</span>=5, <span class="attribute">c4</span>=7, amount = 15</span><br><span class="line">输出: 3</span><br><span class="line">解释: 11 = 7 + 7 + 1。</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例2：</span><br><span class="line"><span class="section">输入: c1=3, amount =7</span></span><br><span class="line"><span class="section">输出: -1</span></span><br><span class="line"><span class="section">解释: 3怎么也凑不到7这个值。</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="字符串交错组成问题">2. <strong>字符串交错组成问题</strong></h3>
+<p>问题：给定三个字符串 s1, s2, s3, 验证 s3 是否是由 s1 和 s2
+交错组成的。</p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例1：</span><br><span class="line">输入: <span class="attribute">s1</span>=<span class="string">"aabcc"</span>,s2 =<span class="string">"dbbca"</span>,<span class="attribute">s3</span>=<span class="string">"aadbbcbcac"</span></span><br><span class="line">输出: <span class="literal">true</span></span><br><span class="line">解释: 可以交错组成。</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight armasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">示例<span class="number">2</span>：</span><br><span class="line">输入: <span class="built_in">s1</span>=<span class="string">"aabcc"</span>,<span class="built_in">s2</span>=<span class="string">"dbbca"</span>,<span class="built_in">s3</span>=<span class="string">"aadbbbaccc"</span></span><br><span class="line">输出: false</span><br><span class="line">解释:无法交错组成。</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="求方案总数">求方案总数</h2>
+<p>比如给定一个数据结构和限定条件，让你计算出一个方案的所有可能的路径，那么这种问题就属于求方案总数的问题。</p>
+<h3 id="硬币组合问题">1. <strong>硬币组合问题</strong></h3>
+<p>问题：英国的英镑硬币有 1p, 2p, 5p, 10p, 20p, 50p, £1 (100p), 和 £2
+(200p)。比如我们可以用以下方式来组成 2 英镑：1×£1 + 1×50p + 2×20p + 1×5p +
+1×2p + 3×1p。问题是一共有多少种方式可以组成 n 英镑？注意不能有重复，比如
+1 英镑 + 2 个 50P 和 50P+50P+1 英镑是一样的。</p>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例1：</span><br><span class="line"><span class="section">输入: 2</span></span><br><span class="line"><span class="section">输出: 73682 </span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="路径规划问题">2. 路径规划问题</h3>
+<p>问题：一个机器人位于一个 m x n
+网格的左上角。机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角，共有多少路径？</p>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例1：</span><br><span class="line"><span class="section">输入: 2 2</span></span><br><span class="line"><span class="section">输出: 2</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例1：</span><br><span class="line"><span class="section">输入: 3 3</span></span><br><span class="line"><span class="section">输出: 6</span></span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>求方案总数的动态规划问题一般都指的是求 “一个” 方案的所有具体形式。如果是求 “所有” 方案的具体形式，那这种肯定不是动态规划问题，而是使用递归来遍历出所有方案的具体形式。</li>
+</ul>
+<h1 id="有些问题并不是动态规划的问题">有些问题并不是动态规划的问题</h1>
+<h2 id="数据不可排序">数据不可排序</h2>
+<h3 id="最小的k个数"><strong>最小的 k 个数</strong></h3>
+<p>问题：输入整数数组 arr ，找出其中最小的 k
+个数。例如，输入 4、5、1、6、2、7、3、8 这 8 个数字，则最小的 4 个数字是 1、2、3、4。</p>
+<figure class="highlight inform7"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例1：</span><br><span class="line">输入：arr = <span class="comment">[3,2,1]</span>, k = 2</span><br><span class="line">输出：<span class="comment">[1,2]</span> 或者 <span class="comment">[2,1]</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight inform7"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">示例2：</span><br><span class="line">输入：arr = <span class="comment">[0,1,2,1]</span>, k = 1</span><br><span class="line">输出：<span class="comment">[0]</span></span><br></pre></td></tr></tbody></table></figure>
+<p>我们发现虽然这个问题也是求 “最” 值，但其实只要通过排序就能解决</p>
+<h2 id="数据不可交换non-swapable">数据不可交换（Non-swapable）</h2>
+<p>还有一类问题，可以归类到我们总结的几类问题里去，但是不存在动态规划要求的重叠子问题（比如经典的八皇后问题），那么这类问题就无法通过动态规划求解</p>
+<h3 id="全排列"><strong>全排列</strong></h3>
+<p>问题：给定一个没有重复数字的序列，返回其所有可能的全排列。</p>
+<figure class="highlight inform7"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">示例：</span><br><span class="line">输入: <span class="comment">[1,2,3]</span></span><br><span class="line">输出:</span><br><span class="line"><span class="comment">[</span></span><br><span class="line"><span class="comment">  <span class="comment">[1,2,3]</span>,</span></span><br><span class="line"><span class="comment">  <span class="comment">[1,3,2]</span>,</span></span><br><span class="line"><span class="comment">  <span class="comment">[2,1,3]</span>,</span></span><br><span class="line"><span class="comment">  <span class="comment">[2,3,1]</span>,</span></span><br><span class="line"><span class="comment">  <span class="comment">[3,1,2]</span>,</span></span><br><span class="line"><span class="comment">  <span class="comment">[3,2,1]</span></span></span><br><span class="line"><span class="comment">]</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<p>这个问题虽然是求组合，但没有重叠子问题，更不存在最优化的要求</p>
+<h1 id="由于本人对于动归看的很迷所以暂时停止了之后还会继续的">由于本人对于动归看的很迷，所以暂时停止了，之后还会继续的</h1>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>ann-zhgy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ann-zhgy.github.io/2023/04/61a8be5c.html" title="动归 ——（四）动态规划是啥？">http://ann-zhgy.github.io/2023/04/61a8be5c.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%BD%BF%E7%94%A8/" rel="tag"># 动态规划使用</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/dd74b71d.html" rel="prev" title="动归 ——（三）前置 —— 贪心算法">
+                  <i class="fa fa-chevron-left"></i> 动归 ——（三）前置 —— 贪心算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/04/32213c97.html" rel="next" title="学习路径">
+                  学习路径 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ann-zhgy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">78k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:43</span>
+  </span>
+</div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/ann-zhgy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.3.0/mermaid.min.js","integrity":"sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"yYOHRyhsgIO8haBfdx0wQUTx-MdYXbMMI","appKey":"Hucp0iKzTAYc4qnH1pbB6aTC","serverURLs":"https://yyohryhs.api.lncldglobal.com","placeholder":"ヾﾉ≧∀≦)o来啊，快活啊! Just go go (在昵称框输入QQ号码，按下Tab键，自动获取QQ昵称和QQ头像)","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"el":"#valine-comments","path":"/2023/04/61a8be5c.html"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

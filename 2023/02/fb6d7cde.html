@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ann-zhgy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="JAVA9 并非一个长期更新版本，但是其中的一些新特性也代表着 Java 更新的方向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA9 新特性">
+<meta property="og:url" content="http://ann-zhgy.github.io/2023/02/fb6d7cde.html">
+<meta property="og:site_name" content="ann-zhgy">
+<meta property="og:description" content="JAVA9 并非一个长期更新版本，但是其中的一些新特性也代表着 Java 更新的方向">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-pic-bed.oss-cn-beijing.aliyuncs.com/blog-pic1677650907021.png">
+<meta property="og:image" content="https://blog-pic-bed.oss-cn-beijing.aliyuncs.com/blog-pic1678179847508.png">
+<meta property="article:published_time" content="2023-02-13T11:43:29.000Z">
+<meta property="article:modified_time" content="2023-11-15T06:22:06.577Z">
+<meta property="article:author" content="ann-zhgy">
+<meta property="article:tag" content="Java9新特性">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-pic-bed.oss-cn-beijing.aliyuncs.com/blog-pic1677650907021.png">
+
+
+<link rel="canonical" href="http://ann-zhgy.github.io/2023/02/fb6d7cde.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://ann-zhgy.github.io/2023/02/fb6d7cde.html","path":"2023/02/fb6d7cde.html","title":"JAVA9 新特性"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>JAVA9 新特性 | ann-zhgy</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="ann-zhgy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ann-zhgy</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">blog 学习笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-messages"><a href="/messages/" rel="section"><i class="fa fa-comments fa-fw"></i>messages</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#jdk-%E7%9B%AE%E5%BD%95%E7%9A%84%E5%8F%98%E5%8C%96"><span class="nav-number">1.</span> <span class="nav-text">JDK 目录的变化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A5%E5%8F%A3%E5%8F%AF%E4%BB%A5%E6%B7%BB%E5%8A%A0%E7%A7%81%E6%9C%89%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">接口可以添加私有方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#try-with-resource-%E8%AF%AD%E6%B3%95%E7%B3%96%E6%94%AF%E6%8C%81%E5%B0%86%E5%A4%96%E9%83%A8%E5%8F%98%E9%87%8F%E5%86%99%E5%9C%A8%E6%8B%AC%E5%8F%B7%E5%86%85"><span class="nav-number">3.</span> <span class="nav-text">try-with-resource
+语法糖支持将外部变量写在括号内</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%91%BD%E5%90%8D%E6%97%B6%E7%A6%81%E6%AD%A2%E4%BD%BF%E7%94%A8-_"><span class="nav-number">4.</span> <span class="nav-text">变量命名时禁止使用 ‘_’</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#deprecated-%E6%B3%A8%E8%A7%A3%E6%B7%BB%E5%8A%A0%E5%B1%9E%E6%80%A7"><span class="nav-number">5.</span> <span class="nav-text">@Deprecated 注解添加属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#string%E7%B1%BB%E5%BA%95%E5%B1%82%E4%BC%98%E5%8C%96"><span class="nav-number">6.</span> <span class="nav-text">String 类底层优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jmod-%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">7.</span> <span class="nav-text">Jmod 模块化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#jshell-%E5%B7%A5%E5%85%B7"><span class="nav-number">8.</span> <span class="nav-text">JShell 工具</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ann-zhgy"
+      src="http://ann-zhgy.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ann-zhgy</p>
+  <div class="site-description" itemprop="description">做一个纯粹的技术人</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAP%E3%80%81ACID%E3%80%81BASE/" rel="tag">CAP、ACID、BASE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E4%BB%8B%E7%BB%8D/" rel="tag">ES介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" rel="tag">ES安装及入门</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E7%9A%84CURD/" rel="tag">ES的CURD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95/" rel="tag">Java 扩展方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java10%E3%80%8111%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java10、11新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java12%EF%BD%9E17%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java12～17新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java8新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java9%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java9新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" rel="tag">Java开发规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LaTeX/" rel="tag">LaTeX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manifold/" rel="tag">Manifold</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Paxos/" rel="tag">Paxos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quick-Start/" rel="tag">Quick Start</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raft/" rel="tag">Raft</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-compose/" rel="tag">docker-compose</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker%E4%B8%80%E9%94%AE%E6%9E%84%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8/" rel="tag">docker一键构建并启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/" rel="tag">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F/" rel="tag">elasticsearch查询方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E7%9A%84mapping/" rel="tag">elasticsearch的mapping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github-emoji/" rel="tag">github emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea-jrebel%E6%8F%92%E4%BB%B6%E6%BF%80%E6%B4%BB/" rel="tag">idea-jrebel插件激活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/latex-%E8%AF%AD%E6%B3%95/" rel="tag">latex 语法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-%E8%84%9A%E6%9C%AC/" rel="tag">linux 脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macos/" rel="tag">macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-emoji/" rel="tag">markdown emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E7%A1%80/" rel="tag">markdown基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E8%AF%AD%E6%B3%95%E8%BF%9B%E9%98%B6/" rel="tag">markdown语法进阶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-a/" rel="tag">passwd-a</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-b/" rel="tag">passwd-b</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pl-sql/" rel="tag">pl&#x2F;sql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware/" rel="tag">vmware</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware%E5%AE%89%E8%A3%85macos/" rel="tag">vmware安装macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" rel="tag">分布式算法学习路径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E8%AF%8D%E5%99%A8/" rel="tag">分词器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%BD%BF%E7%94%A8/" rel="tag">动态规划使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="tag">动态规划学习方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%93%A8%E5%85%B5/" rel="tag">哨兵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="tag">存储过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/" rel="tag">容器引擎</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BB%BA%E8%AE%AE%E5%99%A8/" rel="tag">建议器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E9%97%AE%E9%A2%98/" rel="tag">拜占庭问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%87%E9%92%88/" rel="tag">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84/" rel="tag">数组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%98%A0%E5%B0%84/" rel="tag">映射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88/" rel="tag">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%BA%94%E7%94%A8/" rel="tag">栈应用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/" rel="tag">表达式求值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%81%8A%EF%BD%9E/" rel="tag">闲聊～</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%9F%E5%88%97/" rel="tag">队列</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ann-zhgy.github.io/2023/02/fb6d7cde.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://ann-zhgy.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="ann-zhgy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ann-zhgy">
+      <meta itemprop="description" content="做一个纯粹的技术人">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="JAVA9 新特性 | ann-zhgy">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JAVA9 新特性
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-13 19:43:29" itemprop="dateCreated datePublished" datetime="2023-02-13T19:43:29+08:00">2023-02-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-15 14:22:06" itemprop="dateModified" datetime="2023-11-15T14:22:06+08:00">2023-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java%E6%96%B0%E7%89%B9%E6%80%A7/" itemprop="url" rel="index"><span itemprop="name">Java新特性</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2023/02/fb6d7cde.html" class="post-meta-item leancloud_visitors" data-flag-title="JAVA9 新特性" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>JAVA9 并非一个长期更新版本，但是其中的一些新特性也代表着 Java
+更新的方向</p>
+</blockquote>
+<span id="more"></span>
+<h1 id="jdk-目录的变化">JDK 目录的变化</h1>
+<p>在 JavaSE 9 之前：</p>
+<ul>
+<li>bin 目录用于包含命令行开发和调试工具，如 javac，jar 和 javadoc。
+它还用于包含 Java 命令来启动 Java 应用程序。</li>
+<li>include 目录包含在编译本地代码时使用的 C/C++ 头文件。</li>
+<li>lib 目录包含 JDK 工具的几个 JAR 和其他类型的文件。
+它有一个 tools.jar 文件，其中包含 javac 编译器的 Java 类。</li>
+<li>jre，如 java 命令。
+在 Windows 平台上，它包含系统的运行时动态链接库（DLL）。</li>
+<li>jre，如.properties 和.policy 文件。</li>
+<li>jre。
+这允许在 Java 社区进程之外创建的实施标准或独立技术的类和接口的更高版本被并入 Java 平台。
+这些 JAR 被添加到 JVM 的引导类路径中，从而覆盖了 Java 运行时中存在的这些类和接口的任何定义。</li>
+<li>jre。
+该机制通过扩展类加载器（该类加载器）加载了该目录中的所有 JAR，该引导类加载器是系统类加载器的子进程，它加载所有应用程序类。
+通过将 JAR 放在此目录中，可以扩展 Java SE 平台。
+这些 JAR 的内容对于在此运行时映像上编译或运行的所有应用程序都可见。</li>
+<li>jre。 rt.jar 文件包含运行时的 Java 类和资源文件。
+许多工具依赖于 rt.jar 文件的位置。</li>
+<li>jre。</li>
+<li>jre，其中包含运行时文件，如字体和图像。</li>
+</ul>
+<p>从 JavaSE 9 开始：</p>
+<ul>
+<li>没有名为 jre 的子目录。</li>
+<li>bin 目录包含所有命令。
+在 Windows 平台上，它继续包含系统的运行时动态链接库。</li>
+<li>conf 目录包含用户可编辑的配置文件，例如以前位于 jre.properties 和.policy 文件。</li>
+<li>include 目录包含要在以前编译本地代码时使用的 C/C++ 头文件。
+它只存在于 JDK 中。</li>
+<li>jmods 目录包含 JMOD 格式的平台模块。 创建自定义运行时映像时需要它。
+它只存在于 JDK 中。</li>
+<li>legal 目录包含法律声明。</li>
+<li>lib 目录包含非 Windows 平台上的动态链接本地库。
+其子目录和文件不应由开发人员直接编辑或使用。</li>
+</ul>
+<h1 id="接口可以添加私有方法">接口可以添加私有方法</h1>
+<p>继 Java8 可以添加默认方法之后，Java9
+支持添加私有方法了，给人一种和抽象类越来越像的感觉</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">InterfaceA</span> {</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">methodA</span><span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">default</span> <span class="keyword">void</span> <span class="title function_">defaultMethod</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"default method!"</span>);</span><br><span class="line">        System.out.println(<span class="string">"call private method..."</span>);</span><br><span class="line">        privateMethod();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">privateMethod</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"private method!"</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>接口中的私有方法可以提供给 default
+修饰的方法调用，在子类中是不可调用的</li>
+</ul>
+<h1 id="try-with-resource-语法糖支持将外部变量写在括号内">try-with-resource
+语法糖支持将外部变量写在括号内</h1>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TryWithResource</span> {</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException {</span><br><span class="line">        <span class="type">FileReader</span> <span class="variable">fileReader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileReader</span>(Objects.requireNonNull(TryWithResource.class.getResource(<span class="string">"/file.txt"</span>)).getPath());</span><br><span class="line">        <span class="type">BufferedReader</span> <span class="variable">bufferedReader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(fileReader);</span><br><span class="line">        <span class="keyword">try</span> (fileReader; bufferedReader) {</span><br><span class="line">            <span class="comment">// 具体操作</span></span><br><span class="line">            String line;</span><br><span class="line">            <span class="keyword">while</span> ((line = bufferedReader.readLine()) != <span class="literal">null</span>) {</span><br><span class="line">                System.out.println(line);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>此写法使得 try-resource 的括号中的内容不再臃肿</li>
+</ul>
+<h1 id="变量命名时禁止使用-_">变量命名时禁止使用 ‘_’</h1>
+<div style="max-width: 75%; margin: auto; opacity: 0.95;">
+<p><img alt="1677650907021" data-src="https://blog-pic-bed.oss-cn-beijing.aliyuncs.com/blog-pic1677650907021.png" style="width: 100%;"></p>
+</div>
+<ul>
+<li>在 Java8 中，单独使用 <code>_</code> 作为变量名会有警告信息，Java9
+中已经是会报错了</li>
+</ul>
+<h1 id="deprecated-注解添加属性"><span class="citation" data-cites="Deprecated">@Deprecated</span> 注解添加属性</h1>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Copyright (c) 2003, 2015, Oracle and/or its affiliates. All rights reserved.</span></span><br><span class="line"><span class="comment"> * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> java.lang;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.*;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> java.lang.annotation.ElementType.*;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * A program element annotated {<span class="doctag">@code</span> <span class="doctag">@Deprecated</span>} is one that programmers</span></span><br><span class="line"><span class="comment"> * are discouraged from using. An element may be deprecated for any of several</span></span><br><span class="line"><span class="comment"> * reasons, for example, its usage is likely to lead to errors; it may</span></span><br><span class="line"><span class="comment"> * be changed incompatibly or removed in a future version; it has been</span></span><br><span class="line"><span class="comment"> * superseded by a newer, usually preferable alternative; or it is obsolete.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;Compilers issue warnings when a deprecated program element is used or</span></span><br><span class="line"><span class="comment"> * overridden in non-deprecated code. Use of the {<span class="doctag">@code</span> <span class="doctag">@Deprecated</span>}</span></span><br><span class="line"><span class="comment"> * annotation on a local variable declaration or on a parameter declaration</span></span><br><span class="line"><span class="comment"> * or a package declaration has no effect on the warnings issued by a compiler.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;When a module is deprecated, the use of that module in {<span class="doctag">@code</span></span></span><br><span class="line"><span class="comment"> * requires}, but not in {<span class="doctag">@code</span> exports} or {<span class="doctag">@code</span> opens} clauses causes</span></span><br><span class="line"><span class="comment"> * a warning to be issued. A module being deprecated does &lt;em&gt;not&lt;/em&gt; cause</span></span><br><span class="line"><span class="comment"> * warnings to be issued for uses of types within the module.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;This annotation type has a string-valued element {<span class="doctag">@code</span> since}. The value</span></span><br><span class="line"><span class="comment"> * of this element indicates the version in which the annotated program element</span></span><br><span class="line"><span class="comment"> * was first deprecated.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;This annotation type has a boolean-valued element {<span class="doctag">@code</span> forRemoval}.</span></span><br><span class="line"><span class="comment"> * A value of {<span class="doctag">@code</span> true} indicates intent to remove the annotated program</span></span><br><span class="line"><span class="comment"> * element in a future version. A value of {<span class="doctag">@code</span> false} indicates that use of</span></span><br><span class="line"><span class="comment"> * the annotated program element is discouraged, but at the time the program</span></span><br><span class="line"><span class="comment"> * element was annotated, there was no specific intent to remove it.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@apiNote</span></span></span><br><span class="line"><span class="comment"> * It is strongly recommended that the reason for deprecating a program element</span></span><br><span class="line"><span class="comment"> * be explained in the documentation, using the {<span class="doctag">@code</span> <span class="doctag">@deprecated</span>}</span></span><br><span class="line"><span class="comment"> * javadoc tag. The documentation should also suggest and link to a</span></span><br><span class="line"><span class="comment"> * recommended replacement API, if applicable. A replacement API often</span></span><br><span class="line"><span class="comment"> * has subtly different semantics, so such issues should be discussed as</span></span><br><span class="line"><span class="comment"> * well.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;It is recommended that a {<span class="doctag">@code</span> since} value be provided with all newly</span></span><br><span class="line"><span class="comment"> * annotated program elements. Note that {<span class="doctag">@code</span> since} cannot be mandatory,</span></span><br><span class="line"><span class="comment"> * as there are many existing annotations that lack this element value.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;There is no defined order among annotation elements. As a matter of</span></span><br><span class="line"><span class="comment"> * style, the {<span class="doctag">@code</span> since} element should be placed first.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;The {<span class="doctag">@code</span> <span class="doctag">@Deprecated</span>} annotation should always be present if</span></span><br><span class="line"><span class="comment"> * the {<span class="doctag">@code</span> <span class="doctag">@deprecated</span>} javadoc tag is present, and vice-versa.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>  Neal Gafter</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@since</span> 1.5</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@jls</span> 9.6.4.6 <span class="doctag">@Deprecated</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(value={CONSTRUCTOR, FIELD, LOCAL_VARIABLE, METHOD, PACKAGE, MODULE, PARAMETER, TYPE})</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Deprecated {</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the version in which the annotated element became deprecated.</span></span><br><span class="line"><span class="comment">     * The version string is in the same format and namespace as the value of</span></span><br><span class="line"><span class="comment">     * the {<span class="doctag">@code</span> <span class="doctag">@since</span>} javadoc tag. The default value is the empty</span></span><br><span class="line"><span class="comment">     * string.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> the version string</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 9</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    String <span class="title function_">since</span><span class="params">()</span> <span class="keyword">default</span> <span class="string">""</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Indicates whether the annotated element is subject to removal in a</span></span><br><span class="line"><span class="comment">     * future version. The default value is {<span class="doctag">@code</span> false}.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> whether the element is subject to removal</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> 9</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">forRemoval</span><span class="params">()</span> <span class="keyword">default</span> <span class="literal">false</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li><code>since</code> 属性表示从哪个版本开始弃用</li>
+<li><code>forRemoval</code> 表示未来是否会删除</li>
+</ul>
+<h1 id="string类底层优化">String 类底层优化</h1>
+<ol type="1">
+<li>底层使用 <code>byte[]</code> 代替 <code>char[]</code>
+存储，当字符串是全英文的时候，可以节省空间</li>
+<li>新增了 <code>COMPACT_STRINGS</code> 和 <code>coder</code>
+两个成员变量
+<ol type="1">
+<li><code>COMPACT_STRINGS</code>：是否压缩。true - 压缩；false - 不压缩，使用
+UTF16 编码格式</li>
+<li><code>coder</code>：当前使用的编码。LATIN1 (0)- 拉丁，UTF16 (1)</li>
+</ol></li>
+</ol>
+<h1 id="jmod-模块化">Jmod 模块化</h1>
+<p>当我们开发 web 应用时， <code>Java</code>
+自带有很多无用的包也必须加载，如：awt、application…… 但是实际上我们用不到这些包。Java9
+模块化的特性将这些基础的包分成了各个模块，开发者可以通过
+module-info.java
+这个文件限制当前模块哪些类是可以开放给外界使用的，哪些类是我需要的</p>
+<blockquote>
+<p>对比 <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/index.html">Java8</a> 和
+<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/9/docs/api/overview-summary.html">Java9</a>
+的官方文档，我们可以发现 Java9 的官方文档首页显示的是 module，而 Java8
+的是 package</p>
+</blockquote>
+<p>module-info.java</p>
+<figure class="highlight java"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">module</span> java9Demo {</span><br><span class="line">    <span class="keyword">requires</span> xxx;</span><br><span class="line">    <span class="keyword">exports</span> xxx; <span class="comment">// 导出包，表示允许访问指标包中的 public 成员</span></span><br><span class="line">    opens xxx2; <span class="comment">// 导出包，表示允许在运行时通过反射的形式访问</span></span><br><span class="line">    uses xxxInterface;</span><br><span class="line">    provides xxxInterface with xxxImplClass; <span class="comment">// 语句指定一个或多个服务接口的实现类</span></span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>使用 <code>requires</code> 表示需要本模块依赖哪些接口</li>
+<li>使用 <code>exports</code>
+表示本模块要开放哪些接口，即依赖方可以访问哪些包下面的 public
+资源，但是不可以通过反射访问，运行时会报错</li>
+<li>使用 <code>opens</code>
+表示本模块哪些成员可以在，即依赖方可以在运行时通过反射的方式访问哪些资源，但是不可以直接访问，编译时会报错</li>
+<li>使用 <code>uses</code>
+表示本模块的接口是需要依赖引用的模块实现的，使用服务接口的名字，当前模块就会发现它，使用
+<code>java.util.ServiceLoader</code>
+类进行加载，必须是本模块中的，不能是其他模块中的。其实现类可以由其他模块提供.</li>
+<li> 使用 <code>provides xxxInterface with xxxImplClass</code>
+表示本模块的接口使用的哪个实现</li>
+</ul>
+<h1 id="jshell-工具">JShell 工具</h1>
+<blockquote>
+<p>类似于 node、ruby 等包含直接运行简单脚本的交互环境，Java9
+也添加了类似的环境，同时也可以类比一下浏览器的开发者工具的控制台，可以直接运行简单的
+js 脚本</p>
+</blockquote>
+<ul>
+<li><p>通过 jshell 命令进入终端，然后写简单的语句即可实时获取结果</p>
+<div style="max-width: 75%; margin: auto; opacity: 0.95;">
+<p><img alt="1678179847508" data-src="https://blog-pic-bed.oss-cn-beijing.aliyuncs.com/blog-pic1678179847508.png" style="width: 100%;"></p>
+</div></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>ann-zhgy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ann-zhgy.github.io/2023/02/fb6d7cde.html" title="JAVA9 新特性">http://ann-zhgy.github.io/2023/02/fb6d7cde.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java9%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag"># Java9新特性</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/ef31f377.html" rel="prev" title="专题 —— 数据结构与算法 - 06 番外 - 表达式求值">
+                  <i class="fa fa-chevron-left"></i> 专题 —— 数据结构与算法 - 06 番外 - 表达式求值
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/02/d0090e46.html" rel="next" title="GibHub commit emoji 表情对照表（也可适用于 markdown 表情）">
+                  GibHub commit emoji 表情对照表（也可适用于 markdown 表情） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ann-zhgy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">78k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:43</span>
+  </span>
+</div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/ann-zhgy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.3.0/mermaid.min.js","integrity":"sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"yYOHRyhsgIO8haBfdx0wQUTx-MdYXbMMI","appKey":"Hucp0iKzTAYc4qnH1pbB6aTC","serverURLs":"https://yyohryhs.api.lncldglobal.com","placeholder":"ヾﾉ≧∀≦)o来啊，快活啊! Just go go (在昵称框输入QQ号码，按下Tab键，自动获取QQ昵称和QQ头像)","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"el":"#valine-comments","path":"/2023/02/fb6d7cde.html"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

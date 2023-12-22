@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"ann-zhgy.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":true,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.json","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="安装 Java 安装  elasticsearch 需要 Java 的环境，我们一般需要安装 JDK1.8 或以上版本，Java 的安装步骤不再展示（参考菜鸟教程）……">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES 入门">
+<meta property="og:url" content="http://ann-zhgy.github.io/2021/06/feaeef89.html">
+<meta property="og:site_name" content="ann-zhgy">
+<meta property="og:description" content="安装 Java 安装  elasticsearch 需要 Java 的环境，我们一般需要安装 JDK1.8 或以上版本，Java 的安装步骤不再展示（参考菜鸟教程）……">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1168165/201903/1168165-20190321171753955-918996558.png">
+<meta property="article:published_time" content="2021-06-14T12:27:45.000Z">
+<meta property="article:modified_time" content="2023-11-15T06:22:06.581Z">
+<meta property="article:author" content="ann-zhgy">
+<meta property="article:tag" content="ES安装及入门">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img2018.cnblogs.com/blog/1168165/201903/1168165-20190321171753955-918996558.png">
+
+
+<link rel="canonical" href="http://ann-zhgy.github.io/2021/06/feaeef89.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://ann-zhgy.github.io/2021/06/feaeef89.html","path":"2021/06/feaeef89.html","title":"ES 入门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ES 入门 | ann-zhgy</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+<link rel="alternate" href="/atom.xml" title="ann-zhgy" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">ann-zhgy</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">blog 学习笔记</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-messages"><a href="/messages/" rel="section"><i class="fa fa-comments fa-fw"></i>messages</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-commonweal"><a href="/404/" rel="section"><i class="fa fa-heartbeat fa-fw"></i>公益 404</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">Java 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#elasticsearch%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.</span> <span class="nav-text">Elasticsearch 安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85%E5%8C%85%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">官网下载安装包安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose-%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.2.</span> <span class="nav-text">docker-compose 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ik-%E5%88%86%E8%AF%8D%E5%99%A8%E4%B8%8B%E8%BD%BD%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.3.</span> <span class="nav-text">ik 分词器下载安装</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#elasticsearch%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E8%A7%A3%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">Elasticsearch 配置文件解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#elasticsearch.yml"><span class="nav-number">2.1.</span> <span class="nav-text">elasticsearch.yml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jvm.options"><span class="nav-number">2.2.</span> <span class="nav-text">jvm.options</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#es-%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">ES 的数据结构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">逻辑设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%A1%A3document"><span class="nav-number">3.1.1.</span> <span class="nav-text">文档（document）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8Btype"><span class="nav-number">3.1.2.</span> <span class="nav-text">类型（type）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95"><span class="nav-number">3.1.3.</span> <span class="nav-text">索引</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%A9%E7%90%86%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.2.</span> <span class="nav-text">物理设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95"><span class="nav-number">3.2.1.</span> <span class="nav-text">倒排索引</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BE%E4%B8%AA%E6%A0%97%E5%AD%90"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">举个栗子</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#es-%E7%9A%84%E7%AE%80%E5%8D%95%E6%93%8D%E4%BD%9C"><span class="nav-number">4.</span> <span class="nav-text">ES 的简单操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#put"><span class="nav-number">4.1.</span> <span class="nav-text">PUT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#put-%E6%93%8D%E4%BD%9C%E5%A2%9E%E5%8A%A0%E7%B4%A2%E5%BC%95"><span class="nav-number">4.1.1.</span> <span class="nav-text">PUT 操作增加索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put-%E5%A2%9E%E5%8A%A0%E6%96%87%E6%A1%A3"><span class="nav-number">4.1.2.</span> <span class="nav-text">PUT 增加文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post"><span class="nav-number">4.2.</span> <span class="nav-text">POST</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#post-%E5%A2%9E%E5%8A%A0%E6%96%87%E6%A1%A3"><span class="nav-number">4.2.1.</span> <span class="nav-text">POST 增加文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#get"><span class="nav-number">4.3.</span> <span class="nav-text">GET</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get-%E6%93%8D%E4%BD%9C%E6%9F%A5%E7%9C%8B%E7%B4%A2%E5%BC%95%E4%BF%A1%E6%81%AF"><span class="nav-number">4.3.1.</span> <span class="nav-text">GET 操作查看索引信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E6%96%87%E6%A1%A3"><span class="nav-number">4.3.2.</span> <span class="nav-text">GET 查询所有文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#delete"><span class="nav-number">4.4.</span> <span class="nav-text">DELETE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#delete-%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95"><span class="nav-number">4.4.1.</span> <span class="nav-text">DELETE 删除索引</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ann-zhgy"
+      src="http://ann-zhgy.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ann-zhgy</p>
+  <div class="site-description" itemprop="description">做一个纯粹的技术人</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+<script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+<div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div id="myCanvasContainer" class="widget tagcloud">
+        <canvas width="250" height="250" id="resCanvas" style="width=100%">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CAP%E3%80%81ACID%E3%80%81BASE/" rel="tag">CAP、ACID、BASE</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E4%BB%8B%E7%BB%8D/" rel="tag">ES介绍</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" rel="tag">ES安装及入门</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES%E7%9A%84CURD/" rel="tag">ES的CURD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java-%E6%89%A9%E5%B1%95%E6%96%B9%E6%B3%95/" rel="tag">Java 扩展方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java10%E3%80%8111%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java10、11新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java12%EF%BD%9E17%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java12～17新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java8新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java9%E6%96%B0%E7%89%B9%E6%80%A7/" rel="tag">Java9新特性</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Java%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83/" rel="tag">Java开发规范</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LaTeX/" rel="tag">LaTeX</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manifold/" rel="tag">Manifold</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Paxos/" rel="tag">Paxos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Quick-Start/" rel="tag">Quick Start</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Raft/" rel="tag">Raft</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blog/" rel="tag">blog</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker/" rel="tag">docker</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker-compose/" rel="tag">docker-compose</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/docker%E4%B8%80%E9%94%AE%E6%9E%84%E5%BB%BA%E5%B9%B6%E5%90%AF%E5%8A%A8/" rel="tag">docker一键构建并启动</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch/" rel="tag">elasticsearch</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F/" rel="tag">elasticsearch查询方式</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/elasticsearch%E7%9A%84mapping/" rel="tag">elasticsearch的mapping</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github-emoji/" rel="tag">github emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/idea-jrebel%E6%8F%92%E4%BB%B6%E6%BF%80%E6%B4%BB/" rel="tag">idea-jrebel插件激活</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/latex-%E8%AF%AD%E6%B3%95/" rel="tag">latex 语法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux-%E8%84%9A%E6%9C%AC/" rel="tag">linux 脚本</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/macos/" rel="tag">macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown-emoji/" rel="tag">markdown emoji</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E5%9F%BA%E7%A1%80/" rel="tag">markdown基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/markdown%E8%AF%AD%E6%B3%95%E8%BF%9B%E9%98%B6/" rel="tag">markdown语法进阶</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-a/" rel="tag">passwd-a</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/passwd-b/" rel="tag">passwd-b</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pl-sql/" rel="tag">pl&#x2F;sql</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware/" rel="tag">vmware</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vmware%E5%AE%89%E8%A3%85macos/" rel="tag">vmware安装macos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0%E8%B7%AF%E5%BE%84/" rel="tag">分布式算法学习路径</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%88%86%E8%AF%8D%E5%99%A8/" rel="tag">分词器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E4%BD%BF%E7%94%A8/" rel="tag">动态规划使用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95/" rel="tag">动态规划学习方法</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%93%A8%E5%85%B5/" rel="tag">哨兵</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%98%E5%82%A8%E8%BF%87%E7%A8%8B/" rel="tag">存储过程</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/" rel="tag">容器引擎</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%BB%BA%E8%AE%AE%E5%99%A8/" rel="tag">建议器</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8B%9C%E5%8D%A0%E5%BA%AD%E9%97%AE%E9%A2%98/" rel="tag">拜占庭问题</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%8C%87%E9%92%88/" rel="tag">指针</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" rel="tag">数据结构与算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E7%BB%84/" rel="tag">数组</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%98%A0%E5%B0%84/" rel="tag">映射</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88/" rel="tag">栈</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%88%E5%BA%94%E7%94%A8/" rel="tag">栈应用</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%BA%BF%E6%80%A7%E8%A1%A8/" rel="tag">线性表</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%B1%82%E5%80%BC/" rel="tag">表达式求值</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B4%AA%E5%BF%83%E7%AE%97%E6%B3%95/" rel="tag">贪心算法</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%93%BE%E8%A1%A8/" rel="tag">链表</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%97%B2%E8%81%8A%EF%BD%9E/" rel="tag">闲聊～</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%98%9F%E5%88%97/" rel="tag">队列</a><span class="tag-list-count">1</span></li></ul>
+        </canvas>
+    </div>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://ann-zhgy.github.io/2021/06/feaeef89.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="http://ann-zhgy.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="ann-zhgy">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ann-zhgy">
+      <meta itemprop="description" content="做一个纯粹的技术人">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ES 入门 | ann-zhgy">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ES 入门
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-06-14 20:27:45" itemprop="dateCreated datePublished" datetime="2021-06-14T20:27:45+08:00">2021-06-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-15 14:22:06" itemprop="dateModified" datetime="2023-11-15T14:22:06+08:00">2023-11-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/ElasticSearch/" itemprop="url" rel="index"><span itemprop="name">ElasticSearch</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2021/06/feaeef89.html" class="post-meta-item leancloud_visitors" data-flag-title="ES 入门" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="安装">安装</h1>
+<h2 id="java安装">Java 安装</h2>
+<ul>
+<li>elasticsearch 需要 Java 的环境，我们一般需要安装 JDK1.8
+或以上版本，Java 的安装步骤不再展示（参考<a target="_blank" rel="noopener" href="https://www.runoob.com/java/java-environment-setup.html">菜鸟教程</a>）……</li>
+</ul>
+<span id="more"></span>
+<h2 id="elasticsearch安装">Elasticsearch 安装</h2>
+<h3 id="官网下载安装包安装">官网下载安装包安装</h3>
+<ol type="1">
+<li><p>访问官网下载安装包</p>
+<p>可以在 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/start">官网</a>
+直接下载，也可以选择 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/past-releases#elasticsearch">Elasticsearch</a>
+和 <a target="_blank" rel="noopener" href="https://www.elastic.co/cn/downloads/past-releases#kibana">Kibana</a>
+版本下载，也可以在官方 <a target="_blank" rel="noopener" href="https://github.com/elastic/elasticsearch/releases">github</a>
+下载源码</p></li>
+</ol>
+<blockquote>
+<p>Kibana 是 Elastic 公司提供的免费且开放的用户界面，方便用户对 Elastic
+进行各种操作</p>
+</blockquote>
+<ol start="2" type="1">
+<li><p>解压之后，在 bin 目录运行 elasticsearch.bat 即可</p></li>
+<li><p>运行完成之后，访问 127.0.0.1:9200，出现如下界面表示运行成功</p>
+<div style="max-width: 75%; margin: auto; opacity: 0.95;">
+<pre><code>&lt;img alt="20210614205247" src="https://i.loli.net/2021/06/14/oyxaB4VSnRrIhcO.png" style="width: 100%;"&gt;</code></pre>
+</div></li>
+<li><p>ES 目录介绍（需要我们关注的有四个）</p>
+<table>
+<thead>
+<tr class="header">
+<th>目录</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td> bin</td>
+<td> 存放了启动及设置 ES 的入口（可执行文件）</td>
+</tr>
+<tr class="even">
+<td>config</td>
+<td> 存放了 ES 的配置的信息</td>
+</tr>
+<tr class="odd">
+<td> data</td>
+<td> 存放数据</td>
+</tr>
+<tr class="even">
+<td> logs</td>
+<td> 存放了 ES 运行过程中产生的日志信息</td>
+</tr>
+<tr class="odd">
+<td> plugins</td>
+<td>ES 支持的各种插件存放在该目录中</td>
+</tr>
+</tbody>
+</table></li>
+</ol>
+<h3 id="docker-compose-安装">docker-compose 安装</h3>
+<ol type="1">
+<li><p>准备配置文件</p>
+<ul>
+<li>elasticsearch.yml：可以参考下载下来的包中的 config 中的
+<code>elasticsearch.yml</code> 文件</li>
+<li> kibana.yml：同理，参考下载下来的包中的 config 中的
+<code>kibana.yml</code> 文件</li>
+</ul></li>
+<li><p>编写 docker-compose</p>
+<figure class="highlight yml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">'3.6'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">elasticsearch:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">elasticsearch:7.7.0</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">elasticsearch</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"cluster.name=elasticsearch"</span> <span class="comment">#设置集群名称为elasticsearch</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"discovery.type=single-node"</span> <span class="comment">#以单一节点模式启动</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"ES_JAVA_OPTS=-Xms2048m -Xmx2048m"</span> <span class="comment">#设置使用jvm内存大小</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data/elasticsearch/plugins:/usr/share/elasticsearch/plugins</span> <span class="comment">#插件文件挂载</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data/elasticsearch/data:/usr/share/elasticsearch/data</span> <span class="comment">#数据文件挂载</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data/elasticsearch/config/elastic-search.yml:/usr/share/elasticsearch/config/elasticsearch.yml</span> <span class="comment">#配置文件挂载</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">9200</span><span class="string">:9200</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">9300</span><span class="string">:9300</span></span><br><span class="line">  <span class="attr">kibana:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">kibana:7.7.0</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">kibana</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">elasticsearch</span> <span class="comment">#kibana在elasticsearch启动之后再启动</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">"elasticsearch.hosts=http://192.168.91.128:9200"</span> <span class="comment">#设置访问elasticsearch的地址</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./data/kibana/config:/usr/share/kibana/config</span> <span class="comment">#配置文件挂载</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">5601</span><span class="string">:5601</span></span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>启动，访问 http://ip:port 验证是否安装成功</p>
+<blockquote>
+<ol type="1">
+<li>启动前需要将配置文件复制到相对应的挂载目录 (volumes) 中，然后才可以成功启动容器</li>
+<li>这个 docker-compose 是一个单一节点的案例</li>
+</ol>
+</blockquote></li>
+</ol>
+<h3 id="ik-分词器下载安装">ik 分词器下载安装</h3>
+<p>从 <a target="_blank" rel="noopener" href="https://github.com/medcl/elasticsearch-analysis-ik/releases">github</a>
+选择相对应的版本下载，然后放在目录 <code>plugins/ik</code>
+下面，重启 ES 就好了</p>
+<h1 id="elasticsearch配置文件解析">Elasticsearch 配置文件解析</h1>
+<blockquote>
+<p>ES 的配置文件在 config
+文件夹下，值得关注的有 <code>elasticsearch.yml</code>、<code>jvm.options</code>、<code>log4j2.properties</code>，但是我们需要关注的仅仅是
+<code>elasticsearch.yml</code>，<code>jvm.options</code>
+在 JVM 的笔记中会详细解释，<code>log4j2.properties</code>
+里面存储了日志打印的信息，一般不用管，而且在
+<code>elasticsearch.yml</code> 中同样可以进行日志的配置</p>
+</blockquote>
+<h2 id="elasticsearch.yml"><code>elasticsearch.yml</code></h2>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"># ES的官方文档地址：https://www.elastic.co/guide/en/elasticsearch/reference/index.html</span><br><span class="line">#----------------------------------- 集群相关 ------------------------------------</span><br><span class="line"># 集群名称，默认就是 elasticsearch</span><br><span class="line">cluster.name: my-application</span><br><span class="line"></span><br><span class="line">#----------------------------------- 节点相关 ------------------------------------</span><br><span class="line"># 当前节点名字，如果不配置，系统会随机指定名字</span><br><span class="line">node.name: node-1</span><br><span class="line"># 设置节点是否可以成为主节点，默认为true</span><br><span class="line">node.master: true</span><br><span class="line"># 设置节点是否存储数据，默认为true</span><br><span class="line">node.data: true</span><br><span class="line">#===========================================</span><br><span class="line"># master 和 data 配置可以产生一些奇异的效果</span><br><span class="line"># 1). 当master为false，而data为true时，该节点将会专门用来存储数据</span><br><span class="line"># 2). 当master为true，而data为false时，该节点具有成为 master 节点的资格</span><br><span class="line"># 3). 当master为false，data也为false时，该节点是一个 client (客户端)，主要用来处理用户的请求，进行负载均衡，或者是进行请求结果的计算</span><br><span class="line">#===========================================</span><br><span class="line"></span><br><span class="line"># ----------------------------- 日志和持久化相关 ---------------------------------</span><br><span class="line"># 数据文件存储目录，可以设置多个路径，用【逗号】隔开 </span><br><span class="line">path.data: /path/to/data1,/path/to/data2</span><br><span class="line"># 日志文件存储目录</span><br><span class="line">path.logs: /path/to/logs</span><br><span class="line"># 临时文件目录</span><br><span class="line">path.work: /path/to/work</span><br><span class="line"># 配置文件目录</span><br><span class="line">path.conf: /path/to/conf</span><br><span class="line"># 插件安装路径</span><br><span class="line">path.plugins: /path/to/plugins</span><br><span class="line"></span><br><span class="line"># ----------------------------------- 内存配置 -----------------------------------</span><br><span class="line"># 锁定物理内存地址，防止es内存被交换出去，也就是避免es使用swap交换分区。频繁的交换，会导致IOPS变高。</span><br><span class="line">bootstrap.memory_lock: true</span><br><span class="line"># 要确保堆大小设置为系统可用内存的一半</span><br><span class="line"></span><br><span class="line"># ---------------------------------- 网络配置 -----------------------------------</span><br><span class="line"># 本机绑定ip地址，默认0.0.0.0</span><br><span class="line">network.host: 192.168.0.1</span><br><span class="line"># 本机绑定端口，默认9200</span><br><span class="line">http.port: 9200</span><br><span class="line"></span><br><span class="line"># ----------------------------- 集群节点服务发现配置 ------------------------------</span><br><span class="line"># 设置一个集群中主节点的数量，其意义在于防止脑裂，规定集群只有在发现有 这个多 结点的时候，才可以选主节点</span><br><span class="line">discovery.zen.minimum_master_nodes: 1</span><br><span class="line">#</span><br><span class="line"># 设置ping其他节点时的超时时间，网络比较慢时可将该值设大：</span><br><span class="line">discovery.zen.ping.timeout: 3s</span><br><span class="line"># 设置新节点被启动时能够发现的主节点列表（主要用于不同网段机器连接）：</span><br><span class="line">discovery.zen.ping.unicast.hosts: ["host1", "host2:port", "host3[portX-portY]"]</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>更多配置请访问<a target="_blank" rel="noopener" href="https://www.elastic.co/guide/index.html">官方文档</a></li>
+</ul>
+<h2 id="jvm.options"><code>jvm.options</code></h2>
+<p>对于学习来说，这个配置文件中我们只需要关注两个参数即可</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-Xms4g</span><br><span class="line">-Xmx4g</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>这两个参数用于设置 JVM
+的内存，两个值设置为一致大小可以防止内存抖动（一个很正常的现象），ES 学习时推荐设置 512M 就基本足够了</li>
+</ul>
+<h1 id="es-的数据结构设计">ES 的数据结构设计</h1>
+<h2 id="逻辑设计">逻辑设计</h2>
+<blockquote>
+<p>包含<strong>文档</strong>、<strong>类型</strong>、<strong>索引</strong>，可以理解为分别对应关系型数据库的
+<em>记录（行）</em>、<em>表（更像是表中的列的描述）</em>、<em>数据库</em>，但是区别在于：<br>
+关系型数据库中一个数据库中可以有多张表，但是 ES 从 6
+开始，建议一个索引中只能有一个类型，在未来版本中会规定一个索引只有一个类型</p>
+</blockquote>
+<h3 id="文档document">文档（document）</h3>
+<p><code>elasticsearch</code>
+是面向文档的，意味着它搜索和索引数据的最小单位就是文档。文档有几个属性：</p>
+<ul>
+<li>文档是 <code>key-value</code> 的形式，需要同时有值</li>
+<li>文档中可以包含另一个文档，可以理解为 json 的 value 也可以是一个
+json</li>
+<li> 结构灵活。文档中，字段不需要预先定义，可以忽略某个字段，甚至可以可以动态的添加字段</li>
+<li>无模式。文档的字段对应的值可以是任意类型
+<ul>
+<li>有一点需要注意，尽管文档是无模式的，但是字段的类型依旧很重要，明确的类型可以提高存储和索引时的效率</li>
+</ul></li>
+</ul>
+<h3 id="类型type">类型（type）</h3>
+<blockquote>
+<p>类型规定了文档的字段的<strong>类型</strong></p>
+</blockquote>
+<p>类型中对于字段的定义称为映射，比如将 <code>name</code>
+映射为字符串类型，<code>age</code> 映射为整型</p>
+<p>ES 中的文档是无模式的，当文档中的字段没有映射类型时，ES
+会猜该字段是什么类型。但是 ES
+猜的那个类型也不一定是我们想要的类型，所以比较好的办法的是提前定义好所需要的映射</p>
+<h3 id="索引">索引</h3>
+<p>elasticsearch
+的索引是一个非常大的文档集合，存储了文档和定义好的映射（如果有）</p>
+<h2 id="物理设计">物理设计</h2>
+<blockquote>
+<p>节点和分片</p>
+</blockquote>
+<p>es 是支持集群部署的，一个集群包含至少一个节点，一个节点就是一个 es
+的实例（进程）。节点内可以有多个索引</p>
+<p>一个索引默认有 5 个分片（primary shard），每个分片又有一个副本（replica
+shard）</p>
+<p>当集群有三个节点时：</p>
+<figure>
+<img data-src="https://img2018.cnblogs.com/blog/1168165/201903/1168165-20190321171753955-918996558.png" alt="es node clus">
+<figcaption aria-hidden="true">es node clus</figcaption>
+</figure>
+<p>可以看到主分片和对应的副本分片不会分布在同一节点上，这样就算某个节点挂了，数据也不会丢失</p>
+<p>实际上一个分片就是一个 Lucene 的索引，一个<em>倒排索引</em>的目录</p>
+<h3 id="倒排索引">倒排索引</h3>
+<p><strong>索引</strong>可以理解为目录，一般是类似于 <em>标题 —— 页码</em>
+的 <code>key-value</code>
+结构。但是当我们使用关键词进行搜索时，就需要扫描索引库的所有文档，当文档很多时，这样的索引结构根本无法满足近实时的需求</p>
+<p><strong>倒排索引</strong>是将原本的索引结构转换为
+<em>关键词 —— 文档 ID</em>
+的映射结构，每个关键词都对应<strong>包含此关键词的文档的 id
+列表</strong></p>
+<h4 id="举个栗子">举个栗子</h4>
+<p>比如说，我们现在有两个文档，分别包含如下内容：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 文档1</span><br><span class="line">It is never too late to mend.</span><br><span class="line"># 文档2</span><br><span class="line">It is never too late to learn.</span><br></pre></td></tr></tbody></table></figure>
+<p>倒排索引创建后，是这样子的：</p>
+<table>
+<thead>
+<tr class="header">
+<th>term</th>
+<th>doc1</th>
+<th>doc2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>It</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr class="even">
+<td>is</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr class="odd">
+<td>never</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr class="even">
+<td>too</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr class="odd">
+<td>late</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr class="even">
+<td>to</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr class="odd">
+<td>mend</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr class="even">
+<td>learn</td>
+<td>×</td>
+<td>√</td>
+</tr>
+</tbody>
+</table>
+<p>现在，我们搜索
+<code>to learn</code>，只需要搜索每个词条包含的文档就好了</p>
+<table>
+<thead>
+<tr class="header">
+<th>term</th>
+<th>doc1</th>
+<th>doc2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>to</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr class="even">
+<td>learn</td>
+<td>×</td>
+<td>√</td>
+</tr>
+<tr class="odd">
+<td>total</td>
+<td>1</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>可以看出，两个文档都有匹配的地方，第 2 个文档匹配度更高</p>
+<h1 id="es-的简单操作">ES 的简单操作</h1>
+<blockquote>
+<p>本文中，ES 的操作在 Kibana 中进行：Kibana -&gt; Dev Tools -&gt;
+Console</p>
+<p>ES 提供了基于 RESTful 的 API，本节也会基于 HTTP 的方法分类</p>
+</blockquote>
+<h2 id="put">PUT</h2>
+<blockquote>
+<p>PUT 在 RESTful 语义中表示资源的全量更新，在 ES
+中可以增加索引、映射，创建或全量更新文档</p>
+<p>在 Kibana
+中，PUT/POST/GET…… 操作可以小写，但是为了重点表示其是一个操作，建议使用大写</p>
+</blockquote>
+<h3 id="put-操作增加索引">PUT 操作增加索引</h3>
+<ul>
+<li><p>请求：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">PUT test</span><br><span class="line">{</span><br><span class="line">  "settings": {</span><br><span class="line">    "number_of_shards": 5,</span><br><span class="line">    "number_of_replicas": 1,</span><br><span class="line">    "refresh_interval": "1s"</span><br><span class="line">  },</span><br><span class="line">  "mappings": {</span><br><span class="line">    "_doc": {</span><br><span class="line">      "properties": {</span><br><span class="line">        "uid": {"type": "long"},</span><br><span class="line">        "phone": {"type": "long"},</span><br><span class="line">        "message": {"type": "keyword"},</span><br><span class="line">        "sendTime": {</span><br><span class="line">          "type": "date",</span><br><span class="line">          "format": "yyyy-MM-dd HH:mm:ss"</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>需要注意的是，ES 中的时区默认是国际标准时区，我们是东 8 区</li>
+<li>此请求中，包含了映射</li>
+</ul></li>
+<li><p>响应</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "acknowledged" : true,</span><br><span class="line">  "shards_acknowledged" : true,</span><br><span class="line">  "index" : "test"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h3 id="put-增加文档">PUT 增加文档</h3>
+<ul>
+<li><p>请求：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">PUT test/users/2</span><br><span class="line">{</span><br><span class="line">  "uid": 10001,</span><br><span class="line">  "phone": 13133334445,</span><br><span class="line">  "message": "record4",</span><br><span class="line">  "sendTime": "2021-06-09 16:47:47"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>响应</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "_index" : "test",</span><br><span class="line">  "_type" : "users",</span><br><span class="line">  "_id" : "2",</span><br><span class="line">  "_version" : 1,</span><br><span class="line">  "result" : "created",</span><br><span class="line">  "_shards" : {</span><br><span class="line">    "total" : 2,</span><br><span class="line">    "successful" : 1,</span><br><span class="line">    "failed" : 0</span><br><span class="line">  },</span><br><span class="line">  "_seq_no" : 0,</span><br><span class="line">  "_primary_term" : 1</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>响应体中的 <code>result</code> 字段在第一次执行的时候是
+<code>created</code>，表示此次操作是文档创建。第二次执行时是
+<code>updated</code>，表示此次操作是文档更新</li>
+</ul></li>
+</ul>
+<h2 id="post">POST</h2>
+<blockquote>
+<p>PUT 在 RESTful 语义中表示资源的添加，在 ES 中可以创建或更新文档</p>
+</blockquote>
+<h3 id="post-增加文档">POST 增加文档</h3>
+<ul>
+<li><p>请求：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST test/users/2</span><br><span class="line">{</span><br><span class="line">  "uid": 10001,</span><br><span class="line">  "phone": 13133334445,</span><br><span class="line">  "message": "record4",</span><br><span class="line">  "sendTime": "2021-06-09 16:47:47"</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>响应</p>
+<ul>
+<li>响应结果与 PUT 操作增加文档一致</li>
+</ul></li>
+</ul>
+<h2 id="get">GET</h2>
+<blockquote>
+<p>GET 在 RESTful 中表示查询资源，在 ES 中同样表示查询</p>
+</blockquote>
+<h3 id="get-操作查看索引信息">GET 操作查看索引信息</h3>
+<ul>
+<li><p>请求：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET test</span><br></pre></td></tr></tbody></table></figure>
+<p>只需要 GET 后面跟上索引的名字就行了</p></li>
+<li><p>响应</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "test" : {</span><br><span class="line">    "aliases" : { },</span><br><span class="line">    "mappings" : {</span><br><span class="line">      "users" : {</span><br><span class="line">        "properties" : {</span><br><span class="line">          "message" : {</span><br><span class="line">            "type" : "keyword"</span><br><span class="line">          },</span><br><span class="line">          "phone" : {</span><br><span class="line">            "type" : "long"</span><br><span class="line">          },</span><br><span class="line">          "sendTime" : {</span><br><span class="line">            "type" : "date",</span><br><span class="line">            "format" : "yyyy-MM-dd HH:mm:ss"</span><br><span class="line">          },</span><br><span class="line">          "uid" : {</span><br><span class="line">            "type" : "long"</span><br><span class="line">          }</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    },</span><br><span class="line">    "settings" : {</span><br><span class="line">      "index" : {</span><br><span class="line">        "refresh_interval" : "1s",</span><br><span class="line">        "number_of_shards" : "5",</span><br><span class="line">        "provided_name" : "test",</span><br><span class="line">        "creation_date" : "1624526067403",</span><br><span class="line">        "number_of_replicas" : "1",</span><br><span class="line">        "uuid" : "zf2LNEBnTk27P_8Gm9yc5A",</span><br><span class="line">        "version" : {</span><br><span class="line">          "created" : "6050499"</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    }</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>响应体中包含索引的详细信息</li>
+</ul></li>
+</ul>
+<h3 id="get查询所有文档">GET 查询所有文档</h3>
+<ul>
+<li><p>请求：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET _search</span><br></pre></td></tr></tbody></table></figure></li>
+<li><p>响应</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "took" : 0,</span><br><span class="line">  "timed_out" : false,</span><br><span class="line">  "_shards" : {</span><br><span class="line">    "total" : 6,</span><br><span class="line">    "successful" : 6,</span><br><span class="line">    "skipped" : 0,</span><br><span class="line">    "failed" : 0</span><br><span class="line">  },</span><br><span class="line">  "hits" : {</span><br><span class="line">    "total" : 3,</span><br><span class="line">    "max_score" : 1.0,</span><br><span class="line">    "hits" : [</span><br><span class="line">      {</span><br><span class="line">        "_index" : ".kibana_1",</span><br><span class="line">        "_type" : "doc",</span><br><span class="line">        "_id" : "space:default",</span><br><span class="line">        "_score" : 1.0,</span><br><span class="line">        "_source" : {</span><br><span class="line">          "space" : {</span><br><span class="line">            "name" : "Default",</span><br><span class="line">            "description" : "This is your default space!",</span><br><span class="line">            "color" : "#00bfb3",</span><br><span class="line">            "_reserved" : true</span><br><span class="line">          },</span><br><span class="line">          "type" : "space",</span><br><span class="line">          "updated_at" : "2021-06-24T09:05:12.000Z"</span><br><span class="line">        }</span><br><span class="line">      },</span><br><span class="line">      {</span><br><span class="line">        "_index" : ".kibana_1",</span><br><span class="line">        "_type" : "doc",</span><br><span class="line">        "_id" : "config:6.5.4",</span><br><span class="line">        "_score" : 1.0,</span><br><span class="line">        "_source" : {</span><br><span class="line">          "config" : {</span><br><span class="line">            "buildNum" : 18878</span><br><span class="line">          },</span><br><span class="line">          "type" : "config",</span><br><span class="line">          "updated_at" : "2021-06-24T09:05:37.978Z"</span><br><span class="line">        }</span><br><span class="line">      },</span><br><span class="line">      {</span><br><span class="line">        "_index" : "test",</span><br><span class="line">        "_type" : "users",</span><br><span class="line">        "_id" : "2",</span><br><span class="line">        "_score" : 1.0,</span><br><span class="line">        "_source" : {</span><br><span class="line">          "uid" : 10001,</span><br><span class="line">          "phone" : 13133334445,</span><br><span class="line">          "message" : "record4",</span><br><span class="line">          "sendTime" : "2021-06-09 16:47:47"</span><br><span class="line">        }</span><br><span class="line">      }</span><br><span class="line">    ]</span><br><span class="line">  }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<ul>
+<li>响应中包含了 es 中所有的文档信息，会进行分页</li>
+</ul></li>
+</ul>
+<h2 id="delete">DELETE</h2>
+<blockquote>
+<p>GET 在 RESTful 中表示删除资源，在 ES
+中同样表示删除，可以删除索引、文档</p>
+</blockquote>
+<h3 id="delete-删除索引">DELETE 删除索引</h3>
+<ul>
+<li><p>请求：</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE test</span><br></pre></td></tr></tbody></table></figure>
+<p>DELETE 后面加索引名即可</p></li>
+<li><p>响应</p>
+<figure class="highlight text"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{</span><br><span class="line">  "acknowledged" : true</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<p>表示删除成功</p></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>原作者： </strong>ann-zhgy
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://ann-zhgy.github.io/2021/06/feaeef89.html" title="ES 入门">http://ann-zhgy.github.io/2021/06/feaeef89.html</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/ES%E5%AE%89%E8%A3%85%E5%8F%8A%E5%85%A5%E9%97%A8/" rel="tag"># ES安装及入门</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/af0250b2.html" rel="prev" title="ES 介绍">
+                  <i class="fa fa-chevron-left"></i> ES 介绍
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/06/feaeef89.html" rel="next" title="ES 的 CURD">
+                  ES 的 CURD <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ann-zhgy</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">78k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:43</span>
+  </span>
+</div><script color="0,0,255" opacity="0.5" zIndex="-1" count="99" src="https://cdn.jsdelivr.net/npm/canvas-nest.js@1/dist/canvas-nest.js"></script>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/ann-zhgy" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js" integrity="sha256-j+yj56cdEY2CwkVtGyz18fNybFGpMGJ8JxG3GSyO2+I=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":"forest","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/9.3.0/mermaid.min.js","integrity":"sha256-QdTG1YTLLTwD3b95jLqFxpQX9uYuJMNAtVZgwKX4oYU="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","mhchem":true,"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"yYOHRyhsgIO8haBfdx0wQUTx-MdYXbMMI","appKey":"Hucp0iKzTAYc4qnH1pbB6aTC","serverURLs":"https://yyohryhs.api.lncldglobal.com","placeholder":"ヾﾉ≧∀≦)o来啊，快活啊! Just go go (在昵称框输入QQ号码，按下Tab键，自动获取QQ昵称和QQ头像)","avatar":"monsterid","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":true,"enableQQ":true,"requiredFields":["nick","mail"],"el":"#valine-comments","path":"/2021/06/feaeef89.html"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://fastly.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/haruto.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
